@@ -1,0 +1,32 @@
+.fieldTextarea {
+  display: flex;
+  margin: 20px;
+  textarea {
+    display: block;
+    height: 50px;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    background-color: transparent;
+    border-radius: 0.25rem;
+    box-shadow: none;
+  }
+}
+
+.error {
+  color: #f4a3b5;
+  width: 88%;
+  text-align: end;
+  font-weight: 300;
+  font-size: 13px;
+}
+
+.fieldError {
+  margin: 12px 0px 3px !important;
+  input {
+    border: 1px solid #ec240d !important;
+  }
+  textarea {
+    border: 1px solid #ec240d !important;
+  }
+}

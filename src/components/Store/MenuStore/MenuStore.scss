@@ -1,0 +1,33 @@
+.menuStore {
+  .mainMenu {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px;
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      background-color: #282828;
+      height: 2px;
+      width: 100%;
+      bottom: -15px;
+    }
+    .menuLi {
+      a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 400;
+        transition: color 0.3s;
+        &:hover {
+          color: #792c9b;
+          transition: color 0.3s;
+        }
+      }
+    }
+  }
+  img {
+    width: 94.5vw;
+    margin-top: 40px;
+    object-fit: cover;
+  }
+}

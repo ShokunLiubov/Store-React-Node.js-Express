@@ -1,0 +1,83 @@
+// .container {
+//   position: relative;
+// }
+.containerLogin {
+  background-color: #fff;
+  border-radius: 6px;
+  width: 350px;
+  .form {
+    position: relative;
+
+    span {
+      font-size: 72px;
+      position: absolute;
+      top: -9px;
+      left: -4px;
+      font-weight: 800;
+    }
+
+    img {
+      border-radius: 6px;
+      object-fit: cover;
+      width: 350px;
+      // position: absolute;
+      top: 0;
+    }
+  }
+
+  .blockInput {
+    display: flex;
+    margin: 0px auto 20px;
+    position: relative;
+    top: -30px;
+    color: #222a42;
+    width: 90%;
+    text-align: center;
+    align-items: center;
+    border: 1px solid rgba(29, 37, 59, 0.2);
+    border-radius: 6px;
+
+    span {
+      position: static;
+      width: 15%;
+      color: #8e929d;
+      font-size: 20px;
+      font-weight: 300;
+    }
+    .fieldInput {
+      width: 85%;
+      margin: 0px;
+
+      label {
+        display: none;
+      }
+      input {
+        border: none;
+        width: 100%;
+        color: #8e929d;
+        outline: none;
+      }
+    }
+  }
+
+  button {
+    width: 90%;
+    margin: 20px 0px;
+  }
+  .bottomLink {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 20px 35px;
+    a {
+      color: #bc57f6;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 10px;
+      font-weight: 300;
+    }
+  }
+}
+
+.blockInput:focus-within {
+  border: 1px solid #bc57f6;
+}

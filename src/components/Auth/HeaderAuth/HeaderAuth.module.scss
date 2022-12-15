@@ -1,0 +1,49 @@
+.menuAuth {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 30px 0px;
+  .title {
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+  nav {
+    display: flex;
+  }
+  a {
+    text-decoration: none;
+    margin-left: 40px;
+    font-weight: 100;
+    display: flex;
+
+    .icon {
+      font-weight: 200;
+      margin-right: 3px;
+    }
+  }
+  a:hover {
+    color: #1d8cf8;
+    transition: color 0.5s;
+    span {
+      transition: color 0.5s;
+      color: #1d8cf8;
+    }
+    .icon {
+      transition: color 0.5s;
+      color: #1d8cf8;
+    }
+  }
+
+  .backShop {
+    color: #e14dca;
+    .icon {
+      color: #e14dca;
+    }
+  }
+
+  .active {
+    color: #e14dca;
+    span {
+      color: #e14dca;
+    }
+  }
+}

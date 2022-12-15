@@ -1,0 +1,52 @@
+.logo {
+  font-size: 34px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px 0px;
+  align-items: center;
+  .icon {
+    font-weight: 200;
+    font-size: 30px;
+    &:hover {
+      color: #315ff4;
+      transition: color 0.7s;
+    }
+  }
+}
+
+.rightNavbar {
+  display: flex;
+  li {
+    margin: 0px 12px;
+    cursor: pointer;
+    a {
+      text-decoration: none;
+    }
+  }
+}
+
+.setting {
+  display: flex;
+  span {
+    margin-left: 5px;
+  }
+}
+
+.leftNavbar {
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+
+.sidebarBurger {
+  cursor: pointer;
+  font-weight: 100;
+  font-size: 30px;
+}

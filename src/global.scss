@@ -1,0 +1,160 @@
+$base-font: "Montserrat", sans-serif;
+body {
+  margin: 0;
+  padding: 0;
+}
+.AuthLayout {
+  background-color: #1e1e28;
+  button {
+    background: #e14eca;
+    cursor: pointer;
+    outline: 0;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    margin: 4px 1px;
+    padding: 15px 30px;
+    font-weight: 600;
+    font-style: 18px;
+    border-radius: 0.4285rem;
+    background-image: linear-gradient(
+      to bottom left,
+      #e14eca,
+      #ba54f5,
+      #e14eca
+    );
+  }
+}
+
+.AdminLayout {
+  background-color: #1e1e28;
+  button {
+    background: #e14eca;
+    cursor: pointer;
+    outline: 0;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    margin: 4px 1px;
+    padding: 15px 30px;
+    font-weight: 600;
+    font-style: 18px;
+    border-radius: 0.4285rem;
+    background-image: linear-gradient(
+      to bottom left,
+      #e14eca,
+      #ba54f5,
+      #e14eca
+    );
+  }
+}
+
+.PublicLayout {
+  background-color: #fff;
+  li,
+  p,
+  span,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  button,
+  a,
+  div {
+    color: #000;
+  }
+  button {
+    background: #792c9b;
+    cursor: pointer;
+    outline: 0;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    margin: 4px 1px;
+    color: #fff;
+    font-size: 9px;
+    padding: 8px 30px;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+  }
+  .storeContainer {
+    padding: 0px 40px;
+  }
+}
+
+li,
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+a,
+div {
+  font-family: $base-font;
+  color: #ffffff;
+}
+
+ul {
+  list-style: none;
+}
+
+.containerAdminDark {
+  margin: 20px;
+  background-color: #27293c;
+  padding: 30px;
+  border-radius: 6px;
+  width: 100%;
+  height: 100%;
+}
+
+.containerAdminWhite {
+  margin: 20px;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 6px;
+  width: 100%;
+  height: 100%;
+}
+
+.adminContainer {
+  display: flex;
+}
+
+.numberDark {
+  margin: 2px;
+  font-size: 15px;
+  font-weight: 400;
+  color: #333;
+}
+
+h1 {
+  font-size: 12px;
+}
+
+h2 {
+  font-size: 16px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 95vh;
+}
+
+.preloader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 90px;
+  color: black;
+}
