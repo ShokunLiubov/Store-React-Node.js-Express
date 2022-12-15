@@ -1,4 +1,5 @@
 import { orderAPI } from "../../api/api";
+import { orderService } from "../../api/services/OrderService";
 import { IOrder } from "../../shared/interfaces/order.interface";
 
 const SET_ORDERS: string = "SET-ORDERS";
@@ -23,9 +24,8 @@ export const setOrders = (ordersData: Array<IOrder>) => ({
 });
 
 export const getOrders = () => {
-  return (dispatch: any) => {
-    orderAPI.getOrders().then((data) => {
-      dispatch(setOrders(data));
-    });
+  return async (dispatch: any) => {
+    let response = await orderService.getOrders();
+    dispatch(setOrders(response.data));
   };
 };

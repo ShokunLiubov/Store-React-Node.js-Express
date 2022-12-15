@@ -1,6 +1,5 @@
 import { $API } from "../api";
 import { AxiosResponse } from "axios";
-import { AuthResponse } from "../../shared/response/authResponse.interface";
 import { IProduct } from "../../shared/interfaces/product.interface";
 
 export class productService {

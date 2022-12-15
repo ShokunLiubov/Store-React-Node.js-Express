@@ -4,5 +4,4 @@ export interface IUserInfo {
   email: string;
   phone: number | string;
   city: string;
-  postOffice: string;
 }

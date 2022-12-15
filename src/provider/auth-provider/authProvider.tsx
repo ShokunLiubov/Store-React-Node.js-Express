@@ -1,19 +1,16 @@
-import React, { createContext, PropsWithChildren, useState } from "react";
-import {
-  IContext,
-  TypeUserState,
-} from "../../shared/interfaces/customer.interface";
+import React from "react";
+// import React, { createContext, PropsWithChildren, useState } from "react";
 
-export const AuthContext = createContext({} as IContext);
+// export const AuthContext = createContext({} as IContext);
 
-const AuthProvider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
-  const [user, setUser] = useState<TypeUserState>(null);
+// const AuthProvider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
+//   const [user, setUser] = useState<TypeUserState>(null);
 
-  return (
-    <AuthContext.Provider value={{ user, setUser }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
+//   return (
+//     <AuthContext.Provider value={{ user, setUser }}>
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// };
 
-export default AuthProvider;
+// export default AuthProvider;

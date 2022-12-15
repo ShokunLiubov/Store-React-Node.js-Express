@@ -4,11 +4,11 @@ import cn from "classnames";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { getCustomers } from "../../redux/customerReducer/customerReducer";
-import { ICustomer } from "../../shared/interfaces/customer.interface";
+import { IUserInfo } from "../../shared/interfaces/userInfo.interface";
 
 interface IMyCatalogsProps {
   getCustomers: () => void;
-  customersData: Array<ICustomer>;
+  customersData: Array<IUserInfo>;
 }
 
 export const Customers: React.FC<IMyCatalogsProps> = ({
@@ -32,8 +32,8 @@ export const Customers: React.FC<IMyCatalogsProps> = ({
         <tbody>
           {customersData.length > 0 &&
             customersData.map((customer: any) => (
-              <tr key={customer.id}>
-                <td>{customer.name}</td>
+              <tr key={customer._id}>
+                <td>{customer.username}</td>
                 <td>{customer.email}</td>
                 <td>{customer.phone}</td>
                 <td>{customer.city}</td>

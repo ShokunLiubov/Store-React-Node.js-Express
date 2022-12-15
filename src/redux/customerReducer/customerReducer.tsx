@@ -1,5 +1,5 @@
 import { customerAPI } from "../../api/api";
-import { ICustomer } from "../../shared/interfaces/customer.interface";
+import { IUserInfo } from "../../shared/interfaces/userInfo.interface";
 
 const SET_CUSTOMERS: string = "SET-CUSTOMERS";
 
@@ -17,7 +17,7 @@ export const customerReducer = (state = initialState, action: any) => {
   }
 };
 
-export const setCustomers = (customersData: Array<ICustomer>) => ({
+export const setCustomers = (customersData: Array<IUserInfo>) => ({
   type: SET_CUSTOMERS,
   customersData,
 });
