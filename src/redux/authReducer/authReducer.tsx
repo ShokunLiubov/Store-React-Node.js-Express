@@ -88,7 +88,6 @@ export const checkAuth = () => {
       const response = await axios.get<AuthResponse>(`${APIurl}auth/refresh`, {
         withCredentials: true,
       });
-      console.log(response);
 
       localStorage.setItem("token", response.data.accessToken);
       dispatch(setAuth(response.data.user));

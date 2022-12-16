@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Login.scss";
 import { useFormik } from "formik";
 import { Input } from "../../components/UI/Form/Input/Input";
@@ -13,7 +13,7 @@ interface LoginProps {
 
 export const Login: React.FC<LoginProps> = ({ login }) => {
   const navigate = useNavigate();
-
+  const [showHiddenPassword, setShowHiddenPassword] = useState(false);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -46,8 +46,14 @@ export const Login: React.FC<LoginProps> = ({ login }) => {
             name={"password"}
             placeholder={"Password"}
             formik={formik}
-            type={"password"}
+            type={showHiddenPassword ? "text" : "password"}
           />
+          <span
+            className='material-symbols-outlined'
+            onClick={() => setShowHiddenPassword(!showHiddenPassword)}
+          >
+            {showHiddenPassword ? "visibility" : "visibility_off"}
+          </span>
         </div>
 
         <button type='submit'>Get Started</button>

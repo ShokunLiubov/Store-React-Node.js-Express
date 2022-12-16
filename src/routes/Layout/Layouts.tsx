@@ -1,4 +1,4 @@
-import { AdminLayout } from "./AdminLayout";
+import AdminLayout from "./AdminLayout";
 import { AuthLayout } from "./AuthLayout";
 import { PublicLayout } from "./PublicLayout";
 

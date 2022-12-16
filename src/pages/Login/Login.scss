@@ -36,7 +36,9 @@
     align-items: center;
     border: 1px solid rgba(29, 37, 59, 0.2);
     border-radius: 6px;
-
+    .material-symbols-outlined {
+      cursor: pointer;
+    }
     span {
       position: static;
       width: 15%;

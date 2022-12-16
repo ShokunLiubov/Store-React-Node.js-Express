@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Register.scss";
 import { useFormik } from "formik";
 import { Input } from "../../components/UI/Form/Input/Input";
@@ -13,6 +13,7 @@ interface RegisterProps {
 
 export const Register: React.FC<RegisterProps> = ({ registrationUser }) => {
   const navigate = useNavigate();
+  const [showHiddenPassword, setShowHiddenPassword] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -46,8 +47,14 @@ export const Register: React.FC<RegisterProps> = ({ registrationUser }) => {
             name={"password"}
             placeholder={"Password"}
             formik={formik}
-            type={"password"}
+            type={showHiddenPassword ? "text" : "password"}
           />
+          <span
+            className='material-symbols-outlined'
+            onClick={() => setShowHiddenPassword(!showHiddenPassword)}
+          >
+            {showHiddenPassword ? "visibility" : "visibility_off"}
+          </span>
         </div>
 
         <button type='submit'>Get Started</button>

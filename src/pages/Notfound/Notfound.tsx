@@ -1,5 +1,12 @@
 import React from "react";
+import cn from "classnames";
 
-export const Notfound: React.FC = () => {
-  return <span style={{ fontSize: "50px" }}>Not Found 404</span>;
+interface NotfoundProps {
+  styleAdmin?: string;
+}
+
+export const Notfound: React.FC<NotfoundProps> = ({ styleAdmin }) => {
+  return (
+    <span className={cn("center", "notFound", styleAdmin)}>Not Found 404</span>
+  );
 };
