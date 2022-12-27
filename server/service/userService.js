@@ -1,8 +1,10 @@
 const User = require("../models/User");
+const UserInfo = require("../models/UserInfo");
 const Role = require("../models/Role");
 const tokenService = require("./tokenService");
 const UserDto = require("../DTO/userDto");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const AuthError = require("../exception/authError");
 
 class UserService {
@@ -85,8 +87,28 @@ class UserService {
   }
 
   async getAllUsers() {
-    const users = await User.find();
+    const users = await User.find({ roles: "USERS" });
+    const usersInfo = await User.find;
+
     return users;
+  }
+
+  async postCustomerInfo(email, phone, city, token) {
+    if (!token) {
+      return next(AuthError.UnauthorizedError());
+    }
+    const { id } = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+
+    const userInfo = await UserInfo.create({
+      email,
+      phone,
+      city,
+    });
+    const userId = { _id: id };
+    const userInfoId = { $set: { userInfo: userInfo._id } };
+    const userUpdate = await User.updateOne(userId, userInfoId);
+
+    return { userInfo, userUpdate };
   }
 }
 

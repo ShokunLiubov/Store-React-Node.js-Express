@@ -1,8 +1,5 @@
-import { APIurl } from "../../api/api";
 import { IUser } from "../../shared/interfaces/user.interface";
 import { authService } from "../../api/services/AuthService";
-import axios from "axios";
-import { AuthResponse } from "../../shared/response/authResponse.interface";
 
 const SET_AUTH = "auth/SET-AUTH-DATA";
 const OUT_AUTH = "auth/OUT-AUTH";
@@ -85,9 +82,7 @@ export const checkAuth = () => {
   return async (dispatch: any) => {
     dispatch(setLoading(true));
     try {
-      const response = await axios.get<AuthResponse>(`${APIurl}auth/refresh`, {
-        withCredentials: true,
-      });
+      const response = await authService.refreshToken();
 
       localStorage.setItem("token", response.data.accessToken);
       dispatch(setAuth(response.data.user));

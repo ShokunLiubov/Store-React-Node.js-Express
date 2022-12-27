@@ -13,7 +13,7 @@ interface LoginProps {
 
 export const Login: React.FC<LoginProps> = ({ login }) => {
   const navigate = useNavigate();
-  const [showHiddenPassword, setShowHiddenPassword] = useState(false);
+  const [isShownPassword, setIsShownPassword] = useState(false);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -46,13 +46,13 @@ export const Login: React.FC<LoginProps> = ({ login }) => {
             name={"password"}
             placeholder={"Password"}
             formik={formik}
-            type={showHiddenPassword ? "text" : "password"}
+            type={isShownPassword ? "text" : "password"}
           />
           <span
             className='material-symbols-outlined'
-            onClick={() => setShowHiddenPassword(!showHiddenPassword)}
+            onClick={() => setIsShownPassword(!isShownPassword)}
           >
-            {showHiddenPassword ? "visibility" : "visibility_off"}
+            {isShownPassword ? "visibility" : "visibility_off"}
           </span>
         </div>
 

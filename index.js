@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const authRouter = require("./server/routers/authRouter");
 const productsRouter = require("./server/routers/productsRouter");
+const customerRouter = require("./server/routers/customerRouter");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const errorMiddleware = require("./server/middleware/errorMiddleware");
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 });
 app.use("/auth", authRouter);
 app.use(productsRouter);
+app.use("/customer", customerRouter);
 // Last error meddleware
 app.use(errorMiddleware);
 

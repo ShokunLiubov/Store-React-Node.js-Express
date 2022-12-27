@@ -14,4 +14,8 @@ export class authService {
   static async logout(): Promise<void> {
     return $API.post("auth/logout");
   }
+
+  static async refreshToken(): Promise<any> {
+    return $API.get<any>("auth/refresh");
+  }
 }

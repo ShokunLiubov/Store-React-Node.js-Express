@@ -13,7 +13,7 @@ interface RegisterProps {
 
 export const Register: React.FC<RegisterProps> = ({ registrationUser }) => {
   const navigate = useNavigate();
-  const [showHiddenPassword, setShowHiddenPassword] = useState(false);
+  const [isShownPassword, setIsShownPassword] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -47,13 +47,13 @@ export const Register: React.FC<RegisterProps> = ({ registrationUser }) => {
             name={"password"}
             placeholder={"Password"}
             formik={formik}
-            type={showHiddenPassword ? "text" : "password"}
+            type={isShownPassword ? "text" : "password"}
           />
           <span
             className='material-symbols-outlined'
-            onClick={() => setShowHiddenPassword(!showHiddenPassword)}
+            onClick={() => setIsShownPassword(!isShownPassword)}
           >
-            {showHiddenPassword ? "visibility" : "visibility_off"}
+            {isShownPassword ? "visibility" : "visibility_off"}
           </span>
         </div>
 

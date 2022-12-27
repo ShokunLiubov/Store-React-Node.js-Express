@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export const APIurl = "http://localhost:5001/";
+const API_URL = "http://localhost:5001/";
 
 export const $API = axios.create({
   withCredentials: true,
-  baseURL: APIurl,
+  baseURL: API_URL,
 });
 
 $API.interceptors.request.use((config) => {
@@ -25,7 +25,7 @@ $API.interceptors.response.use(
     ) {
       try {
         originalRequest._isRetry = true;
-        const response = await axios.get(`${APIurl}auth/refresh`);
+        const response = await axios.get(`${API_URL}auth/refresh`);
         localStorage.setItem("token", response.data.accessToken);
         return $API.request(originalRequest);
       } catch (e) {
