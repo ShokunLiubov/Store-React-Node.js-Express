@@ -1,5 +1,5 @@
-import { customerAPI } from "../../api/api";
-import { IUserInfo } from "../../shared/interfaces/userInfo.interface";
+import { customerService } from "../../api/services/CustomerService";
+import { IUser } from "../../shared/interfaces/user.interface";
 
 const SET_CUSTOMERS: string = "SET-CUSTOMERS";
 
@@ -17,15 +17,14 @@ export const customerReducer = (state = initialState, action: any) => {
   }
 };
 
-export const setCustomers = (customersData: Array<IUserInfo>) => ({
+export const setCustomers = (customersData: Array<IUser>) => ({
   type: SET_CUSTOMERS,
   customersData,
 });
 
 export const getCustomers = () => {
-  return (dispatch: any) => {
-    customerAPI.getCustomer().then((data) => {
-      dispatch(setCustomers(data));
-    });
+  return async (dispatch: any) => {
+    const response = await customerService.fetchUsers();
+    dispatch(setCustomers(response.data));
   };
 };

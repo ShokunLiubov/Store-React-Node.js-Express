@@ -87,8 +87,10 @@ class UserService {
   }
 
   async getAllUsers() {
-    const users = await User.find({ roles: "USERS" });
-    const usersInfo = await User.find;
+    const users = await User.find({ roles: "USERS" }).populate({
+      path: "userInfo",
+      model: "UserInfo",
+    });
 
     return users;
   }

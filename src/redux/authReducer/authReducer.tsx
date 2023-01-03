@@ -93,8 +93,3 @@ export const checkAuth = () => {
     }
   };
 };
-
-// export const setAuthUser = (userId, username, isAuth, role) => ({
-//   type: SET_USER,
-//   payload: { userId, username, isAuth, role },
-// });
