@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+import { Schema, model } from "mongoose";
 
 const User = new Schema({
   username: { type: String, unique: true, required: true },
@@ -7,4 +7,4 @@ const User = new Schema({
   userInfo: { type: Schema.Types.ObjectId, ref: "UserInfo" },
 });
 
-module.exports = model("User", User);
+export default model("User", User);

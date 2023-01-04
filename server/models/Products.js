@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+import { Schema, model } from "mongoose";
 
 const Products = new Schema({
   image: { type: String, required: true },
@@ -15,4 +15,4 @@ const Products = new Schema({
   description: { type: String, required: true },
 });
 
-module.exports = model("products", Products);
+export default model("products", Products);

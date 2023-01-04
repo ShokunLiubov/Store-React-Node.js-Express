@@ -1,9 +1,9 @@
-const Router = require("express");
+import Router from "express";
 const router = new Router();
-const controller = require("../controllers/productsController");
-const multer = require("multer");
-const Products = require("../models/Products");
-const path = require("path");
+import controller from "../controllers/productsController";
+import multer from "multer";
+import Products from "../models/Products";
+import path from "path";
 
 const dirPath = path.join(__dirname, "../../public/image_product");
 
@@ -39,4 +39,4 @@ router.delete("/products/:id", controller.deleteProduct);
 
 router.post("/products", upload.single("image"), controller.postProduct);
 
-module.exports = router;
+export default router;

@@ -1,6 +1,6 @@
-const tokenService = require("../service/tokenService");
-const userService = require("../service/userService");
-const jwt = require("jsonwebtoken");
+import tokenService from "../service/tokenService";
+import userService from "../service/userService";
+import jwt from "jsonwebtoken";
 
 class customerController {
   async getCustomerInfo(req, res, next) {
@@ -27,4 +27,4 @@ class customerController {
   }
 }
 
-module.exports = new customerController();
+export default new customerController();

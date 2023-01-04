@@ -1,5 +1,5 @@
-const Products = require("../models/Products");
-const { MongoClient, ObjectId } = require("mongodb");
+import Products from "../models/Products";
+import { MongoClient, ObjectId } from "mongodb";
 
 class productsController {
   async getProducts(req, res, next) {
@@ -51,4 +51,4 @@ class productsController {
   }
 }
 
-module.exports = new productsController();
+export default new productsController();

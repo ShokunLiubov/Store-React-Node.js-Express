@@ -1,11 +1,11 @@
-const User = require("../models/User");
-const UserInfo = require("../models/UserInfo");
-const Role = require("../models/Role");
-const tokenService = require("./tokenService");
-const UserDto = require("../DTO/userDto");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const AuthError = require("../exception/authError");
+import User from "../models/User";
+import UserInfo from "../models/UserInfo";
+import Role from "../models/Role";
+import tokenService from "./tokenService";
+import UserDto from "../DTO/userDto";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import AuthError from "../exception/authError";
 
 class UserService {
   async registration(username, password) {
@@ -114,4 +114,4 @@ class UserService {
   }
 }
 
-module.exports = new UserService();
+export default new UserService();

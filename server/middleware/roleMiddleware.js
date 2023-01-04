@@ -1,9 +1,9 @@
-const jwt = require("jsonwebtoken");
-// const { secret } = require("../config");
-const AuthError = require("../exception/authError");
-const tokenService = require("../service/tokenService");
+import jwt from "jsonwebtoken";
+// import { secret } from "../config"
+import AuthError from "../exception/authError";
+import tokenService from "../service/tokenService";
 
-module.exports = function (roles) {
+export default function (roles) {
   return function (req, res, next) {
     if (req.method === "OPTIONS") {
       next();
@@ -40,4 +40,4 @@ module.exports = function (roles) {
       return res.status(403).json({ message: "User not authorized" });
     }
   };
-};
+}

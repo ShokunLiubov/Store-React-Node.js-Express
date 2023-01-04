@@ -1,9 +1,9 @@
-const Router = require("express");
+import Router from "express";
 const router = new Router();
-const controller = require("../controllers/authController");
-const { check } = require("express-validator");
-const authMiddleware = require("../middleware/authMiddleware");
-const roleMiddleware = require("../middleware/roleMiddleware");
+import controller from "../controllers/authController";
+import { check } from "express-validator";
+import authMiddleware from "../middleware/authMiddleware";
+import roleMiddleware from "../middleware/roleMiddleware";
 
 // create router
 router.post(
@@ -33,4 +33,4 @@ router.get(
   controller.getUsers,
 );
 
-module.exports = router;
+export default router;

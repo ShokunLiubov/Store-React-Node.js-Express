@@ -1,4 +1,4 @@
-module.exports = class AuthError extends Error {
+export default class AuthError extends Error {
   status;
   errors;
   constructor(status, message, errors = []) {
@@ -13,4 +13,4 @@ module.exports = class AuthError extends Error {
   static BadRequest(message, errors = []) {
     return new AuthError(400, message, errors);
   }
-};
+}

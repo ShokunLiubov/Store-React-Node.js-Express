@@ -1,9 +1,9 @@
-const User = require("../models/User");
-const Role = require("../models/Role");
-const bcrypt = require("bcryptjs");
-const { validationResult } = require("express-validator");
-const userService = require("../service/userService");
-const AuthError = require("../exception/authError");
+import User from "../models/User";
+import Role from "../models/Role";
+import bcrypt from "bcryptjs";
+import { validationResult } from "express-validator";
+import userService from "../service/userService";
+import AuthError from "../exception/authError";
 
 class authController {
   async registration(req, res, next) {
@@ -74,4 +74,4 @@ class authController {
   }
 }
 
-module.exports = new authController();
+export default new authController();

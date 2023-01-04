@@ -1,10 +1,10 @@
-const Router = require("express");
+import Router from "express";
 const router = new Router();
-const controller = require("../controllers/customerController");
-const roleMiddleware = require("../middleware/roleMiddleware");
+import controller from "../controllers/customerController";
+import roleMiddleware from "../middleware/roleMiddleware";
 
 // create router
 router.post("/info", controller.postCustomerInfo);
 router.get("/info", controller.getCustomerInfo);
 
-module.exports = router;
+export default router;
