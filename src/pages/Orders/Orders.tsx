@@ -41,10 +41,10 @@ export const Orders: React.FC<IOrdersProps> = ({ ordersData, getOrders }) => {
                 <td>
                   <div
                     className={cn(
-                      order.status_order === "Availability is checked"
+                      order.status_order === "Availability is check"
                         ? styles.count
                         : styles.statusNot,
-                      order.status_order === "Availability is checked"
+                      order.status_order === "Availability is check"
                         ? styles.count
                         : "",
                       order.status_order === "Awaiting shipment"

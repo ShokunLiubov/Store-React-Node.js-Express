@@ -3,11 +3,12 @@ dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import authRouter from "./routers/authRouter";
-// import productsRouter from "./routers/productsRouter";
-// import customerRouter from "./routers/customerRouter";
+import productsRouter from "./routers/productsRouter";
+import customerRouter from "./routers/customerRouter";
+import orderRouter from "./routers/orderRouter";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-// import errorMiddleware from "./middleware/errorMiddleware";
+import errorMiddleware from "./middleware/errorMiddleware";
 
 const PORT = process.env.PORT || 5001;
 const app = express();
@@ -23,14 +24,12 @@ app.use(cookieParser());
 
 // app.use(express.urlencoded({ extended: false }));
 // // listen router
-// app.get("/", (req, res) => {
-//   res.send("<h1>Hello Make Up</h1>");
-// });
 app.use("/auth", authRouter);
-// app.use(productsRouter);
-// app.use("/customer", customerRouter);
+app.use(productsRouter);
+app.use(orderRouter);
+app.use("/customer", customerRouter);
 // Last error meddleware
-// app.use(errorMiddleware);
+app.use(errorMiddleware);
 
 // function start app server
 const start = async () => {

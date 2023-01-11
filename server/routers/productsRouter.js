@@ -1,9 +1,13 @@
 import Router from "express";
 const router = new Router();
-import controller from "../controllers/productsController";
+import controller from "../controllers/productController";
 import multer from "multer";
 import Products from "../models/Products";
 import path from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
 
 const dirPath = path.join(__dirname, "../../public/image_product");
 

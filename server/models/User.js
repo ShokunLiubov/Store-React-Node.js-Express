@@ -5,6 +5,7 @@ const User = new Schema({
   password: { type: String, required: true },
   roles: [{ type: String, ref: "Role" }],
   userInfo: { type: Schema.Types.ObjectId, ref: "UserInfo" },
+  orders: [{ type: Schema.Types.ObjectId, ref: "Order" }],
 });
 
 export default model("User", User);

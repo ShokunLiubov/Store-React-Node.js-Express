@@ -1,7 +1,7 @@
 export interface IOrder {
   id: number;
-  client_name: string;
-  city: string;
-  order_price: number;
-  status_order: string;
+  fullName: string;
+  address: string;
+  allPrice: number;
+  status: string;
 }

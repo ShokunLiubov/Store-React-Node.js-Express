@@ -97,7 +97,7 @@ class UserService {
 
   async postCustomerInfo(email, phone, city, token) {
     if (!token) {
-      return next(AuthError.UnauthorizedError());
+      return AuthError.UnauthorizedError();
     }
     const { id } = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
 
