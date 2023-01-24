@@ -4,6 +4,7 @@ import { MongoClient, ObjectId } from "mongodb";
 class productsController {
   async getProducts(req, res, next) {
     try {
+      debugger;
       const products = await Products.find();
       res.json(products);
     } catch (e) {
