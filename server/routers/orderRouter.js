@@ -8,4 +8,4 @@ router.get("/order", roleMiddleware(["ADMIN"]), controller.getOrders);
 
 router.post("/order", controller.postOrders);
 
-export default router;
+export { router as orderRouter };

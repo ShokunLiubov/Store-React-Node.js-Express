@@ -7,4 +7,4 @@ import roleMiddleware from "../middleware/roleMiddleware";
 router.post("/info", controller.postCustomerInfo);
 router.get("/info", controller.getCustomerInfo);
 
-export default router;
+export { router as customerRouter };

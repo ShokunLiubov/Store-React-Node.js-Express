@@ -2,10 +2,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
-import authRouter from "./routers/authRouter";
-import productsRouter from "./routers/productsRouter";
-import customerRouter from "./routers/customerRouter";
-import orderRouter from "./routers/orderRouter";
+import * as routers from "./routers/routers";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import errorMiddleware from "./middleware/errorMiddleware";
@@ -24,10 +21,10 @@ app.use(cookieParser());
 
 // app.use(express.urlencoded({ extended: false }));
 // // listen router
-app.use("/auth", authRouter);
-app.use(productsRouter);
-app.use(orderRouter);
-app.use("/customer", customerRouter);
+app.use("/auth", routers.authRouter);
+app.use(routers.productsRouter);
+app.use(routers.orderRouter);
+app.use("/customer", routers.customerRouter);
 // Last error meddleware
 app.use(errorMiddleware);
 

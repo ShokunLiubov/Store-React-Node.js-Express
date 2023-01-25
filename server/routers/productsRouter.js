@@ -43,4 +43,4 @@ router.delete("/products/:id", controller.deleteProduct);
 
 router.post("/products", upload.single("image"), controller.postProduct);
 
-export default router;
+export { router as productsRouter };

@@ -33,4 +33,4 @@ router.get(
   controller.getUsers,
 );
 
-export default router;
+export { router as authRouter };
