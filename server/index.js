@@ -6,6 +6,7 @@ import * as routers from "./routers/routers";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import errorMiddleware from "./middleware/errorMiddleware";
+import helmet from "helmet";
 
 const PORT = process.env.PORT || 5001;
 const app = express();
@@ -18,6 +19,18 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
+
+// security
+app.use(helmet()); //standard security packages
+app.use(helmet.hidePoweredBy()); //hidden X-Powered-By: Express
+app.use(
+  helmet.contentSecurityPolicy({
+    //does not allow loading another's script
+    directives: {
+      defaultSrc: ["'self'"], // specify allowed domain here
+    },
+  }),
+);
 
 // // listen router
 app.use("/auth", routers.authRouter);
