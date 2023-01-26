@@ -8,7 +8,6 @@ import { IRoutes } from "../shared/interfaces/routes.interface";
 import { IUser } from "../shared/interfaces/user.interface";
 
 interface IRouterCombiner {
-  PrivateRoute: any;
   routes: Array<IRoutes>;
   auth?: any;
   checkAuth: any;
@@ -17,7 +16,6 @@ interface IRouterCombiner {
 }
 
 export const RouterCombiner: React.FC<IRouterCombiner> = ({
-  PrivateRoute,
   routes,
   checkAuth,
   isLoading,

@@ -19,13 +19,13 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-// app.use(express.urlencoded({ extended: false }));
 // // listen router
 app.use("/auth", routers.authRouter);
-app.use(routers.productsRouter);
-app.use(routers.orderRouter);
+app.use("/products", routers.productsRouter);
+app.use("/orders", routers.orderRouter);
 app.use("/customer", routers.customerRouter);
-// Last error meddleware
+
+//Error middleware
 app.use(errorMiddleware);
 
 // function start app server

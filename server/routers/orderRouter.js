@@ -4,8 +4,8 @@ import roleMiddleware from "../middleware/roleMiddleware";
 
 const router = new Router();
 
-router.get("/order", roleMiddleware(["ADMIN"]), controller.getOrders);
+router.get("/", roleMiddleware(["ADMIN"]), controller.getOrders);
 
-router.post("/order", controller.postOrders);
+router.post("/", controller.postOrders);
 
 export { router as orderRouter };

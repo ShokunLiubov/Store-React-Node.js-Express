@@ -16,6 +16,8 @@ export const Orders: React.FC<IOrdersProps> = ({ ordersData, getOrders }) => {
     getOrders();
   }, []);
 
+  // console.log(ordersData);
+
   return (
     <div className={cn("containerAdminDark")}>
       <table className={styles.table}>

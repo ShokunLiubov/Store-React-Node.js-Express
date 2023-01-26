@@ -4,7 +4,7 @@ import AuthError from "../exception/authError";
 class orderController {
   async getOrders(req, res, next) {
     try {
-      const orders = await orderService.gerAllOrders();
+      const orders = await orderService.getAllOrders();
       return res.json(orders);
     } catch (e) {
       console.log(e);

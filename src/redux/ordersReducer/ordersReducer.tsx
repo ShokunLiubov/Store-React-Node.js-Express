@@ -26,6 +26,7 @@ export const setOrders = (ordersData: Array<IOrder>) => ({
 export const getOrders = () => {
   return async (dispatch: any) => {
     let response = await orderService.getOrders();
+
     dispatch(setOrders(response.data));
   };
 };

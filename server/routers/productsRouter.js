@@ -37,10 +37,10 @@ const filefilter = (req, file, cb) => {
 
 const upload = multer({ storage: storage, filefilter: filefilter });
 
-router.get("/products", controller.getProducts);
+router.get("/", controller.getProducts);
 
-router.delete("/products/:id", controller.deleteProduct);
+router.delete("/:id", controller.deleteProduct);
 
-router.post("/products", upload.single("image"), controller.postProduct);
+router.post("/", upload.single("image"), controller.postProduct);
 
 export { router as productsRouter };

@@ -3,12 +3,14 @@ import Order from "../models/Order";
 import jwt from "jsonwebtoken";
 
 class orderService {
-  async gerAllOrders() {
+  async getAllOrders() {
     const order = await User.find({ roles: "USERS" }).populate({
       path: "orders",
       model: "Order",
     });
+    return { order };
   }
+
   async createOrder(token, fullName, address, allPrice, products) {
     const { id } = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
 

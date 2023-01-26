@@ -1,7 +1,6 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Routes } from "react-router-dom";
-import PrivateRoute from "./MyRoutes/PrivateRotes";
 import store from "./redux/redux-store";
 import { AppRoutes } from "./routes/AppRoutes";
 import "./global.scss";
@@ -17,11 +16,7 @@ const App: React.FC = () => {
       <Provider store={store}>
         <SidebarProvider>
           <BrowserRouter>
-            <RouterCombiner
-              routes={AppRoutes}
-              PrivateRoute={PrivateRoute}
-              auth={auth}
-            />
+            <RouterCombiner routes={AppRoutes} auth={auth} />
           </BrowserRouter>
         </SidebarProvider>
       </Provider>

@@ -47,7 +47,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "nodemon --experimental-modules --es-module-specifier-resolution=node --no-warnings ./server/index.js",
-    "server:debug": "DEBUG=express:* nodemon --experimental-modules --es-module-specifier-resolution=node --no-warnings ./server/index.js"
+    "server:debug": "DEBUG=express:* nodemon --experimental-modules --es-module-specifier-resolution=node --no-warnings ./src/server/index.js"
   },
   "eslintConfig": {
     "extends": [
