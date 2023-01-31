@@ -1,5 +1,5 @@
 import React from "react";
-import "./HeaderStore.scss";
+import "./headerStore.scss";
 import { NavLink } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";

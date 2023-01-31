@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./Register.scss";
+import "./register.scss";
 import { useFormik } from "formik";
-import { Input } from "../../components/UI/Form/Input/Input";
+import { Input } from "../../components/ui/form/input/Input";
 import { NavLink, useNavigate } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";

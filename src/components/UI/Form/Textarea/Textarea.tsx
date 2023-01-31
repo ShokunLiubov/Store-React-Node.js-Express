@@ -1,5 +1,5 @@
 import React from "react";
-import "./Textarea.scss";
+import "./textarea.scss";
 import cn from "classnames";
 
 interface ITextarea {

@@ -1,8 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useFormik } from "formik";
-import "./HeaderStore.scss";
-import { Input } from "../../UI/Form/Input/Input";
+import "./headerStore.scss";
+import { Input } from "../../ui/form/input/Input";
 import UserAuth from "./UserAuth";
 
 export const HeaderStore: React.FC = () => {

@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "./Sidebar.module.scss";
+import styles from "./sidebar.module.scss";
 import cn from "classnames";
 import { NavLink } from "react-router-dom";
-import { useSidebar } from "../../../api/Context/sidebarContext";
+import { useSidebar } from "../../../context/sidebarContext";
 import { ISidebar } from "../../../shared/interfaces/sidebar.interface";
 
 interface ISidebarProps {

@@ -1,5 +1,5 @@
 import { orderAPI } from "../../api/api";
-import { orderService } from "../../api/services/OrderService";
+import { orderService } from "../../api/services/orderService";
 import { IOrder } from "../../shared/interfaces/order.interface";
 
 const SET_ORDERS: string = "SET-ORDERS";

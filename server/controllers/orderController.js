@@ -26,7 +26,7 @@ class orderController {
         allPrice,
         products,
       );
-      return res.json(orderData);
+      return res.status(201).json(orderData);
     } catch (e) {
       console.log(e);
     }

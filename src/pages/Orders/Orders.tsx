@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styles from "./Orders.module.scss";
+import styles from "./orders.module.scss";
 import cn from "classnames";
 import { compose } from "redux";
 import { connect } from "react-redux";
@@ -16,7 +16,7 @@ export const Orders: React.FC<IOrdersProps> = ({ ordersData, getOrders }) => {
     getOrders();
   }, []);
 
-  // console.log(ordersData);
+  console.log(ordersData);
 
   return (
     <div className={cn("containerAdminDark")}>

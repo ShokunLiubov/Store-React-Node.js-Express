@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import "./MenuStore.scss";
+import "./menuStore.scss";
 
 interface IItemMenu {
   title: string;

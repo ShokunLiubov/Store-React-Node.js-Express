@@ -1,5 +1,5 @@
 import { IUser } from "../../shared/interfaces/user.interface";
-import { authService } from "../../api/services/AuthService";
+import { authService } from "../../api/services/authService";
 
 const SET_AUTH = "auth/SET-AUTH-DATA";
 const OUT_AUTH = "auth/OUT-AUTH";

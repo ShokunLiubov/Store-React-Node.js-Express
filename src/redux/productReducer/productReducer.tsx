@@ -1,4 +1,4 @@
-import { productService } from "../../api/services/ProductService";
+import { productService } from "../../api/services/productService";
 import { IProduct } from "../../shared/interfaces/product.interface";
 
 const SET_PRODUCTS: string = "SET-PRODUCTS";

@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { compose } from "redux";
 import { getProducts } from "../../redux/productReducer/productReducer";
 import { IProduct } from "../../shared/interfaces/product.interface";
-import styles from "./StoreHome.module.scss";
+import styles from "./storeHome.module.scss";
 
 interface IStoreHome {
   productsData: Array<IProduct>;

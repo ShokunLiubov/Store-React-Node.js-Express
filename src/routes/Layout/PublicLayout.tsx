@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { HeaderStore } from "../../components/Store/HeaderStore/HeaderStore";
-import { MenuStore } from "../../components/Store/MenuStore/MenuStore";
+import { HeaderStore } from "../../components/store/headerStore/HeaderStore";
+import { MenuStore } from "../../components/store/menuStore/MenuStore";
 
 interface PublicLayoutProps {
   // children: any;

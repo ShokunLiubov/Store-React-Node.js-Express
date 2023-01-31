@@ -1,5 +1,5 @@
 import React from "react";
-import "./Radio.scss";
+import "./radio.scss";
 import cn from "classnames";
 
 interface IRadio {

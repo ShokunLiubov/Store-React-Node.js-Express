@@ -1,7 +1,7 @@
 import React from "react";
 import { Pages } from "../pages/PagesCombiner";
 import { IRoutes } from "../shared/interfaces/routes.interface";
-import { Layouts } from "./Layout/Layouts";
+import { Layouts } from "./layout/Layouts";
 
 export const AppRoutes: Array<IRoutes> = [
   {

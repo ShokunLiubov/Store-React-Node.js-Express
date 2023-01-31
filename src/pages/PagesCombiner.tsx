@@ -1,13 +1,13 @@
 import { useLocation } from "react-router-dom";
-import CreateProduct from "./CreateProduct/CreateProduct";
-import Customers from "./Customers/Customers";
-import Login from "./Login/Login";
-import MyCatalogs from "./My Catalogs/MyCatalogs";
-import { Notfound } from "./Notfound/Notfound";
-import Orders from "./Orders/Orders";
-import Register from "./Register/Register";
-import { Shipping } from "./Shipping/Shipping";
-import { Stats } from "./Stats/Stats";
+import CreateProduct from "./createProduct/CreateProduct";
+import Customers from "./customers/Customers";
+import Login from "./login/Login";
+import MyCatalogs from "./myCatalogs/MyCatalogs";
+import { Notfound } from "./notfound/Notfound";
+import Orders from "./orders/Orders";
+import Register from "./register/Register";
+import { Shipping } from "./shipping/Shipping";
+import { Stats } from "./stats/Stats";
 import StoreHome from "./StoreHome/StoreHome";
 
 export const Pages = {

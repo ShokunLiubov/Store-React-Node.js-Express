@@ -29,7 +29,7 @@ class productsController {
   async postProduct(req, res, next) {
     try {
       const body = req.body;
-      const product = new Products({
+      const product = await Products.create({
         image: "./../../image_product/" + req.file.filename,
         title: body.title,
         category: body.category,
@@ -44,7 +44,7 @@ class productsController {
         description: body.description,
       });
 
-      await product.save();
+      return res.status(201).json(product);
     } catch (e) {
       console.log(e);
       res.status(400).json({ message: "Create product  error" });

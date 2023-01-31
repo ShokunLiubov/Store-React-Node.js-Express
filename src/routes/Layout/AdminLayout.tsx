@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
-import { Header } from "../../components/Admin/Header/Header";
-import { Sidebar } from "../../components/Admin/Sidebar/Sidebar";
+import { Header } from "../../components/admin/header/Header";
+import { Sidebar } from "../../components/admin/sidebar/Sidebar";
 import { IHeader } from "../../shared/interfaces/header.interface";
 import { ISidebar } from "../../shared/interfaces/sidebar.interface";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { IUser } from "../../shared/interfaces/user.interface";
-import { Notfound } from "../../pages/Notfound/Notfound";
+import { Notfound } from "../../pages/notfound/Notfound";
 
 const HEADER_ADMIN_MENU: Array<IHeader> = [
   { path: "/setting", icon: "settings" },

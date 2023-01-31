@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { HeaderAuth } from "../../components/Auth/HeaderAuth/HeaderAuth";
+import { HeaderAuth } from "../../components/auth/headerAuth/HeaderAuth";
 
 export const AuthLayout: React.FC = () => {
   return (

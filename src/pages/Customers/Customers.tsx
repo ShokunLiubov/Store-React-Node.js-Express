@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styles from "./Customers.module.scss";
+import styles from "./customers.module.scss";
 import cn from "classnames";
 import { compose } from "redux";
 import { connect } from "react-redux";

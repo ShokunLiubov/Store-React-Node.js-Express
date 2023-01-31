@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import styles from "./HeaderAuth.module.scss";
+import styles from "./headerAuth.module.scss";
 import cn from "classnames";
 
 export const HeaderAuth: React.FC = () => {

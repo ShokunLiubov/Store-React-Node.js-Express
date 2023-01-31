@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Notification.module.scss";
+import styles from "./notification.module.scss";
 
 interface INotificationProps {}
 

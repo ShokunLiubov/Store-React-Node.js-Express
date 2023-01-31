@@ -4,7 +4,7 @@ import { BrowserRouter, Routes } from "react-router-dom";
 import store from "./redux/redux-store";
 import { AppRoutes } from "./routes/AppRoutes";
 import "./global.scss";
-import { SidebarProvider } from "./api/Context/sidebarContext";
+import { SidebarProvider } from "./context/sidebarContext";
 import { checkAuth } from "./redux/authReducer/authReducer";
 import RouterCombiner from "./routes/RouterCombiner";
 

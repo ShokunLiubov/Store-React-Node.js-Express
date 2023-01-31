@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Shipping.module.scss";
+import styles from "./shipping.module.scss";
 import cn from "classnames";
 
 export const Shipping: React.FC = () => {

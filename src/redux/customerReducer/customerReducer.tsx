@@ -1,4 +1,4 @@
-import { customerService } from "../../api/services/CustomerService";
+import { customerService } from "../../api/services/customerService";
 import { IUser } from "../../shared/interfaces/user.interface";
 
 const SET_CUSTOMERS: string = "SET-CUSTOMERS";

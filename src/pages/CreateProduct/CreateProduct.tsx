@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./CreateProduct.scss";
+import "./createProduct.scss";
 import cn from "classnames";
 import { useFormik } from "formik";
 import { compose } from "redux";
@@ -10,9 +10,9 @@ import {
 } from "../../redux/productReducer/productReducer";
 import { useLocation, useNavigate } from "react-router-dom";
 import { validateCreateProductForm } from "../../utils/validate/Validate";
-import { Input } from "../../components/UI/Form/Input/Input";
-import { Textarea } from "../../components/UI/Form/Textarea/Textarea";
-import { Radio } from "../../components/UI/Form/Radio/Radio";
+import { Input } from "../../components/ui/form/input/Input";
+import { Textarea } from "../../components/ui/form/textarea/Textarea";
+import { Radio } from "../../components/ui/form/radio/Radio";
 
 interface CreateProductProps {
   createNewProduct: any;

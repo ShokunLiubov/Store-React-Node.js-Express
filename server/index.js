@@ -42,6 +42,17 @@ app.use("/customer", routers.customerRouter);
 app.use(errorMiddleware);
 
 // function start app server
+const mongooseOptions = {
+  promiseLibrary: global.Promise,
+  poolSize: 50,
+  keepAlive: 30000,
+  connectTimeoutMS: 5000,
+  // reconnectTries: Number.MAX_ SAFE_INTEGER,
+  reconnectInterval: 5000,
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+};
 const start = async () => {
   try {
     await mongoose.connect(process.env.DB_URL);

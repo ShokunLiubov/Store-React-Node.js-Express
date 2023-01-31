@@ -7,13 +7,13 @@ export const $API = axios.create({
   baseURL: API_URL,
 });
 
-$API.interceptors.request.use((config) => {
+$API.interceptors.request.use((config: any) => {
   config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
   return config;
 });
 
 $API.interceptors.response.use(
-  (config) => {
+  (config: any) => {
     return config;
   },
   async (error) => {

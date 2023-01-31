@@ -1,16 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import styles from "./header.module.scss";
+import styles from "./Header.module.scss";
 import cn from "classnames";
 import { useSidebar } from "../../../context/sidebarContext";
-import { IHeader } from "../../../shared/interfaces/header.interface";
 
-interface IHeaderProps {
-  items: Array<IHeader>;
-  logo: string;
-}
-
-export const Header: React.FC<IHeaderProps> = ({ items, logo }) => {
+export const Header: React.FC = () => {
   const sidebar = useSidebar();
 
   return (
@@ -25,20 +19,24 @@ export const Header: React.FC<IHeaderProps> = ({ items, logo }) => {
           </span>
 
           <NavLink to='/' className={styles.logo}>
-            {logo}
+            Make up
           </NavLink>
         </div>
 
         <ul className={styles.rightNavbar}>
-          {items.map((item) => (
-            <li key={item.icon}>
-              <NavLink to={item.path}>
-                <span className={cn("material-symbols-outlined", styles.icon)}>
-                  {item.icon}
-                </span>
-              </NavLink>
-            </li>
-          ))}
+          <li>
+            <NavLink to='/'>Admin</NavLink>
+          </li>
+
+          <li>
+            <NavLink to='/auth/login'>Login</NavLink>
+          </li>
+          <li>
+            <NavLink to='/' className={styles.setting}>
+              Setting
+              <span className='material-symbols-outlined'>settings</span>
+            </NavLink>
+          </li>
         </ul>
       </div>
     </nav>

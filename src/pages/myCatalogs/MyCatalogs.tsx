@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./MyCatalogs.module.scss";
+import styles from "./myCatalogs.module.scss";
 import cn from "classnames";
 import { compose } from "redux";
 import { connect } from "react-redux";
