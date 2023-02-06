@@ -1,9 +1,10 @@
 import { $API } from "../api";
 import { AxiosResponse } from "axios";
 import { IProduct } from "../../shared/interfaces/product.interface";
+import { IProductBasket } from "../../shared/interfaces/productBasket.interface";
 
 export class productService {
-  static async getProduct(): Promise<AxiosResponse<IProduct[]>> {
+  static async getProducts(): Promise<AxiosResponse<IProduct[]>> {
     return $API.get<IProduct[]>("products");
   }
 
@@ -13,5 +14,9 @@ export class productService {
 
   static async createProduct(newProduct: IProduct): Promise<AxiosResponse> {
     return $API.post("products", newProduct);
+  }
+
+  static async getProduct(productId: string): Promise<IProductBasket> {
+    return $API.get(`products/${productId}`).then((response) => response.data);
   }
 }

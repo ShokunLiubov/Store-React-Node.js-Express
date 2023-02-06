@@ -39,6 +39,8 @@ const upload = multer({ storage: storage, filefilter: filefilter });
 
 router.get("/", controller.getProducts);
 
+router.get("/:id", controller.getProduct);
+
 router.delete("/:id", controller.deleteProduct);
 
 router.post("/", upload.single("image"), controller.postProduct);

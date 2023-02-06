@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import "./headerStore.scss";
 import { Input } from "../../ui/form/input/Input";
 import UserAuth from "./UserAuth";
+import { Basket } from "./Basket";
 
 export const HeaderStore: React.FC = () => {
   const formik = useFormik({
@@ -48,6 +49,7 @@ export const HeaderStore: React.FC = () => {
         </div>
         <div className='user'>
           <UserAuth />
+          <Basket />
           <form className='search' onSubmit={formik.handleSubmit}>
             <Input
               label={"search"}

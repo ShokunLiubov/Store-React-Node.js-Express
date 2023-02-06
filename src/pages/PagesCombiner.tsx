@@ -8,7 +8,7 @@ import Orders from "./orders/Orders";
 import Register from "./register/Register";
 import { Shipping } from "./shipping/Shipping";
 import { Stats } from "./stats/Stats";
-import StoreHome from "./StoreHome/StoreHome";
+import StoreHome from "./storeHome/StoreHome";
 
 export const Pages = {
   MyCatalogs: () => <MyCatalogs />,

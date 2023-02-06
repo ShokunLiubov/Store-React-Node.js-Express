@@ -36,7 +36,7 @@ export const setDeleteProduct = (productId: number) => ({
 
 export const getProducts = () => {
   return async (dispatch: any) => {
-    const response = await productService.getProduct();
+    const response = await productService.getProducts();
     dispatch(setProducts(response.data));
   };
 };

@@ -7,6 +7,7 @@ import "./global.scss";
 import { SidebarProvider } from "./context/sidebarContext";
 import { checkAuth } from "./redux/authReducer/authReducer";
 import RouterCombiner from "./routes/RouterCombiner";
+import { BasketModalProvider } from "./context/basketModalContext";
 
 const App: React.FC = () => {
   const auth: any =
@@ -15,9 +16,11 @@ const App: React.FC = () => {
     <div>
       <Provider store={store}>
         <SidebarProvider>
-          <BrowserRouter>
-            <RouterCombiner routes={AppRoutes} auth={auth} />
-          </BrowserRouter>
+          <BasketModalProvider>
+            <BrowserRouter>
+              <RouterCombiner routes={AppRoutes} auth={auth} />
+            </BrowserRouter>
+          </BasketModalProvider>
         </SidebarProvider>
       </Provider>
     </div>

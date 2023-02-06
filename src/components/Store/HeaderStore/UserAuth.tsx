@@ -18,7 +18,6 @@ export const UserAuth: React.FC<IUserAuth> = ({ user, isAuth, logout }) => {
       {!isAuth && (
         <NavLink to='auth/login'>
           <span className='material-symbols-outlined'>person</span>
-          Log in
         </NavLink>
       )}
       {isAuth && (
@@ -31,7 +30,6 @@ export const UserAuth: React.FC<IUserAuth> = ({ user, isAuth, logout }) => {
             }}
           >
             <span className='material-symbols-outlined'>logout</span>
-            Logout
           </span>
         </div>
       )}
