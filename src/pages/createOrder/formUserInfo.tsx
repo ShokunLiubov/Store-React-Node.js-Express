@@ -8,8 +8,9 @@ import {
   getUserInfo,
   createUserInfo,
   updateUserInfo,
-} from "../../redux/userReducer/userReducer";
+} from "../../redux/userReducer/userThunk";
 import { IUserInfo } from "../../shared/interfaces/userInfo.interface";
+import { AppStateType } from "../../redux/redux-store";
 
 interface IFormUserInfo {
   getUserInfo: () => void;
@@ -141,7 +142,7 @@ export const FormUserInfo: React.FC<IFormUserInfo> = ({
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     userInfo: state.user.userInfo,
   };

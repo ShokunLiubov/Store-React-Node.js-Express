@@ -3,9 +3,7 @@ import { Outlet } from "react-router-dom";
 import { HeaderStore } from "../../components/store/headerStore/HeaderStore";
 import { MenuStore } from "../../components/store/menuStore/MenuStore";
 
-interface PublicLayoutProps {
-  // children: any;
-}
+interface PublicLayoutProps {}
 
 export const PublicLayout: React.FC<PublicLayoutProps> = () => {
   return (

@@ -4,9 +4,10 @@ import { NavLink } from "react-router-dom";
 import { compose } from "redux";
 import { MenuStore } from "../../components/store/menuStore/MenuStore";
 import { useBasketModal } from "../../context/basketModalContext";
-import { addToBasket } from "../../redux/basketReducer/basketReducer";
-import { getProducts } from "../../redux/productReducer/productReducer";
-import { getUserInfo } from "../../redux/userReducer/userReducer";
+import { addToBasket } from "../../redux/basketReducer/basketThunk";
+import { getProducts } from "../../redux/productReducer/productThunk";
+import { AppStateType } from "../../redux/redux-store";
+import { getUserInfo } from "../../redux/userReducer/userThunk";
 import { IProduct } from "../../shared/interfaces/product.interface";
 import styles from "./storeHome.module.scss";
 
@@ -61,7 +62,7 @@ export const StoreHome: React.FC<any> = ({
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     productsData: state.product.productsData,
   };

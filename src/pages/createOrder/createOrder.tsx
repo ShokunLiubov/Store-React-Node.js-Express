@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { compose } from "redux";
 import ProductItem from "../../components/store/basketModal/productItem";
-import { createOrder } from "../../redux/orderReducer/orderReducer";
-import { getUserInfo } from "../../redux/userReducer/userReducer";
+import { createOrder } from "../../redux/orderReducer/orderThunk";
+import { AppStateType } from "../../redux/redux-store";
+import { getUserInfo } from "../../redux/userReducer/userThunk";
 import "./createOrder.scss";
 import FormUserInfo from "./formUserInfo";
 
@@ -61,7 +62,7 @@ export const CreateOrder: React.FC<ICreateOrder> = ({
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     basketSum: state.basket.basketSum,
   };

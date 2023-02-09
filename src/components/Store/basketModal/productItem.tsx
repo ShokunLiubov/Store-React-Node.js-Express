@@ -3,24 +3,24 @@ import "./basketModal.scss";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { useBasketModal } from "../../../context/basketModalContext";
-import { IProduct } from "../../../shared/interfaces/product.interface";
 import {
   addToBasket,
   removeCountProduct,
   deleteProductFromBasket,
-} from "../../../redux/basketReducer/basketReducer";
+} from "../../../redux/basketReducer/basketThunk";
+import { AppStateType } from "../../../redux/redux-store";
+import { IProductBasket } from "../../../shared/interfaces/productBasket.interface";
 
 interface IProductItem {
-  productsBasket: IProduct[];
-  basketSum: number;
-  addToBasket: (productId: string) => void;
-  removeCountProduct: (productId: string) => void;
-  deleteProductFromBasket: (productId: string) => void;
+  productsBasket: IProductBasket[];
+  // basketSum: number;
+  addToBasket: (productId: string) => Promise<void>;
+  removeCountProduct: (productId: string) => Promise<void>;
+  deleteProductFromBasket: (productId: string) => Promise<void>;
 }
 
 export const ProductItem: React.FC<IProductItem> = ({
   productsBasket,
-  basketSum,
   addToBasket,
   removeCountProduct,
   deleteProductFromBasket,
@@ -73,7 +73,7 @@ export const ProductItem: React.FC<IProductItem> = ({
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     productsBasket: state.basket.productsBasket,
     basketSum: state.basket.basketSum,

@@ -5,7 +5,7 @@ import cn from "classnames";
 interface IRadio {
   data: Array<IRadioData>;
   formik: any;
-  label: any;
+  label: string;
 }
 
 interface IRadioData {

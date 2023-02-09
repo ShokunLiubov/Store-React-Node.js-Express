@@ -5,7 +5,8 @@ import { Input } from "../../components/ui/form/input/Input";
 import { NavLink, useNavigate } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { registrationUser } from "../../redux/authReducer/authReducer";
+import { registrationUser } from "../../redux/authReducer/authThunk";
+import { AppStateType } from "../../redux/redux-store";
 
 interface RegisterProps {
   registrationUser: any;
@@ -67,7 +68,7 @@ export const Register: React.FC<RegisterProps> = ({ registrationUser }) => {
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     user: state.auth.user,
   };

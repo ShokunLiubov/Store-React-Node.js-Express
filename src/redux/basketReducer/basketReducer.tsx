@@ -1,33 +1,35 @@
-import { productService } from "../../api/services/productService";
+import { AnyAction } from "redux";
 import { IProductBasket } from "../../shared/interfaces/productBasket.interface";
+import * as actionType from "./basketActionType";
 
-const ADD_PRODUCT: string = "ADD-PRODUCT-IN-BASKET";
-const REMOVE_PRODUCT: string = "REMOVE-PRODUCT-IN-BASKET";
-const INCREMENT_COUNT_PRODUCT: string = "INCREMENT-COUNT-PRODUCT-IN-BASKET";
-const DECREMENT_COUNT_PRODUCT: string = "DECREMENT-COUNT-PRODUCT-IN-BASKET";
-const COUNTER_SUM_IN_BASKET: string = "COUNTER-SUM-IN-BASKET";
-const SET_EMPTY_BASKET: string = "SET-EMPTY-BASKET";
+interface IBasketState {
+  productsBasket: IProductBasket[];
+  basketSum: number;
+}
 
-let initialState: any = {
-  productsBasket: [] as IProductBasket[],
-  basketSum: 0 as number,
+let initialState: IBasketState = {
+  productsBasket: [],
+  basketSum: 0,
 };
 
-export const basketReducer = (state = initialState, action: any) => {
+export const basketReducer = (
+  state = initialState,
+  action: AnyAction,
+): IBasketState => {
   switch (action.type) {
-    case ADD_PRODUCT:
+    case actionType.ADD_PRODUCT:
       return {
         ...state,
         productsBasket: [...state.productsBasket, action.product],
       };
-    case REMOVE_PRODUCT:
+    case actionType.REMOVE_PRODUCT:
       return {
         ...state,
         productsBasket: state.productsBasket.filter(
           (product: IProductBasket) => product.id !== action.productId,
         ),
       };
-    case INCREMENT_COUNT_PRODUCT:
+    case actionType.INCREMENT_COUNT_PRODUCT:
       state.productsBasket.map((product: IProductBasket) => {
         if (product.id === action.productId) {
           product.count += 1;
@@ -38,7 +40,7 @@ export const basketReducer = (state = initialState, action: any) => {
         ...state,
         productsBasket: [...state.productsBasket],
       };
-    case DECREMENT_COUNT_PRODUCT:
+    case actionType.DECREMENT_COUNT_PRODUCT:
       state.productsBasket.map((product: IProductBasket) => {
         if (product.id === action.productId) {
           product.count -= 1;
@@ -49,7 +51,7 @@ export const basketReducer = (state = initialState, action: any) => {
         ...state,
         productsBasket: [...state.productsBasket],
       };
-    case COUNTER_SUM_IN_BASKET:
+    case actionType.COUNTER_SUM_IN_BASKET:
       let basketSum = 0;
       state.productsBasket.map((product: IProductBasket) => {
         return (basketSum = basketSum + product.price * product.count);
@@ -59,7 +61,7 @@ export const basketReducer = (state = initialState, action: any) => {
         ...state,
         basketSum: basketSum,
       };
-    case SET_EMPTY_BASKET:
+    case actionType.SET_EMPTY_BASKET:
       return {
         ...state,
         productsBasket: [],
@@ -68,76 +70,4 @@ export const basketReducer = (state = initialState, action: any) => {
     default:
       return state;
   }
-};
-
-export const addProduct = (product: IProductBasket) => ({
-  type: ADD_PRODUCT,
-  product,
-});
-
-export const removeFromBasket = (productId: string) => ({
-  type: REMOVE_PRODUCT,
-  productId,
-});
-
-export const incrementCount = (productId: string) => ({
-  type: INCREMENT_COUNT_PRODUCT,
-  productId,
-});
-
-export const decrementCount = (productId: string) => ({
-  type: DECREMENT_COUNT_PRODUCT,
-  productId,
-});
-
-export const counterSumBasket = () => ({
-  type: COUNTER_SUM_IN_BASKET,
-});
-
-export const setEmptyBasket = () => ({
-  type: SET_EMPTY_BASKET,
-});
-
-export const deleteProductFromBasket = (productId: string) => {
-  return async (dispatch: any) => {
-    dispatch(removeFromBasket(productId));
-    dispatch(counterSumBasket());
-  };
-};
-
-export const removeCountProduct = (productId: string) => {
-  return async (dispatch: any, getState: any) => {
-    const { basket } = getState();
-
-    const productInBasket = basket.productsBasket.find(
-      (productBasket: IProductBasket) => productBasket.id === productId,
-    );
-
-    if (productInBasket.count === 1) {
-      dispatch(removeFromBasket(productId));
-    } else {
-      dispatch(decrementCount(productId));
-    }
-    dispatch(counterSumBasket());
-  };
-};
-
-export const addToBasket = (productId: string) => {
-  return async (dispatch: any, getState: any) => {
-    const { basket } = getState();
-
-    let productFromDB = await productService.getProduct(productId);
-
-    const productInBasket = basket.productsBasket.find(
-      (productBasket: IProductBasket) => productBasket.id === productFromDB.id,
-    );
-
-    if (!productInBasket) {
-      dispatch(addProduct(productFromDB));
-    } else if (productInBasket.available > productInBasket.count) {
-      dispatch(incrementCount(productFromDB.id));
-    }
-
-    dispatch(counterSumBasket());
-  };
 };

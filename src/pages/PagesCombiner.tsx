@@ -1,4 +1,3 @@
-import { useLocation } from "react-router-dom";
 import CreateOrder from "./createOrder/createOrder";
 import CreateProduct from "./createProduct/CreateProduct";
 import Customers from "./customers/Customers";

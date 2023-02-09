@@ -3,8 +3,9 @@ import styles from "./customers.module.scss";
 import cn from "classnames";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { getUsers } from "../../redux/userReducer/userReducer";
+import { getUsers } from "../../redux/userReducer/userThunk";
 import { IUser } from "../../shared/interfaces/user.interface";
+import { AppStateType } from "../../redux/redux-store";
 
 interface IMyCatalogsProps {
   getUsers: () => void;
@@ -58,7 +59,7 @@ export const Customers: React.FC<IMyCatalogsProps> = ({
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     usersData: state.user.usersData,
   };

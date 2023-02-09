@@ -7,7 +7,7 @@ interface IInput {
   name: string;
   formik: any;
   placeholder?: string;
-  type?: any;
+  type?: string;
 }
 
 export const Input: React.FC<IInput> = ({

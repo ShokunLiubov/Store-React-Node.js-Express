@@ -6,9 +6,10 @@ import { connect } from "react-redux";
 import {
   getProducts,
   deleteProduct,
-} from "../../redux/productReducer/productReducer";
+} from "../../redux/productReducer/productThunk";
 import { IProduct } from "../../shared/interfaces/product.interface";
 import { NavLink } from "react-router-dom";
+import { AppStateType } from "../../redux/redux-store";
 
 interface IMyCatalogsProps {
   getProducts: () => void;
@@ -94,7 +95,7 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     productsData: state.product.productsData,
   };

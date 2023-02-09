@@ -4,6 +4,7 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { useBasketModal } from "../../../context/basketModalContext";
 import BasketModal from "../basketModal/BasketModal";
+import { AppStateType } from "../../../redux/redux-store";
 
 interface IBasket {}
 
@@ -20,7 +21,7 @@ export const Basket: React.FC<IBasket> = ({}) => {
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: AppStateType) => {
   return {};
 };
 

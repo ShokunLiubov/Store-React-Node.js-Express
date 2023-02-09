@@ -4,7 +4,7 @@ export interface IOrder {
   fullName: string;
   allPrice: number;
   status?: string;
-  products: [IProductBasket]
+  products: IProducts[]
   address: {
     city: string;
     street: string;
@@ -13,3 +13,7 @@ export interface IOrder {
   createdAt?: string
 }
 
+interface IProducts {
+  productId: string,
+  count: number
+}

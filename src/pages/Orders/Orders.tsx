@@ -3,8 +3,9 @@ import styles from "./orders.module.scss";
 import cn from "classnames";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { getOrders } from "../../redux/orderReducer/orderReducer";
+import { getOrders } from "../../redux/orderReducer/orderThunk";
 import { IOrder } from "../../shared/interfaces/order.interface";
+import { AppStateType } from "../../redux/redux-store";
 
 interface IOrdersProps {
   getOrders: () => void;
@@ -69,7 +70,7 @@ export const Orders: React.FC<IOrdersProps> = ({ ordersData, getOrders }) => {
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     ordersData: state.order.ordersData,
   };

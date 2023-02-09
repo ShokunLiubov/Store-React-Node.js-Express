@@ -2,8 +2,6 @@ import {
   applyMiddleware,
   combineReducers,
   legacy_createStore as createStore,
-  compose,
-  Reducer,
 } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { authReducer } from "./authReducer/authReducer";
@@ -13,15 +11,7 @@ import { productReducer } from "./productReducer/productReducer";
 import { userReducer } from "./userReducer/userReducer";
 import { basketReducer } from "./basketReducer/basketReducer";
 
-interface IReducers {
-  order: any;
-  product: any;
-  user: any;
-  auth: any;
-  basket: any;
-}
-
-const reducers: Reducer<IReducers> = combineReducers({
+const rootReducer = combineReducers({
   order: orderReducer,
   product: productReducer,
   user: userReducer,
@@ -29,8 +19,11 @@ const reducers: Reducer<IReducers> = combineReducers({
   basket: basketReducer,
 });
 
+type RootReducerType = typeof rootReducer;
+export type AppStateType = ReturnType<RootReducerType>
+
 const store = createStore(
-  reducers,
+  rootReducer,
   composeWithDevTools(applyMiddleware(thunkMiddleware)),
 );
 

@@ -3,27 +3,22 @@ import { connect } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { compose } from "redux";
 import { Preloader } from "../components/common/Preloader";
-import { checkAuth } from "../redux/authReducer/authReducer";
+import { checkAuth } from "../redux/authReducer/authThunk";
+import { AppStateType } from "../redux/redux-store";
 import { IRoutes } from "../shared/interfaces/routes.interface";
 import { IUser } from "../shared/interfaces/user.interface";
 
 interface IRouterCombiner {
   routes: Array<IRoutes>;
-  auth?: any;
-  checkAuth: any;
+  checkAuth: () => void;
   isLoading: boolean;
-  user: IUser;
 }
 
 export const RouterCombiner: React.FC<IRouterCombiner> = ({
   routes,
   checkAuth,
   isLoading,
-  user,
-  auth /* Its Only Use For Now,I Handle It With ReduxStore */,
 }) => {
-  // const role = user.roles[0];
-
   useEffect(() => {
     if (localStorage.getItem("token")) {
       checkAuth();
@@ -38,7 +33,7 @@ export const RouterCombiner: React.FC<IRouterCombiner> = ({
   return <Routes>{RoutesMap}</Routes>;
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     user: state.auth.user,
     isLoading: state.auth.isLoading,

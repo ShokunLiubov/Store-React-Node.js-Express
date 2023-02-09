@@ -4,7 +4,8 @@ import { NavLink } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { IUser } from "../../../shared/interfaces/user.interface";
-import { logout } from "../../../redux/authReducer/authReducer";
+import { logout } from "../../../redux/authReducer/authThunk";
+import { AppStateType } from "../../../redux/redux-store";
 
 interface IUserAuth {
   user: IUser;
@@ -37,7 +38,7 @@ export const UserAuth: React.FC<IUserAuth> = ({ user, isAuth, logout }) => {
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     user: state.auth.user,
     isAuth: state.auth.isAuth,

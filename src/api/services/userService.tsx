@@ -10,7 +10,7 @@ export class userService {
   }
 
   static async getUserInfoForDelivery(): Promise<AxiosResponse<IUserInfo>> {
-    return $API.get<any>("users/info");
+    return $API.get<IUserInfo>("users/info");
   }
 
   static async createUserInfoForDelivery(

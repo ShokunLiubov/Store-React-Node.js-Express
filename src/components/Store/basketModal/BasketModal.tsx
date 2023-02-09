@@ -3,12 +3,13 @@ import "./basketModal.scss";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { useBasketModal } from "../../../context/basketModalContext";
-import { IProduct } from "../../../shared/interfaces/product.interface";
 import { NavLink } from "react-router-dom";
 import ProductItem from "./productItem";
+import { AppStateType } from "../../../redux/redux-store";
+import { IProductBasket } from "../../../shared/interfaces/productBasket.interface";
 
 interface IBasketModal {
-  productsBasket: IProduct[];
+  productsBasket: IProductBasket[];
   basketSum: number;
 }
 
@@ -61,7 +62,7 @@ export const BasketModal: React.FC<IBasketModal> = ({
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     productsBasket: state.basket.productsBasket,
     basketSum: state.basket.basketSum,

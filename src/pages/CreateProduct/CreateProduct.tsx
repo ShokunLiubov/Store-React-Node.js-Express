@@ -7,15 +7,16 @@ import { connect } from "react-redux";
 import {
   createNewProduct,
   getProducts,
-} from "../../redux/productReducer/productReducer";
+} from "../../redux/productReducer/productThunk";
 import { useLocation, useNavigate } from "react-router-dom";
 import { validateCreateProductForm } from "../../utils/validate/Validate";
 import { Input } from "../../components/ui/form/input/Input";
 import { Textarea } from "../../components/ui/form/textarea/Textarea";
 import { Radio } from "../../components/ui/form/radio/Radio";
+import { AppStateType } from "../../redux/redux-store";
 
 interface CreateProductProps {
-  createNewProduct: any;
+  createNewProduct: (formData: any) => void;
 }
 
 export const CreateProduct: React.FC<CreateProductProps> = ({
@@ -127,7 +128,7 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     productsData: state.product.productsData,
   };

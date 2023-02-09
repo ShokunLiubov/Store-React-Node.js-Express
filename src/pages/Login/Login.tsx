@@ -5,10 +5,12 @@ import { Input } from "../../components/ui/form/input/Input";
 import { NavLink, useNavigate } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { login } from "../../redux/authReducer/authReducer";
+import { login } from "../../redux/authReducer/authThunk";
+import { AppStateType } from "../../redux/redux-store";
+import { IAuth } from "../../shared/interfaces/auth.interface";
 
 interface LoginProps {
-  login: any;
+  login: (values: IAuth) => void;
 }
 
 export const Login: React.FC<LoginProps> = ({ login }) => {
@@ -19,7 +21,7 @@ export const Login: React.FC<LoginProps> = ({ login }) => {
       username: "",
       password: "",
     },
-    onSubmit: (values) => {
+    onSubmit: (values: IAuth) => {
       login(values);
       navigate("/make-up");
     },
@@ -66,7 +68,7 @@ export const Login: React.FC<LoginProps> = ({ login }) => {
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     user: state.auth.user,
   };

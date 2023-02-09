@@ -8,6 +8,7 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { IUser } from "../../shared/interfaces/user.interface";
 import { Notfound } from "../../pages/notfound/Notfound";
+import { AppStateType } from "../../redux/redux-store";
 
 const HEADER_ADMIN_MENU: Array<IHeader> = [
   { path: "/setting", icon: "settings" },
@@ -57,7 +58,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     user: state.auth.user,
     isLoading: state.auth.isLoading,
