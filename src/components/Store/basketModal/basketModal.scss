@@ -38,6 +38,9 @@
       right: 0;
     }
   }
+  .productPrice {
+    width: 50px;
+  }
   .line {
     display: block;
     margin: 0 0 24px;
@@ -60,11 +63,14 @@
     padding: 4px;
     align-items: center;
     margin-top: 20px;
+    padding: 0px !important;
     span {
+      cursor: pointer;
       text-decoration: underline;
       cursor: pointer;
     }
     button {
+      cursor: pointer;
       font-size: 12px;
       padding: 10px 60px;
     }
@@ -78,11 +84,16 @@
     display: flex;
     align-items: center;
     padding: 20px 0px;
-    img {
+    .productImg {
       width: 160px;
-      height: 120px;
-      object-fit: cover;
+      height: 160px;
+      img {
+        max-width: 150px;
+        max-height: 160px;
+        object-fit: cover;
+      }
     }
+
     .product_info {
       width: 100%;
       padding: 0px 30px;

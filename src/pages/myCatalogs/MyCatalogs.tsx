@@ -21,15 +21,12 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
   productsData,
   deleteProduct,
 }) => {
-  const [reloadProducts, setReloadProducts] = useState(false);
-
   useEffect(() => {
     getProducts();
-  }, [reloadProducts]);
+  }, []);
 
   const handleDeleteProduct = (productId: number) => {
     deleteProduct(productId);
-    setReloadProducts(!reloadProducts);
   };
   return (
     <div className={cn("containerAdminWhite", styles.catalogs)}>
@@ -60,12 +57,12 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
                 </td>
                 <td>
                   <div className={styles.titleProduct}>
-                    <h2>{product.title}</h2>
+                    <span>{product.title}</span>
                   </div>
                 </td>
                 <td>
                   <div className={styles.titleCategory}>
-                    <h1>{product.category}</h1>
+                    <span>{product.category}</span>
                   </div>
                 </td>
                 <td className={cn("numberDark")}>{product.count}</td>

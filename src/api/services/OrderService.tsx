@@ -7,4 +7,8 @@ export class orderService {
   static async getOrders(): Promise<AxiosResponse<IOrder[]>> {
     return $API.get<IOrder[]>("orders");
   }
+
+  static async createOrder(order: IOrder): Promise<AxiosResponse<IOrder[]>> {
+    return $API.post<IOrder[]>("orders", order);
+  }
 }

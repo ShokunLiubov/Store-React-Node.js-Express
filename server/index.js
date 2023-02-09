@@ -36,7 +36,7 @@ app.use(
 app.use("/auth", routers.authRouter);
 app.use("/products", routers.productsRouter);
 app.use("/orders", routers.orderRouter);
-app.use("/customer", routers.customerRouter);
+app.use("/users", routers.userRouter);
 
 //Error middleware
 app.use(errorMiddleware);

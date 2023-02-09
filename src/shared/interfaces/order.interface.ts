@@ -1,7 +1,15 @@
+import { IProductBasket } from './productBasket.interface';
 export interface IOrder {
-  id: number;
+  _id?: number;
   fullName: string;
-  address: string;
   allPrice: number;
-  status: string;
+  status?: string;
+  products: [IProductBasket]
+  address: {
+    city: string;
+    street: string;
+    postOffice: string;
+  };
+  createdAt?: string
 }
+

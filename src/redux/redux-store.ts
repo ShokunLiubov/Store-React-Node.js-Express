@@ -8,23 +8,23 @@ import {
 import thunkMiddleware from "redux-thunk";
 import { authReducer } from "./authReducer/authReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { ordersReducer } from "./ordersReducer/ordersReducer";
+import { orderReducer } from "./orderReducer/orderReducer";
 import { productReducer } from "./productReducer/productReducer";
-import { customerReducer } from "./customerReducer/customerReducer";
+import { userReducer } from "./userReducer/userReducer";
 import { basketReducer } from "./basketReducer/basketReducer";
 
 interface IReducers {
-  orders: any;
+  order: any;
   product: any;
-  customer: any;
+  user: any;
   auth: any;
   basket: any;
 }
 
 const reducers: Reducer<IReducers> = combineReducers({
-  orders: ordersReducer,
+  order: orderReducer,
   product: productReducer,
-  customer: customerReducer,
+  user: userReducer,
   auth: authReducer,
   basket: basketReducer,
 });

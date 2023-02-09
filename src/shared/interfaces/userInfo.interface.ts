@@ -1,6 +1,11 @@
 export interface IUserInfo {
-  _id: string;
+  _id?: string;
+  fullName: string;
   email: string;
   phone: number | string;
-  city: string;
+  address: {
+    city: string;
+    street: string;
+    postOffice: string;
+  };
 }

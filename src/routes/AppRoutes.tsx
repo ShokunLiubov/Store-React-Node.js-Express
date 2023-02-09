@@ -57,6 +57,11 @@ export const AppRoutes: Array<IRoutes> = [
     Layout: Layouts.PublicLayout,
   },
   {
+    path: "/checkout",
+    Component: Pages.CreateOrder,
+    Layout: Layouts.PublicLayout,
+  },
+  {
     path: "*",
     Component: Pages.Notfound,
     Layout: Layouts.AuthLayout,

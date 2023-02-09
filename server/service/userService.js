@@ -2,7 +2,7 @@ import User from "../models/User";
 import UserInfo from "../models/UserInfo";
 import Role from "../models/Role";
 import tokenService from "./tokenService";
-import UserDto from "../DTO/userDto";
+import UserDto from "../dto/userDto";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import AuthError from "../exception/authError";
@@ -95,16 +95,21 @@ class UserService {
     return users;
   }
 
-  async postCustomerInfo(email, phone, city, token) {
+  async postUserInfo(fullName, email, phone, address, token) {
     if (!token) {
       return AuthError.UnauthorizedError();
     }
     const { id } = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
 
     const userInfo = await UserInfo.create({
+      fullName,
       email,
       phone,
-      city,
+      address: {
+        city: address.city,
+        street: address.street,
+        postOffice: address.postOffice,
+      },
     });
     const userId = { _id: id };
     const userInfoId = { $set: { userInfo: userInfo._id } };

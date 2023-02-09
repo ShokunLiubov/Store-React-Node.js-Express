@@ -28,7 +28,6 @@ export const MenuStore: React.FC = () => {
           </li>
         ))}
       </ul>
-      <img src='./../../shopImg/bcgimg.jpeg' />
     </nav>
   );
 };

@@ -36,14 +36,9 @@ $API.interceptors.response.use(
   },
 );
 
-export const orderAPI = {
-  getOrders() {
-    return $API.get("orders").then((response) => response.data);
-  },
-};
 
-export const customerAPI = {
-  getCustomer() {
-    return $API.get("customers").then((response) => response.data);
-  },
-};
+// export const customerAPI = {
+//   getCustomer() {
+//     return $API.get("users").then((response) => response.data);
+//   },
+// };

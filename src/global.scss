@@ -63,7 +63,8 @@ body {
   button,
   a,
   div {
-    color: #000;
+    color: #333;
+    font-weight: 400;
   }
   button {
     background: #792c9b;
@@ -82,6 +83,13 @@ body {
   }
   .storeContainer {
     padding: 0px 40px;
+  }
+
+  .label {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin: 20px 0 48px;
   }
 }
 
@@ -135,11 +143,23 @@ ul {
 }
 
 h1 {
-  font-size: 12px;
+  font-size: 38px;
 }
 
 h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 22px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
   font-size: 16px;
+}
+h6 {
+  font-size: 12px;
 }
 
 .center {

@@ -6,6 +6,7 @@ const REMOVE_PRODUCT: string = "REMOVE-PRODUCT-IN-BASKET";
 const INCREMENT_COUNT_PRODUCT: string = "INCREMENT-COUNT-PRODUCT-IN-BASKET";
 const DECREMENT_COUNT_PRODUCT: string = "DECREMENT-COUNT-PRODUCT-IN-BASKET";
 const COUNTER_SUM_IN_BASKET: string = "COUNTER-SUM-IN-BASKET";
+const SET_EMPTY_BASKET: string = "SET-EMPTY-BASKET";
 
 let initialState: any = {
   productsBasket: [] as IProductBasket[],
@@ -58,7 +59,12 @@ export const basketReducer = (state = initialState, action: any) => {
         ...state,
         basketSum: basketSum,
       };
-
+    case SET_EMPTY_BASKET:
+      return {
+        ...state,
+        productsBasket: [],
+        basketSum: 0,
+      };
     default:
       return state;
   }
@@ -86,6 +92,10 @@ export const decrementCount = (productId: string) => ({
 
 export const counterSumBasket = () => ({
   type: COUNTER_SUM_IN_BASKET,
+});
+
+export const setEmptyBasket = () => ({
+  type: SET_EMPTY_BASKET,
 });
 
 export const deleteProductFromBasket = (productId: string) => {

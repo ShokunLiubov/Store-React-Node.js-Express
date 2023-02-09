@@ -16,8 +16,12 @@ class orderService {
 
     const order = await Order.create({
       fullName,
-      address,
-      allPrice,
+      address: {
+        city: address.city,
+        street: address.street,
+        postOffice: address.postOffice,
+      },
+      // allPrice,
       products,
       status: "Availability is check",
     });
@@ -29,6 +33,7 @@ class orderService {
       },
       { new: true, useFindAndModify: false },
     );
+
     return { order, userUpdate };
   }
 }

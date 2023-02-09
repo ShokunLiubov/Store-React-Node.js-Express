@@ -1,5 +1,6 @@
 import { productService } from "../../api/services/productService";
 import { IProduct } from "../../shared/interfaces/product.interface";
+import { addProduct } from "../basketReducer/basketReducer";
 
 const SET_PRODUCTS: string = "SET-PRODUCTS";
 const DELETE_PRODUCT: string = "DELETE-PRODUCT";
@@ -44,11 +45,14 @@ export const getProducts = () => {
 export const deleteProduct = (productId: string) => {
   return async (dispatch: any) => {
     const response = await productService.deleteProduct(productId);
+    dispatch(getProducts());
   };
 };
 
 export const createNewProduct = (newProduct: IProduct) => {
   return async (dispatch: any) => {
     const response = await productService.createProduct(newProduct);
+    dispatch(getProducts());
+    console.log(222);
   };
 };

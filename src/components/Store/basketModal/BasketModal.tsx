@@ -4,26 +4,17 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { useBasketModal } from "../../../context/basketModalContext";
 import { IProduct } from "../../../shared/interfaces/product.interface";
-import {
-  addToBasket,
-  removeCountProduct,
-  deleteProductFromBasket,
-} from "../../../redux/basketReducer/basketReducer";
+import { NavLink } from "react-router-dom";
+import ProductItem from "./productItem";
 
 interface IBasketModal {
   productsBasket: IProduct[];
   basketSum: number;
-  addToBasket: any;
-  removeCountProduct: any;
-  deleteProductFromBasket: any;
 }
 
 export const BasketModal: React.FC<IBasketModal> = ({
   productsBasket,
   basketSum,
-  addToBasket,
-  removeCountProduct,
-  deleteProductFromBasket,
 }) => {
   const basket = useBasketModal();
 
@@ -43,54 +34,7 @@ export const BasketModal: React.FC<IBasketModal> = ({
           <div className='line'></div>
 
           <div className='productItems'>
-            {productsBasket.length
-              ? productsBasket.map((product: any) => (
-                  <div key={product.id}>
-                    <div className='item'>
-                      <div>
-                        <img src={product.image} />
-                      </div>
-
-                      <div className='product_info'>
-                        <div className='info_option'>
-                          <p className='title'>{product.title}</p>
-                          <p className='classification'>
-                            {product.classification}
-                          </p>
-                          <div className='counter'>
-                            <span
-                              className='material-symbols-outlined'
-                              onClick={() => removeCountProduct(product.id)}
-                            >
-                              remove
-                            </span>
-                            <p className='count'>{product.count}</p>
-                            <span
-                              className='material-symbols-outlined'
-                              onClick={() => addToBasket(product.id)}
-                            >
-                              add
-                            </span>
-                            <span
-                              className='material-symbols-outlined'
-                              onClick={() =>
-                                deleteProductFromBasket(product.id)
-                              }
-                            >
-                              close
-                            </span>
-                            {product.count === product.available && (
-                              <span>Available 0</span>
-                            )}
-                          </div>
-                        </div>
-                        <p>{product.price} $</p>
-                      </div>
-                    </div>
-                    <div className='line'></div>
-                  </div>
-                ))
-              : "Basket is empty"}
+            {productsBasket.length ? <ProductItem /> : "Basket is empty"}
           </div>
 
           <div className='totalPrice'>
@@ -101,7 +45,15 @@ export const BasketModal: React.FC<IBasketModal> = ({
           <div className='line'></div>
           <div className='bottom'>
             <span onClick={basket.toggleBasketModal}>Continue Shopping</span>
-            <button>Checkout</button>
+            {productsBasket.length ? (
+              <NavLink to={"/checkout"}>
+                <button onClick={basket.toggleBasketModal}>Checkout</button>
+              </NavLink>
+            ) : (
+              <button type='button' disabled>
+                Checkout
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -116,10 +68,4 @@ const mapStateToProps = (state: any) => {
   };
 };
 
-export default compose(
-  connect(mapStateToProps, {
-    addToBasket,
-    removeCountProduct,
-    deleteProductFromBasket,
-  }),
-)(BasketModal);
+export default compose(connect(mapStateToProps, {}))(BasketModal);

@@ -3,20 +3,20 @@ import styles from "./customers.module.scss";
 import cn from "classnames";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { getCustomers } from "../../redux/customerReducer/customerReducer";
+import { getUsers } from "../../redux/userReducer/userReducer";
 import { IUser } from "../../shared/interfaces/user.interface";
 
 interface IMyCatalogsProps {
-  getCustomers: () => void;
-  customersData: Array<IUser>;
+  getUsers: () => void;
+  usersData: Array<IUser>;
 }
 
 export const Customers: React.FC<IMyCatalogsProps> = ({
-  getCustomers,
-  customersData,
+  getUsers,
+  usersData,
 }) => {
   useEffect(() => {
-    getCustomers();
+    getUsers();
   }, []);
   return (
     <div className={cn("containerAdminDark")}>
@@ -30,8 +30,8 @@ export const Customers: React.FC<IMyCatalogsProps> = ({
           </tr>
         </thead>
         <tbody>
-          {customersData.length > 0 &&
-            customersData.map((customer: any) => (
+          {usersData.length &&
+            usersData.map((customer: any) => (
               <tr key={customer._id}>
                 <td>{customer.username}</td>
                 {/* {console.log(customer.userInfo.phone)} */}
@@ -60,8 +60,8 @@ export const Customers: React.FC<IMyCatalogsProps> = ({
 
 const mapStateToProps = (state: any) => {
   return {
-    customersData: state.customer.customersData,
+    usersData: state.user.usersData,
   };
 };
 
-export default compose(connect(mapStateToProps, { getCustomers }))(Customers);
+export default compose(connect(mapStateToProps, { getUsers }))(Customers);
