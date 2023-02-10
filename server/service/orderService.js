@@ -10,32 +10,6 @@ class orderService {
     });
     return { order };
   }
-
-  async createOrder(token, fullName, address, allPrice, products) {
-    const { id } = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
-
-    const order = await Order.create({
-      fullName,
-      address: {
-        city: address.city,
-        street: address.street,
-        postOffice: address.postOffice,
-      },
-      // allPrice,
-      products,
-      status: "Availability is check",
-    });
-    const userId = { _id: id };
-    const userUpdate = await User.findByIdAndUpdate(
-      userId,
-      {
-        $push: { orders: order._id },
-      },
-      { new: true, useFindAndModify: false },
-    );
-
-    return { order, userUpdate };
-  }
 }
 
 export default new orderService();
