@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import secret from "../config";
+import AuthError from "../exception/authError";
 
 export default function (req, res, next) {
   if (req.method === "OPTIONS") {
@@ -10,13 +10,15 @@ export default function (req, res, next) {
     // access if user login
     const token = req.headers.authorization.split(" ")[1];
     if (!token) {
-      return res.status(403).json({ message: "User not authorized" });
+      return AuthError.UnauthorizedError();
     }
-    const decodedData = jwt.verify(token, secret);
+    const decodedData = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+    const { id } = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
     req.user = decodedData;
+    req.id = id
     next();
   } catch (e) {
     console.log(e);
-    return res.status(403).json({ message: "User not authorized" });
+    return AuthError.UnauthorizedError();
   }
 }

@@ -7,8 +7,7 @@ import UserInfo from "../models/UserInfo";
 class userController {
   async getUserInfo(req, res, next) {
     try {
-      const token = req.headers.authorization.split(" ")[1];
-      const { id } = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+      const { id } = req.id
       const user = await User.findById({ _id: id }).populate({
         path: "userInfo",
         model: "UserInfo",
@@ -22,8 +21,7 @@ class userController {
 
   async updateUserInfo(req, res, next) {
     try {
-      const token = req.headers.authorization.split(" ")[1];
-      const { id } = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+      const { id } = req.id
       const user = await User.findById({ _id: id }).populate({
         path: "userInfo",
         model: "UserInfo",
@@ -44,7 +42,6 @@ class userController {
           },
         },
       );
-      console.log(updateUserInfo);
 
       return res.json(updateUserInfo);
     } catch (e) {
@@ -55,13 +52,13 @@ class userController {
   async postUserInfo(req, res, next) {
     try {
       const { fullName, email, phone, address } = req.body;
-      const token = req.headers.authorization.split(" ")[1];
+      const { id } = req.id
       const userData = await userService.postUserInfo(
         fullName,
         email,
         phone,
         address,
-        token,
+        id,
       );
       return res.json(userData);
     } catch (e) {

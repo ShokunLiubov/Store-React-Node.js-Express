@@ -95,11 +95,7 @@ class UserService {
     return users;
   }
 
-  async postUserInfo(fullName, email, phone, address, token) {
-    if (!token) {
-      return AuthError.UnauthorizedError();
-    }
-    const { id } = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+  async postUserInfo(fullName, email, phone, address, id) {
 
     const userInfo = await UserInfo.create({
       fullName,

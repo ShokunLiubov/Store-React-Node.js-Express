@@ -8,7 +8,7 @@ export default class AuthError extends Error {
   }
 
   static UnauthorizedError() {
-    return new AuthError(401, "Пользователь не авторизован");
+    return new AuthError(401, "User not authorized");
   }
   static BadRequest(message, errors = []) {
     return new AuthError(400, message, errors);

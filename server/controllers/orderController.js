@@ -15,14 +15,9 @@ class orderController {
     }
   }
 
-  async postOrders(req, res, next) {
+  async createOrders(req, res, next) {
     try {
-      // console.log(req.body)
-      const token = req.headers.authorization.split(" ")[1];
-      if (!token) {
-        throw AuthError.UnauthorizedError();
-      }
-      const { id } = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+
       const { fullName, address, allPrice, products } = req.body;
 
       const order = await Order.create({
@@ -37,7 +32,7 @@ class orderController {
         status: "Availability is check",
       });
 
-      const updateAvailable = products.map(async (product) => {
+      products.map(async (product) => {
 
         return await Products.findByIdAndUpdate(
           { _id: product.productId },
@@ -48,7 +43,7 @@ class orderController {
           }
         );
       })
-      const userId = { _id: id };
+      const userId = { _id: req.id };
 
       const userUpdate = await User.findByIdAndUpdate(
         userId,
