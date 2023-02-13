@@ -29,17 +29,17 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
   const formik = useFormik({
     initialValues: {
       image: "",
-      title: "",
-      category: "",
-      classification: "",
-      price: "",
-      count: "",
-      gender: "",
-      volume: "",
-      type_of_aroma: "",
-      country_of_TM: "",
-      made_in: "",
-      description: "",
+      title: "hello",
+      category: "hello",
+      classification: "hello",
+      price: "45",
+      count: "45",
+      gender: "Woman",
+      volume: "45",
+      type_of_aroma: "hello",
+      country_of_TM: "hello",
+      made_in: "hello",
+      description: "hello",
     },
     onSubmit: (values: any) => {
       const formData = new FormData();

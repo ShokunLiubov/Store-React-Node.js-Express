@@ -1,11 +1,8 @@
 import Router from "express";
-const router = new Router();
 import controller from "../controllers/authController";
 import { check } from "express-validator";
-import authMiddleware from "../middleware/authMiddleware";
-import roleMiddleware from "../middleware/roleMiddleware";
 
-// create router
+const router = new Router();
 router.post(
   "/registration",
   [
@@ -17,20 +14,8 @@ router.post(
   ],
   controller.registration,
 );
-
 router.post("/login", controller.login);
-
 router.post("/logout", controller.logout);
-
-// router.get("/login", controller.setLogin);
-
 router.get("/refresh", controller.refresh);
-
-router.get(
-  "/users",
-  // Middleware gives access only "ADMIN"
-  roleMiddleware(["ADMIN"]),
-  controller.getUsers,
-);
 
 export { router as authRouter };

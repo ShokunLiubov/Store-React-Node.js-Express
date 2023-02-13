@@ -17,6 +17,7 @@ app.use(
     optionSuccessStatus: 200,
   }),
 );
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -43,19 +44,14 @@ app.use(errorMiddleware);
 
 // function start app server
 const mongooseOptions = {
-  promiseLibrary: global.Promise,
-  poolSize: 50,
-  keepAlive: 30000,
-  connectTimeoutMS: 5000,
-  // reconnectTries: Number.MAX_ SAFE_INTEGER,
-  reconnectInterval: 5000,
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useCreateIndex: true,
+  autoIndex: false,
+  maxPoolSize: 10,
+  serverSelectionTimeoutMS: 5000,
 };
+
 const start = async () => {
   try {
-    await mongoose.connect(process.env.DB_URL);
+    await mongoose.connect(process.env.DB_URL, mongooseOptions);
 
     app.listen(PORT, () => console.log(`server started on port ${PORT}`));
   } catch (e) {

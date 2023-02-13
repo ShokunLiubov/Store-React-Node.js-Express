@@ -6,7 +6,7 @@ import { IUserInfo } from "../../shared/interfaces/userInfo.interface";
 
 export class userService {
   static async fetchUsers(): Promise<AxiosResponse<IUser[]>> {
-    return $API.get<IUser[]>("auth/users");
+    return $API.get<IUser[]>("users");
   }
 
   static async getUserInfoForDelivery(): Promise<AxiosResponse<IUserInfo>> {

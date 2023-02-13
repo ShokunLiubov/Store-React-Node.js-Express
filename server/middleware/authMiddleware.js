@@ -7,6 +7,7 @@ export default function (req, res, next) {
   }
 
   try {
+    console.log(req.body);
     // access if user login
     const token = req.headers.authorization.split(" ")[1];
     if (!token) {
@@ -14,8 +15,10 @@ export default function (req, res, next) {
     }
     const decodedData = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
     const { id } = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+
     req.user = decodedData;
     req.id = id
+
     next();
   } catch (e) {
     console.log(e);
