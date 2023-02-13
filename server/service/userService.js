@@ -4,18 +4,17 @@ import Role from "../models/Role";
 import tokenService from "./tokenService";
 import UserDto from "../dto/userDto";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import AuthError from "../exception/authError";
 
 class UserService {
+
   async registration(username, password) {
-    // Check duble candidate
+
     const candidate = await User.findOne({ username });
 
     if (candidate) {
       throw AuthError.BadRequest("A user with the same name already exists");
     }
-    // Check duble candidate
 
     // Create user and tokens
     const hashPassword = bcrypt.hashSync(password, 7);
@@ -34,10 +33,10 @@ class UserService {
       ...tokens,
       user: userDto,
     };
-    // res.json({ message: "User successfully registered" });
   }
 
   async login(username, password) {
+
     const user = await User.findOne({ username });
 
     // Check User presence
@@ -55,6 +54,7 @@ class UserService {
     const userDto = new UserDto(user); // id, username
     const tokens = tokenService.generateTokens({ ...userDto });
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
     return {
       ...tokens,
       user: userDto,
@@ -62,16 +62,20 @@ class UserService {
   }
 
   async logout(refreshToken) {
+
     const token = await tokenService.removeToken(refreshToken);
+
     return token;
   }
 
   async refresh(refreshToken) {
+
     if (!refreshToken) {
       throw AuthError.UnauthorizedError();
     }
     const userData = tokenService.validateRefreshToken(refreshToken);
     const tokenFromDb = await tokenService.findToken(refreshToken);
+
     if (!userData || !tokenFromDb) {
       throw AuthError.UnauthorizedError();
     }
@@ -80,22 +84,16 @@ class UserService {
     const userDto = new UserDto(user); // id, username
     const tokens = tokenService.generateTokens({ ...userDto });
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
     return {
       ...tokens,
       user: userDto,
     };
   }
 
-  async getAllUsers() {
-    const users = await User.find({ roles: "USERS" }).populate({
-      path: "userInfo",
-      model: "UserInfo",
-    });
+  async postUserInfo(payload, id) {
 
-    return users;
-  }
-
-  async postUserInfo(fullName, email, phone, address, id) {
+    const { fullName, email, phone, address } = payload
 
     const userInfo = await UserInfo.create({
       fullName,
@@ -107,11 +105,33 @@ class UserService {
         postOffice: address.postOffice,
       },
     });
+
     const userId = { _id: id };
     const userInfoId = { $set: { userInfo: userInfo._id } };
     const userUpdate = await User.updateOne(userId, userInfoId);
 
     return { userInfo, userUpdate };
+  }
+
+  async updateUserInfo(payload, user) {
+
+    const { fullName, email, phone, address } = payload
+
+    const updateUserInfo = await UserInfo.findByIdAndUpdate(
+      user.userInfo._id,
+      {
+        fullName,
+        email,
+        phone,
+        address: {
+          city: address.city,
+          street: address.street,
+          postOffice: address.postOffice,
+        },
+      },
+    );
+
+    return updateUserInfo
   }
 }
 

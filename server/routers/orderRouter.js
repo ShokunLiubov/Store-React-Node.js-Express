@@ -4,9 +4,7 @@ import authMiddleware from "../middleware/authMiddleware";
 import roleMiddleware from "../middleware/roleMiddleware";
 
 const router = new Router();
-
 router.get("/", roleMiddleware(["ADMIN"]), controller.getOrders);
-
 router.post("/", authMiddleware, controller.createOrders);
 
 export { router as orderRouter };

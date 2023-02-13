@@ -1,13 +1,12 @@
-import tokenService from "../service/tokenService";
 import userService from "../service/userService";
-import jwt from "jsonwebtoken";
 import User from "../models/User";
-import UserInfo from "../models/UserInfo";
 
 class userController {
+
   async getUserInfo(req, res, next) {
+
     try {
-      const { id } = req.id
+      const id = req.id
       const user = await User.findById({ _id: id }).populate({
         path: "userInfo",
         model: "UserInfo",
@@ -19,29 +18,32 @@ class userController {
     }
   }
 
-  async updateUserInfo(req, res, next) {
+  async getUsers(req, res, next) {
+
     try {
-      const { id } = req.id
+      const users = await User.find({ roles: "USERS" }).populate({
+        path: "userInfo",
+        model: "UserInfo",
+      });
+
+      return res.json(users);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async updateUserInfo(req, res, next) {
+
+    try {
+      const id = req.id
+      const payload = req.body;
+
       const user = await User.findById({ _id: id }).populate({
         path: "userInfo",
         model: "UserInfo",
       });
 
-      const { fullName, email, phone, address } = req.body;
-
-      const updateUserInfo = await UserInfo.findByIdAndUpdate(
-        user.userInfo._id,
-        {
-          fullName,
-          email,
-          phone,
-          address: {
-            city: address.city,
-            street: address.street,
-            postOffice: address.postOffice,
-          },
-        },
-      );
+      const updateUserInfo = await userService.updateUserInfo(payload, user)
 
       return res.json(updateUserInfo);
     } catch (e) {
@@ -51,16 +53,13 @@ class userController {
 
   async postUserInfo(req, res, next) {
     try {
-      const { fullName, email, phone, address } = req.body;
-      const { id } = req.id
-      const userData = await userService.postUserInfo(
-        fullName,
-        email,
-        phone,
-        address,
-        id,
+      const payload = req.body;
+      const id = req.id
+      const userInfo = await userService.postUserInfo(
+        payload, id
       );
-      return res.json(userData);
+
+      return res.json(userInfo);
     } catch (e) {
       console.log(e);
     }

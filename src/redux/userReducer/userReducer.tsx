@@ -1,11 +1,10 @@
 import { AnyAction } from "redux";
 import { IUser } from "../../shared/interfaces/user.interface";
-import { IUserInfo } from "../../shared/interfaces/userInfo.interface";
 import * as actionType from "./userActionType";
 
 interface IUserState {
   usersData: IUser[];
-  userInfo: IUserInfo | {};
+  userInfo: any;
 }
 
 let initialState: IUserState = {

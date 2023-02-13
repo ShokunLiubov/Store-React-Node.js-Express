@@ -3,7 +3,7 @@ import { IUser } from "../../shared/interfaces/user.interface";
 import * as actionType from "./authActionType";
 
 interface IAuthState {
-  user: IUser | {};
+  user: any;
   isAuth: boolean;
   isLoading: boolean;
 }
