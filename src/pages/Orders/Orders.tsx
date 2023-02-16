@@ -34,7 +34,7 @@ export const Orders: React.FC<IOrdersProps> = ({
 			<table className={styles.table}>
 				<thead>
 					<tr>
-						<th scope='col'>Order Number</th>
+						<th scope='col'>Data checkout</th>
 						<th scope='col'>Client Name</th>
 						<th scope='col'>City</th>
 						<th scope='col'>All Price</th>
@@ -47,29 +47,34 @@ export const Orders: React.FC<IOrdersProps> = ({
 					{ordersData.length > 0 &&
 						ordersData.map((order: any) => (
 							<tr key={order._id}>
-								<td>{order.id}</td>
-								<td>{order.client_name}</td>
-								<td>{order.city}</td>
-								<td>{order.order_price}$</td>
+								<td>
+									{order.createdAt.slice(0, -14)}
+									<br />
+									Time: {order.createdAt.slice(11, -5)}
+								</td>
+								<td>{order.fullName}</td>
+								<td>
+									City: {order.address.city} <br />
+									Post Office: {order.address.postOffice}
+								</td>
+								<td>{order.allPrice}$</td>
 								<td>
 									<div
 										className={cn(
-											order.status_order === 'Availability is check'
+											order.status === 'Availability is check'
 												? styles.count
 												: styles.statusNot,
-											order.status_order === 'Availability is check'
+											order.status === 'Availability is check'
 												? styles.count
 												: '',
-											order.status_order === 'Awaiting shipment'
-												? styles.await
-												: '',
-											order.status_order === 'Sent' ? styles.sent : '',
-											order.status_order === 'Refusal' ? styles.refusal : '',
-											order.status_order === 'Received' ? styles.received : '',
+											order.status === 'Awaiting shipment' ? styles.await : '',
+											order.status === 'Sent' ? styles.sent : '',
+											order.status === 'Refusal' ? styles.refusal : '',
+											order.status === 'Received' ? styles.received : '',
 											styles.status,
 										)}
 									>
-										{order.status_order}
+										{order.status}
 									</div>
 								</td>
 							</tr>

@@ -1,3 +1,4 @@
+import Order from '../models/Order'
 import orderService from "../service/orderService"
 
 class orderController {
@@ -5,18 +6,8 @@ class orderController {
   async getOrders(req, res, next) {
 
     try {
-      // const orders = await User.find({ roles: "USERS" }).populate({
-      //   path: "orders",
-      //   model: "Order",
-      // })
-
       const { page, limit } = req.query
-      const orders = await User.paginate({ roles: "USERS" }, {
-        page, limit, populate: {
-          path: "orders",
-          model: "Order",
-        }
-      })
+      const orders = await Order.paginate({}, { page, limit, sort: { id: 'desc' } })
 
       return res.json(orders)
 
