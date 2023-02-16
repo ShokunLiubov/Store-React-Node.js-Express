@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { model, Schema } from "mongoose"
 
 const Order = new Schema({
   fullName: { type: String, required: true },
@@ -15,6 +15,7 @@ const Order = new Schema({
     immutable: true,
     default: () => Date.now(),
   },
-});
+})
 
-export default model("Order", Order);
+// Order.plugin(mongoosePaginate)
+export default model("Order", Order)

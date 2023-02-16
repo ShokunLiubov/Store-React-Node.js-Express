@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { model, Schema } from "mongoose"
 
 const User = new Schema({
   username: { type: String, unique: true, required: true },
@@ -6,6 +6,7 @@ const User = new Schema({
   roles: [{ type: String, ref: "Role" }],
   userInfo: { type: Schema.Types.ObjectId, ref: "UserInfo" },
   orders: [{ type: Schema.Types.ObjectId, ref: "Order" }],
-});
+})
 
-export default model("User", User);
+// User.plugin(mongoosePaginate)
+export default model("User", User)

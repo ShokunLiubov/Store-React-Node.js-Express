@@ -1,4 +1,5 @@
-import { Schema, model } from "mongoose";
+import { model, Schema } from "mongoose"
+import mongoosePaginate from 'mongoose-paginate-v2'
 
 const Products = new Schema({
   image: { type: String, required: true },
@@ -13,6 +14,7 @@ const Products = new Schema({
   country_of_TM: { type: String, required: true },
   made_in: { type: String, required: true },
   description: { type: String, required: true },
-});
+})
 
-export default model("products", Products);
+Products.plugin(mongoosePaginate)
+export default model("products", Products)
