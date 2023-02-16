@@ -50,6 +50,7 @@ class productsController {
 
       const product = await productService.deleteProduct(req.params.id)
 
+
       return res.send(product)
 
     } catch (e) {
@@ -61,7 +62,8 @@ class productsController {
   async postProduct(req, res, next) {
 
     try {
-      const product = await productService.createProduct(req.body)
+
+      const product = await productService.createProduct(req.body, req.file.filename)
 
       return res.status(201).json(product)
 
