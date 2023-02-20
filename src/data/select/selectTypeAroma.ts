@@ -1,0 +1,17 @@
+export const selectTypeAroma = [
+    'Select Type Aroma',
+    'Aldehydes',
+    'Amber',
+    'Aromatic',
+    'Vanilla',
+    'Water',
+    'Gourmet',
+    'Wooden',
+    'Greens',
+    'Earthy',
+    'Floral',
+    'Marine',
+    'Musky',
+    'Spicy',
+    'Fresh',
+]

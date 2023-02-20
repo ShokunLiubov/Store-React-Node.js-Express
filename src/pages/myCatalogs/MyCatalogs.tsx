@@ -6,6 +6,7 @@ import { compose } from 'redux'
 import Paginator from '../../components/common/pagination/Pagination'
 import {
 	deleteProduct,
+	editProduct,
 	getProducts,
 } from '../../redux/productReducer/productThunk'
 import { AppStateType } from '../../redux/redux-store'
@@ -18,6 +19,7 @@ interface IMyCatalogsProps {
 	deleteProduct: (id: string) => void
 	currentPage: number
 	totalPages: number
+	editProduct: (productId: string) => void
 }
 
 export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
@@ -26,6 +28,7 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 	deleteProduct,
 	currentPage,
 	totalPages,
+	editProduct,
 }) => {
 	useEffect(() => {
 		getProducts(currentPage)
@@ -78,6 +81,7 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 									<NavLink
 										to={'/edit-product'}
 										className={cn('material-symbols-outlined', styles.editIcon)}
+										onClick={() => editProduct(product._id)}
 									>
 										edit_square
 									</NavLink>
@@ -115,5 +119,5 @@ const mapStateToProps = (state: AppStateType) => {
 }
 
 export default compose(
-	connect(mapStateToProps, { getProducts, deleteProduct }),
+	connect(mapStateToProps, { getProducts, deleteProduct, editProduct }),
 )(MyCatalogs)

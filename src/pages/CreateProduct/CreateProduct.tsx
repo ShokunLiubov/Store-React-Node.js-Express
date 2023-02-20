@@ -6,44 +6,78 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { compose } from 'redux'
 import { Input } from '../../components/ui/form/input/Input'
 import { Radio } from '../../components/ui/form/radio/Radio'
+import { Select } from '../../components/ui/form/select/Select'
 import { Textarea } from '../../components/ui/form/textarea/Textarea'
-import { createNewProduct } from '../../redux/productReducer/productThunk'
+import { selectCategory } from '../../data/select/selectCategory'
+import { selectClassification } from '../../data/select/selectClassification'
+import { selectTypeAroma } from '../../data/select/selectTypeAroma'
+import {
+	createNewProduct,
+	updateProduct,
+} from '../../redux/productReducer/productThunk'
 import { AppStateType } from '../../redux/redux-store'
+import { IProduct } from '../../shared/interfaces/product.interface'
 import { validateCreateProductForm } from '../../utils/validate/Validate'
 import './createProduct.scss'
 
 interface CreateProductProps {
 	createNewProduct: (formData: any) => void
+	updateProduct: (formData: any, id: any) => void
+	editProduct: IProduct
 }
 
 export const CreateProduct: React.FC<CreateProductProps> = ({
 	createNewProduct,
+	editProduct,
+	updateProduct,
 }) => {
 	const navigate = useNavigate()
-	let location = useLocation()
+	let pathnameEditProduct = useLocation().pathname === '/edit-product'
 	const [validateAfterSubmit, setValidateAfterSubmit] = useState(false)
+
+	const title = pathnameEditProduct ? editProduct.title : ''
+	const category = pathnameEditProduct ? editProduct.category : ''
+	const classification = pathnameEditProduct ? editProduct.classification : ''
+	const price = pathnameEditProduct ? editProduct.price : ''
+	const count = pathnameEditProduct ? editProduct.count : ''
+	const gender = pathnameEditProduct ? editProduct.gender : ''
+	const volume = pathnameEditProduct ? editProduct.volume : ''
+	const type_of_aroma = pathnameEditProduct ? editProduct.type_of_aroma : ''
+	const country_of_TM = pathnameEditProduct ? editProduct.country_of_TM : ''
+	const made_in = pathnameEditProduct ? editProduct.made_in : ''
+	const description = pathnameEditProduct ? editProduct.description : ''
 
 	const formik = useFormik({
 		initialValues: {
 			image: '',
-			title: 'hello',
-			category: 'hello',
-			classification: 'hello',
-			price: '45',
-			count: '45',
-			gender: 'Woman',
-			volume: '45',
-			type_of_aroma: 'hello',
-			country_of_TM: 'hello',
-			made_in: 'hello',
-			description: 'hello',
+			title: title,
+			category: `${category}`,
+			classification: `${classification}`,
+			price: `${price}`,
+			count: `${count}`,
+			gender: `${gender}`,
+			volume: `${volume}`,
+			type_of_aroma: `${type_of_aroma}`,
+			country_of_TM: `${country_of_TM}`,
+			made_in: `${made_in}`,
+			description: `${description}`,
 		},
 		onSubmit: (values: any) => {
+			if (values.image === '') {
+				values.image = editProduct.image
+			}
 			const formData = new FormData()
+
 			for (let value in values) {
 				formData.append(value, values[value])
 			}
-			createNewProduct(formData)
+
+			if (pathnameEditProduct) {
+				updateProduct(formData, editProduct._id)
+			} else {
+				createNewProduct(formData)
+			}
+
 			navigate('/my-catalogs')
 		},
 		enableReinitialize: true,
@@ -59,9 +93,7 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 				encType='multipart/form-data'
 			>
 				<span>
-					{location.pathname === '/edit-product'
-						? 'Edit Product'
-						: 'Create New Product'}
+					{pathnameEditProduct ? 'Edit Product' : 'Create New Product'}
 				</span>
 
 				<div className='fieldInput'>
@@ -70,6 +102,9 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 						type='file'
 						name='image'
 						accept='image/*'
+						placeholder={
+							pathnameEditProduct ? 'Edit image product' : 'Add image product'
+						}
 						onChange={(e: any) =>
 							formik.setFieldValue('image', e.currentTarget.files[0])
 						}
@@ -78,12 +113,25 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 
 				<Input label={'Name Product'} name={'title'} formik={formik} />
 
-				<Input label={'Category'} name={'category'} formik={formik} />
-
-				<Input
-					label={'Classification'}
-					name={'classification'}
+				<Select
 					formik={formik}
+					name={'category'}
+					label={'category'}
+					options={selectCategory}
+				/>
+
+				<Select
+					formik={formik}
+					label={'classification'}
+					name={'classification'}
+					options={selectClassification}
+				/>
+
+				<Select
+					formik={formik}
+					name={'type_of_aroma'}
+					label={'type aroma'}
+					options={selectTypeAroma}
 				/>
 
 				<Input label={'Price'} name={'price'} formik={formik} />
@@ -102,8 +150,6 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 
 				<Input label={'Volume'} name={'volume'} formik={formik} />
 
-				<Input label={'Type of aroma'} name={'type_of_aroma'} formik={formik} />
-
 				<Input label={'Country of TM'} name={'country_of_TM'} formik={formik} />
 
 				<Input label={'Made in'} name={'made_in'} formik={formik} />
@@ -117,7 +163,7 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 							formik.handleSubmit()
 						}}
 					>
-						Create a product
+						{pathnameEditProduct ? 'Edit product' : 'Create a product'}
 					</button>
 				</div>
 			</form>
@@ -128,9 +174,10 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 const mapStateToProps = (state: AppStateType) => {
 	return {
 		productsData: state.product.productsData,
+		editProduct: state.product.editProduct,
 	}
 }
 
-export default compose(connect(mapStateToProps, { createNewProduct }))(
-	CreateProduct,
-)
+export default compose(
+	connect(mapStateToProps, { createNewProduct, updateProduct }),
+)(CreateProduct)

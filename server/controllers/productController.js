@@ -44,6 +44,25 @@ class productsController {
     }
   }
 
+
+  async getProductForEdit(req, res, next) {
+
+    try {
+      const product = await Products.findById(req.params.id)
+
+      if (!product) {
+        return res.status(404).json({ message: "Product Not Found" })
+      }
+
+      return res.json({ product })
+
+    } catch (e) {
+
+      console.log(e)
+      res.status(400).json({ message: "Product error" })
+    }
+  }
+
   async deleteProduct(req, res, next) {
 
     try {
@@ -70,6 +89,29 @@ class productsController {
     } catch (e) {
       console.log(e)
       res.status(400).json({ message: "Create product  error" })
+    }
+  }
+
+  async updateProductEdit(req, res, next) {
+
+    try {
+      let filename
+      if (req.file) {
+        filename = req.file.filename
+      }
+      const product = await productService.updateProduct(req.body, req.params.id, filename)
+
+
+      if (!product) {
+        return res.status(404).json({ message: "Product Not Found" })
+      }
+
+      return res.json({ product })
+
+    } catch (e) {
+
+      console.log(e)
+      res.status(400).json({ message: "Product error" })
     }
   }
 }
