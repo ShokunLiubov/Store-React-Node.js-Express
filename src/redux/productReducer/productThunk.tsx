@@ -28,3 +28,18 @@ export const createNewProduct = (newProduct: IProduct) => {
 		dispatch(getProducts(product.currentPage))
 	}
 }
+
+export const editProduct = (productId: string) => {
+	return async (dispatch: any) => {
+		const response = await productService.getProductForEdit(productId)
+		dispatch(AC.setProductForEdit(response))
+	}
+}
+
+export const updateProduct = (productEdit: IProduct, id: string) => {
+	return async (dispatch: any, getState: () => AppStateType) => {
+		const { product } = getState()
+		await productService.updateProductEdit(productEdit, id)
+		dispatch(getProducts(product.currentPage))
+	}
+}

@@ -16,3 +16,8 @@ export const setDeleteProduct = (productId: string) => ({
 	type: actionType.DELETE_PRODUCT,
 	productId,
 })
+
+export const setProductForEdit = (product: IProduct) => ({
+	type: actionType.SET_PRODUCT_FOR_EDIT,
+	product,
+})

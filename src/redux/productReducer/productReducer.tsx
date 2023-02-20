@@ -6,12 +6,14 @@ interface IProductState {
 	productsData: IProduct[]
 	currentPage: number
 	totalPages: number
+	editProduct: any
 }
 
 let initialState: IProductState = {
 	productsData: [],
 	currentPage: 1,
 	totalPages: 0,
+	editProduct: {},
 }
 
 export const productReducer = (
@@ -33,6 +35,11 @@ export const productReducer = (
 				productsData: state.productsData.filter(
 					(product: IProduct) => product._id != action.productId,
 				),
+			}
+		case actionType.SET_PRODUCT_FOR_EDIT:
+			return {
+				...state,
+				editProduct: action.product,
 			}
 		default:
 			return state

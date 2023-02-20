@@ -25,6 +25,29 @@ class productService {
         return { product }
     }
 
+    async updateProduct(payload, id, filename) {
+
+        const { title, category, classification, price, count, gender, volume, type_of_aroma, country_of_TM, made_in, description, image } = payload
+
+        const product = await Products.findByIdAndUpdate(id, {
+            image: filename ? "./../../image_product/" + filename : image,
+            title,
+            category,
+            classification,
+            price,
+            count,
+            gender,
+            volume,
+            type_of_aroma,
+            country_of_TM,
+            made_in,
+            description,
+        })
+
+
+        return { product }
+    }
+
     async deleteProduct(id) {
         const productImg = await Products.findById(id)
         const img = productImg.image.slice(7)

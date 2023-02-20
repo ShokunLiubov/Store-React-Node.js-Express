@@ -19,4 +19,16 @@ export class productService {
 	static async getProduct(productId: string): Promise<IProductBasket> {
 		return $API.get(`products/${productId}`).then(response => response.data)
 	}
+
+	static async getProductForEdit(productId: string): Promise<IProduct> {
+		return $API
+			.get(`products/edit/${productId}`)
+			.then(response => response.data.product)
+	}
+
+	static async updateProductEdit(product: IProduct, productId: string) {
+		// console.log(product)
+
+		return $API.put(`products/edit/${productId}`, product)
+	}
 }
