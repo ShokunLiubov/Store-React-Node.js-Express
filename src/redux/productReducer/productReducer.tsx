@@ -7,6 +7,8 @@ interface IProductState {
 	currentPage: number
 	totalPages: number
 	editProduct: any
+	sortField: string
+	sortOrder: string
 }
 
 let initialState: IProductState = {
@@ -14,6 +16,8 @@ let initialState: IProductState = {
 	currentPage: 1,
 	totalPages: 0,
 	editProduct: {},
+	sortField: '_id',
+	sortOrder: 'asc',
 }
 
 export const productReducer = (

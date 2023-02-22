@@ -4,9 +4,17 @@ import { IProduct } from '../../shared/interfaces/product.interface'
 import { AppStateType } from '../redux-store'
 import * as AC from './productActionCreator'
 
-export const getProducts = (currentPage: number) => {
+export const getProducts = (
+	currentPage: number,
+	sortField: string,
+	sortOrder: string,
+) => {
 	return async (dispatch: Dispatch) => {
-		const response = await productService.getProducts(currentPage)
+		const response = await productService.getProducts(
+			currentPage,
+			sortField,
+			sortOrder,
+		)
 		const { docs, page, totalPages } = response.data
 
 		dispatch(AC.setProducts(docs, page, totalPages))
@@ -16,16 +24,18 @@ export const getProducts = (currentPage: number) => {
 export const deleteProduct = (productId: string) => {
 	return async (dispatch: any, getState: () => AppStateType) => {
 		const { product } = getState()
+		const { currentPage, sortField, sortOrder } = product
 		await productService.deleteProduct(productId)
-		dispatch(getProducts(product.currentPage))
+		dispatch(getProducts(currentPage, sortField, sortOrder))
 	}
 }
 
 export const createNewProduct = (newProduct: IProduct) => {
 	return async (dispatch: any, getState: () => AppStateType) => {
 		const { product } = getState()
+		const { currentPage, sortField, sortOrder } = product
 		await productService.createProduct(newProduct)
-		dispatch(getProducts(product.currentPage))
+		dispatch(getProducts(currentPage, sortField, sortOrder))
 	}
 }
 
@@ -39,7 +49,8 @@ export const editProduct = (productId: string) => {
 export const updateProduct = (productEdit: IProduct, id: string) => {
 	return async (dispatch: any, getState: () => AppStateType) => {
 		const { product } = getState()
+		const { currentPage, sortField, sortOrder } = product
 		await productService.updateProductEdit(productEdit, id)
-		dispatch(getProducts(product.currentPage))
+		dispatch(getProducts(currentPage, sortField, sortOrder))
 	}
 }
