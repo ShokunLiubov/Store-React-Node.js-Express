@@ -4,8 +4,14 @@ import { IProductBasket } from '../../shared/interfaces/productBasket.interface'
 import { $API } from '../api'
 
 export class productService {
-	static async getProducts(page: number): Promise<AxiosResponse<any>> {
-		return $API.get<any>(`products?page=${page}&limit=12`)
+	static async getProducts(
+		page: number,
+		sortField: string,
+		sortOrder: string,
+	): Promise<AxiosResponse<any>> {
+		return $API.get<any>(
+			`products?page=${page}&limit=12&sortField=${sortField}&sortOrder=${sortOrder}`,
+		)
 	}
 
 	static async deleteProduct(productId: string): Promise<AxiosResponse> {

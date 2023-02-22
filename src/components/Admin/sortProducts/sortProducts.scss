@@ -1,0 +1,22 @@
+.sortProduct {
+    width: 100%;
+    span {
+        color: #333;
+        margin: 0px 10px;
+        font-weight: 400;
+        cursor: pointer;
+    }
+    .sort {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        label {
+            color: #333;
+            margin: 0px 10px;
+        }
+        .active {
+            color: #792c9b;
+        }
+    }
+    
+}

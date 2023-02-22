@@ -8,11 +8,11 @@ class productsController {
   async getProducts(req, res, next) {
 
     try {
-      const { page, limit } = req.query
+      const { page, limit, sortField, sortOrder } = req.query
 
-      const products = await Products.paginate({}, { page, limit, sort: { id: 'desc' } })
+      const products = await Products.paginate({}, { page, limit, sort: [[sortField, sortOrder]] })
 
-
+      console.log()
       return res.json(products)
 
     } catch (e) {

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
+import SortProducts from '../../components/admin/sortProducts/SortProducts'
 import Paginator from '../../components/common/pagination/Pagination'
 import { MenuStore } from '../../components/store/menuStore/MenuStore'
 import { useBasketModal } from '../../context/basketModalContext'
@@ -14,11 +15,17 @@ import styles from './storeHome.module.scss'
 
 interface IStoreHome {
 	productsData: Array<IProduct>
-	getProducts: (currentPage: number) => void
+	getProducts: (
+		currentPage: number,
+		sortField: string,
+		sortOrder: string,
+	) => void
 	addToBasket: (id: string) => void
 	getUserInfo: () => void
 	currentPage: number
 	totalPages: number
+	sortFieldCurrent: string
+	sortOrderCurrent: string
 }
 
 export const StoreHome: React.FC<IStoreHome> = ({
@@ -28,21 +35,31 @@ export const StoreHome: React.FC<IStoreHome> = ({
 	getUserInfo,
 	currentPage,
 	totalPages,
+	sortFieldCurrent,
+	sortOrderCurrent,
 }) => {
 	const basket = useBasketModal()
 	useEffect(() => {
-		getProducts(currentPage)
+		getProducts(currentPage, sortFieldCurrent, sortOrderCurrent)
 	}, [])
 
 	const onPageChange = (page: number) => {
-		getProducts(page)
+		getProducts(page, sortFieldCurrent, sortOrderCurrent)
+	}
+
+	const setSortCatalog = (sortField: string, sortOrder: string) => {
+		getProducts(currentPage, sortField, sortOrder)
 	}
 
 	return (
 		<>
 			<MenuStore />
+
 			<div className={styles.carousel}>
 				<img src='./../../shopImg/bcgimg.jpeg' />
+			</div>
+			<div className={styles.blockSort}>
+				<SortProducts setSortCatalog={setSortCatalog} />
 			</div>
 
 			<div className={styles.productsStore}>
@@ -81,6 +98,8 @@ const mapStateToProps = (state: AppStateType) => {
 		productsData: state.product.productsData,
 		currentPage: state.product.currentPage,
 		totalPages: state.product.totalPages,
+		sortFieldCurrent: state.product.sortField,
+		sortOrderCurrent: state.product.sortOrder,
 	}
 }
 

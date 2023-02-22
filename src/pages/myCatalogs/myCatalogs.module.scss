@@ -1,3 +1,14 @@
+.containerCatalog {
+  display: flex;
+  flex-direction: column;
+  width: 85.5vw;
+}
+
+.sortBottomLine {
+  border-bottom: 1px solid #eee;
+  width: 100%;
+}
+
 .cardProduct {
   align-items: center;
   justify-content: center;
@@ -55,8 +66,13 @@ table {
     width: 20%;
     height: 50px;
     font-weight: 600;
+    // display: flex;
     color: #333;
     text-align: center;
+    span {
+      margin-left: 10px;
+      color: #333;
+    }
   }
   td {
     font-weight: 300;
@@ -73,7 +89,7 @@ table {
 
 table,
 th {
-  padding: 0px 10px 10px;
+  padding: 10px 10px 10px;
   border-collapse: collapse;
 }
 
