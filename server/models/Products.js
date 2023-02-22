@@ -17,4 +17,5 @@ const Products = new Schema({
 })
 
 Products.plugin(mongoosePaginate)
+Products.index({ title: 1, price: -1 }, { name: 'title' })
 export default model("products", Products)

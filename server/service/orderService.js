@@ -1,12 +1,12 @@
-import User from "../models/User";
-import Order from "../models/Order";
-import Products from "../models/Products";
+import Order from "../models/Order"
+import Products from "../models/Products"
+import User from "../models/User"
 
 class orderService {
 
   async createOrder(payload) {
 
-    const { fullName, address, allPrice, products } = payload;
+    const { fullName, address, allPrice, products } = payload
 
     const order = await Order.create({
       fullName,
@@ -18,7 +18,7 @@ class orderService {
       allPrice,
       products,
       status: "Availability is check",
-    });
+    })
 
     products.map(async (product) => {
 
@@ -29,21 +29,21 @@ class orderService {
             count: -product.count
           }
         }
-      );
+      )
     })
 
-    const userId = { _id: req.id };
+    const userId = { _id: req.id }
 
     const userUpdate = await User.findByIdAndUpdate(
       userId,
       {
-        $push: { orders: order._id },
+        $addToSet: { orders: order._id },
       },
       { new: true, useFindAndModify: false },
-    );
+    )
 
-    return { order, userUpdate };
+    return { order, userUpdate }
   }
 }
 
-export default new orderService();
+export default new orderService()
