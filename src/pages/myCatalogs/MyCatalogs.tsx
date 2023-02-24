@@ -1,9 +1,8 @@
 import cn from 'classnames'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
-import SortProducts from '../../components/admin/sortProducts/SortProducts'
 import Paginator from '../../components/common/pagination/Pagination'
 import {
 	deleteProduct,
@@ -25,8 +24,8 @@ interface IMyCatalogsProps {
 	currentPage: number
 	totalPages: number
 	editProduct: (productId: string) => void
-	sortFieldCurrent: string
-	sortOrderCurrent: string
+	sortField: string
+	sortOrder: string
 }
 
 export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
@@ -36,33 +35,58 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 	currentPage,
 	totalPages,
 	editProduct,
-	sortFieldCurrent,
-	sortOrderCurrent,
+	sortField,
+	sortOrder,
 }) => {
 	useEffect(() => {
-		getProducts(currentPage, sortFieldCurrent, sortOrderCurrent)
+		getProducts(currentPage, sortField, sortOrder)
 	}, [])
 
+	const [sort, setSort] = useState(true)
+
 	const onPageChange = (page: number) => {
-		getProducts(page, sortFieldCurrent, sortOrderCurrent)
+		getProducts(page, sortField, sortOrder)
 	}
 
-	const setSortCatalog = (sortField: string, sortOrder: string) => {
-		getProducts(currentPage, sortField, sortOrder)
+	const setSortCatalog = (sortField: string, sort: boolean) => {
+		let sortOrder = 'asc'
+		if (sort) {
+			setSort(!sort)
+		} else {
+			setSort(!sort)
+			sortOrder = 'desc'
+		}
+		getProducts(1, sortField, sortOrder)
 	}
+
+	const sortArrow = (
+		<span className='material-symbols-outlined'>
+			{sort ? 'expand_more' : 'expand_less'}
+		</span>
+	)
 
 	return (
 		<div className={cn('containerAdminWhite', styles.catalogs)}>
-			<SortProducts setSortCatalog={setSortCatalog} />
-			<div className={styles.sortBottomLine}></div>
 			<table className={styles.catalogTable}>
 				<thead>
 					<tr>
 						<th>Image</th>
-						<th>Title</th>
+						<th
+							onClick={() => setSortCatalog('title', sort)}
+							className={cn(styles.sort)}
+						>
+							Title
+							{sortArrow}
+						</th>
 						<th className={styles.thSmall}>Category</th>
 						<th className={styles.thSmall}>Count</th>
-						<th className={styles.thSmall}>Price</th>
+						<th
+							className={cn(styles.thSmall, styles.sort)}
+							onClick={() => setSortCatalog('price', sort)}
+						>
+							Price
+							{sortArrow}
+						</th>
 						<th className={styles.thSmall}>Edit</th>
 						<th className={styles.thSmall}>Delete</th>
 					</tr>
@@ -130,8 +154,8 @@ const mapStateToProps = (state: AppStateType) => {
 		productsData: state.product.productsData,
 		currentPage: state.product.currentPage,
 		totalPages: state.product.totalPages,
-		sortFieldCurrent: state.product.sortField,
-		sortOrderCurrent: state.product.sortOrder,
+		sortField: state.product.sortField,
+		sortOrder: state.product.sortOrder,
 	}
 }
 

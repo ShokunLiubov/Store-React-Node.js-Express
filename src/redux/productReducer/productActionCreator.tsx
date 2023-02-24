@@ -5,11 +5,15 @@ export const setProducts = (
 	productsData: Array<IProduct>,
 	page: number,
 	totalPages: number,
+	sortField: string,
+	sortOrder: string,
 ) => ({
 	type: actionType.SET_PRODUCTS,
 	productsData,
 	page,
 	totalPages,
+	sortField,
+	sortOrder,
 })
 
 export const setDeleteProduct = (productId: string) => ({

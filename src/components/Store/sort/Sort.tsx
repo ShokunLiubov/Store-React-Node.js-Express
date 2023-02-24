@@ -3,15 +3,13 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { AppStateType } from '../../../redux/redux-store'
-import './sortProducts.scss'
+import './sort.scss'
 
-interface ISortProductsProps {
+interface ISortProps {
 	setSortCatalog: any
 }
 
-export const SortProducts: React.FC<ISortProductsProps> = ({
-	setSortCatalog,
-}) => {
+export const Sort: React.FC<ISortProps> = ({ setSortCatalog }) => {
 	const [sortField, setSortField] = useState('_id')
 	const [sortOrder, setSortOrder] = useState('asc')
 
@@ -73,4 +71,4 @@ const mapStateToProps = (state: AppStateType) => {
 	}
 }
 
-export default compose(connect(mapStateToProps, {}))(SortProducts)
+export default compose(connect(mapStateToProps, {}))(Sort)

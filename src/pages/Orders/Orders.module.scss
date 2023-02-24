@@ -6,6 +6,16 @@
   height: 100%;
 }
 
+.sort {
+  cursor: pointer;
+  position: relative;
+  span {
+    position: absolute;
+    color: #bfbfc6;
+    top: 13px
+  }
+}
+
 .table {
   width: 100%;
   th {
