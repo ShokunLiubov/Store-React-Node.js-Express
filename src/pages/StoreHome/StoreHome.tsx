@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
-import SortProducts from '../../components/admin/sortProducts/SortProducts'
 import Paginator from '../../components/common/pagination/Pagination'
 import { MenuStore } from '../../components/store/menuStore/MenuStore'
+import Sort from '../../components/store/sort/Sort'
 import { useBasketModal } from '../../context/basketModalContext'
 import { addToBasket } from '../../redux/basketReducer/basketThunk'
 import { getProducts } from '../../redux/productReducer/productThunk'
@@ -24,8 +24,8 @@ interface IStoreHome {
 	getUserInfo: () => void
 	currentPage: number
 	totalPages: number
-	sortFieldCurrent: string
-	sortOrderCurrent: string
+	sortField: string
+	sortOrder: string
 }
 
 export const StoreHome: React.FC<IStoreHome> = ({
@@ -35,20 +35,20 @@ export const StoreHome: React.FC<IStoreHome> = ({
 	getUserInfo,
 	currentPage,
 	totalPages,
-	sortFieldCurrent,
-	sortOrderCurrent,
+	sortField,
+	sortOrder,
 }) => {
 	const basket = useBasketModal()
 	useEffect(() => {
-		getProducts(currentPage, sortFieldCurrent, sortOrderCurrent)
+		getProducts(currentPage, sortField, sortOrder)
 	}, [])
 
 	const onPageChange = (page: number) => {
-		getProducts(page, sortFieldCurrent, sortOrderCurrent)
+		getProducts(page, sortField, sortOrder)
 	}
 
 	const setSortCatalog = (sortField: string, sortOrder: string) => {
-		getProducts(currentPage, sortField, sortOrder)
+		getProducts(1, sortField, sortOrder)
 	}
 
 	return (
@@ -59,7 +59,7 @@ export const StoreHome: React.FC<IStoreHome> = ({
 				<img src='./../../shopImg/bcgimg.jpeg' />
 			</div>
 			<div className={styles.blockSort}>
-				<SortProducts setSortCatalog={setSortCatalog} />
+				<Sort setSortCatalog={setSortCatalog} />
 			</div>
 
 			<div className={styles.productsStore}>
@@ -98,8 +98,8 @@ const mapStateToProps = (state: AppStateType) => {
 		productsData: state.product.productsData,
 		currentPage: state.product.currentPage,
 		totalPages: state.product.totalPages,
-		sortFieldCurrent: state.product.sortField,
-		sortOrderCurrent: state.product.sortOrder,
+		sortField: state.product.sortField,
+		sortOrder: state.product.sortOrder,
 	}
 }
 

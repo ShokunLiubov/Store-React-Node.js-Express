@@ -12,9 +12,7 @@ class productsController {
 
       const products = await Products.paginate({}, { page, limit, sort: [[sortField, sortOrder]] })
 
-      console.log()
       return res.json(products)
-
     } catch (e) {
       console.log(e)
       res.status(400).json({ message: "Products error" })

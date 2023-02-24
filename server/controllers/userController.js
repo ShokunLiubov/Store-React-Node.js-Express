@@ -22,14 +22,19 @@ class userController {
   async getUsers(req, res, next) {
 
     try {
-      const users = await User.find({ roles: "USERS" })
-        .sort({ username: 'asc' })
-        .select('username')
-        .populate({
+      const { page, limit, sortField, sortOrder } = req.query
+
+      const users = await User.paginate({ roles: "USERS" }, {
+        page, limit,
+        select: 'username userInfo',
+        populate: {
           path: "userInfo",
           model: "UserInfo",
-          select: 'email phone address -_id'
-        })
+          select: 'email phone address -_id',
+        },
+        sort: [[sortField, sortOrder]],
+      })
+
 
       return res.json(users)
     } catch (e) {

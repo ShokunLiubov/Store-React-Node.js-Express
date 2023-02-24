@@ -17,7 +17,7 @@ export const getProducts = (
 		)
 		const { docs, page, totalPages } = response.data
 
-		dispatch(AC.setProducts(docs, page, totalPages))
+		dispatch(AC.setProducts(docs, page, totalPages, sortField, sortOrder))
 	}
 }
 

@@ -5,12 +5,21 @@ import { setEmptyBasket } from '../basketReducer/basketActionCreator'
 import { AppStateType } from '../redux-store'
 import * as AC from './orderActionCreator'
 
-export const getOrders = (currentPage: number) => {
+export const getOrders = (
+	currentPage: number,
+	sortField: string,
+	sortOrder: string,
+) => {
 	return async (dispatch: Dispatch) => {
-		let response = await orderService.getOrders(currentPage)
+		let response = await orderService.getOrders(
+			currentPage,
+			sortField,
+			sortOrder,
+		)
+
 		const { docs, page, totalPages } = response.data
 
-		dispatch(AC.setOrders(docs, page, totalPages))
+		dispatch(AC.setOrders(docs, page, totalPages, sortField, sortOrder))
 	}
 }
 

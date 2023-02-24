@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import Paginator from '../../components/common/pagination/Pagination'
@@ -9,35 +9,80 @@ import { IOrder } from '../../shared/interfaces/order.interface'
 import styles from './orders.module.scss'
 
 interface IOrdersProps {
-	getOrders: (currentPage: number) => void
+	getOrders: (page: number, sortField: string, sortOrder: string) => void
 	ordersData: Array<IOrder>
-	currentPage: number
+	page: number
 	totalPages: number
+	sortField: string
+	sortOrder: string
 }
 
 export const Orders: React.FC<IOrdersProps> = ({
 	ordersData,
 	getOrders,
-	currentPage,
+	page,
 	totalPages,
+	sortField,
+	sortOrder,
 }) => {
 	useEffect(() => {
-		getOrders(currentPage)
+		getOrders(page, sortField, sortOrder)
 	}, [])
 
+	const [sort, setSort] = useState(true)
+
 	const onPageChange = (page: number) => {
-		getOrders(page)
+		getOrders(page, sortField, sortOrder)
 	}
+
+	const setSortCatalog = (sortField: string, sort: boolean) => {
+		let sortOrder = 'asc'
+		if (sort) {
+			setSort(!sort)
+		} else {
+			setSort(!sort)
+			sortOrder = 'desc'
+		}
+
+		getOrders(1, sortField, sortOrder)
+	}
+
+	const sortArrow = (
+		<span className='material-symbols-outlined'>
+			{sort ? 'expand_more' : 'expand_less'}
+		</span>
+	)
 
 	return (
 		<div className={cn('containerAdminDark')}>
 			<table className={styles.table}>
 				<thead>
 					<tr>
-						<th scope='col'>Data checkout</th>
-						<th scope='col'>Client Name</th>
+						<th
+							scope='col'
+							onClick={() => setSortCatalog('createdAt', sort)}
+							className={styles.sort}
+						>
+							Data checkout
+							{sortArrow}
+						</th>
+						<th
+							scope='col'
+							onClick={() => setSortCatalog('username', sort)}
+							className={styles.sort}
+						>
+							Client Name
+							{sortArrow}
+						</th>
 						<th scope='col'>City</th>
-						<th scope='col'>All Price</th>
+						<th
+							scope='col'
+							onClick={() => setSortCatalog('allPrice', sort)}
+							className={styles.sort}
+						>
+							All Price
+							{sortArrow}
+						</th>
 						<th scope='col' className={styles.statusTh}>
 							Status Order
 						</th>
@@ -82,7 +127,7 @@ export const Orders: React.FC<IOrdersProps> = ({
 				</tbody>
 			</table>
 			<Paginator
-				currentPage={currentPage}
+				currentPage={page}
 				totalPages={totalPages}
 				onPageChange={onPageChange}
 			/>
@@ -93,8 +138,10 @@ export const Orders: React.FC<IOrdersProps> = ({
 const mapStateToProps = (state: AppStateType) => {
 	return {
 		ordersData: state.order.ordersData,
-		currentPage: state.order.currentPage,
+		page: state.order.currentPage,
 		totalPages: state.order.totalPages,
+		sortField: state.order.sortField,
+		sortOrder: state.order.sortOrder,
 	}
 }
 

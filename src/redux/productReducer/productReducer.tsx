@@ -31,6 +31,8 @@ export const productReducer = (
 				productsData: action.productsData,
 				currentPage: action.page,
 				totalPages: action.totalPages,
+				sortField: action.sortField,
+				sortOrder: action.sortOrder,
 			}
 
 		case actionType.DELETE_PRODUCT:

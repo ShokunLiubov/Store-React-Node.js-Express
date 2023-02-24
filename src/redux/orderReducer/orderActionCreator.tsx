@@ -5,9 +5,13 @@ export const setOrders = (
 	ordersData: Array<IOrder>,
 	page: number,
 	totalPages: number,
+	sortField: string,
+	sortOrder: string,
 ) => ({
 	type: actionType.SET_ORDERS,
 	ordersData,
 	page,
 	totalPages,
+	sortField,
+	sortOrder,
 })

@@ -1,4 +1,5 @@
-import { Schema, model } from "mongoose";
+import { model, Schema } from "mongoose"
+import mongoosePaginate from 'mongoose-paginate-v2'
 
 const UserInfo = new Schema({
   fullName: { type: String },
@@ -9,6 +10,7 @@ const UserInfo = new Schema({
     street: { type: String },
     postOffice: { type: String },
   },
-});
+})
 
-export default model("UserInfo", UserInfo);
+UserInfo.plugin(mongoosePaginate)
+export default model("UserInfo", UserInfo)
