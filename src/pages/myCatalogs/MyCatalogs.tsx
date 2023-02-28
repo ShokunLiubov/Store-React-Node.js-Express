@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
+import FiltersMyCatalog from '../../components/admin/filters/FiltersMyCatalog'
 import Paginator from '../../components/common/pagination/Pagination'
 import {
 	deleteProduct,
@@ -18,6 +19,7 @@ interface IMyCatalogsProps {
 		currentPage: number,
 		sortField: string,
 		sortOrder: string,
+		values: any,
 	) => void
 	productsData: Array<IProduct>
 	deleteProduct: (id: string) => void
@@ -39,13 +41,13 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 	sortOrder,
 }) => {
 	useEffect(() => {
-		getProducts(currentPage, sortField, sortOrder)
+		getProducts(currentPage, sortField, sortOrder, {})
 	}, [])
 
 	const [sort, setSort] = useState(true)
 
 	const onPageChange = (page: number) => {
-		getProducts(page, sortField, sortOrder)
+		getProducts(page, sortField, sortOrder, {})
 	}
 
 	const setSortCatalog = (sortField: string, sort: boolean) => {
@@ -56,7 +58,7 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 			setSort(!sort)
 			sortOrder = 'desc'
 		}
-		getProducts(1, sortField, sortOrder)
+		getProducts(1, sortField, sortOrder, {})
 	}
 
 	const sortArrow = (
@@ -67,6 +69,8 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 
 	return (
 		<div className={cn('containerAdminWhite', styles.catalogs)}>
+			<FiltersMyCatalog />
+			<div className={styles.line}></div>
 			<table className={styles.catalogTable}>
 				<thead>
 					<tr>

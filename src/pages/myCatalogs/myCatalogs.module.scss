@@ -4,6 +4,11 @@
   width: 85.5vw;
   
 }
+.line {
+  border-bottom: 1px solid #eeeeee;
+  width: 100%;
+  margin: 22px 0px 10px;
+}
 .sort {
   cursor: pointer;
   position: relative;
@@ -12,6 +17,8 @@
     top: 13px
   }
 }
+
+
 
 .cardProduct {
   align-items: center;

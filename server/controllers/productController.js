@@ -8,9 +8,26 @@ class productsController {
   async getProducts(req, res, next) {
 
     try {
-      const { page, limit, sortField, sortOrder } = req.query
+      const { page, limit, sortField, sortOrder, search, category, count, price } = req.query
+      const filters = {}
 
-      const products = await Products.paginate({}, { page, limit, sort: [[sortField, sortOrder]] })
+      if (search) {
+        filters.title = new RegExp(`${search}`, "i")
+      }
+      if (category) {
+        filters.category = { $in: category.split(',') }
+      }
+      if (count) {
+        const { $gte, $lte } = count
+
+        filters.count = { $gte, $lte }
+      }
+      if (price) {
+        const { $gte, $lte } = price
+        filters.price = { $gte, $lte }
+      }
+
+      const products = await Products.paginate(filters, { page, limit, sort: [[sortField, sortOrder]] })
 
       return res.json(products)
     } catch (e) {

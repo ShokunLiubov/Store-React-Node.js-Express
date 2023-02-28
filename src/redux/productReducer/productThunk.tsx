@@ -8,12 +8,14 @@ export const getProducts = (
 	currentPage: number,
 	sortField: string,
 	sortOrder: string,
+	filters: any,
 ) => {
 	return async (dispatch: Dispatch) => {
 		const response = await productService.getProducts(
 			currentPage,
 			sortField,
 			sortOrder,
+			filters,
 		)
 		const { docs, page, totalPages } = response.data
 
@@ -26,7 +28,7 @@ export const deleteProduct = (productId: string) => {
 		const { product } = getState()
 		const { currentPage, sortField, sortOrder } = product
 		await productService.deleteProduct(productId)
-		dispatch(getProducts(currentPage, sortField, sortOrder))
+		dispatch(getProducts(currentPage, sortField, sortOrder, {}))
 	}
 }
 
@@ -35,7 +37,7 @@ export const createNewProduct = (newProduct: IProduct) => {
 		const { product } = getState()
 		const { currentPage, sortField, sortOrder } = product
 		await productService.createProduct(newProduct)
-		dispatch(getProducts(currentPage, sortField, sortOrder))
+		dispatch(getProducts(currentPage, sortField, sortOrder, {}))
 	}
 }
 
@@ -51,6 +53,6 @@ export const updateProduct = (productEdit: IProduct, id: string) => {
 		const { product } = getState()
 		const { currentPage, sortField, sortOrder } = product
 		await productService.updateProductEdit(productEdit, id)
-		dispatch(getProducts(currentPage, sortField, sortOrder))
+		dispatch(getProducts(currentPage, sortField, sortOrder, {}))
 	}
 }

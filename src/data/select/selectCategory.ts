@@ -1,12 +1,10 @@
 export const selectCategory = [
-    'Select Category',
-    'Perfumery',
-    'Hair',
-    'Face',
-    'Makeup',
-    'Body and bath',
-    'To men',
-    'Health & Care',
-    'Gifts',
-    'Clothes'                           
+    { value: 'Perfumery', label: 'Perfumery' },
+    { value: 'Hair', label: 'Hair' },
+    { value: 'Face', label: 'Face', },
+    { value: 'Makeup', label: 'Makeup' },
+    { value: 'To men', label: 'To men' },
+    { value: 'Health & Care', label: 'Health & Care' },
+    { value: 'Gifts', label: 'Gifts' },
+    { value: 'Clothes', label: 'Clothes' },                      
 ]
