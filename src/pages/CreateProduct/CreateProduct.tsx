@@ -6,7 +6,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { compose } from 'redux'
 import { Input } from '../../components/ui/form/input/Input'
 import { Radio } from '../../components/ui/form/radio/Radio'
-import { Select } from '../../components/ui/form/select/Select'
+// import { Select } from '../../components/ui/form/select/Select'
+import Select from 'react-select'
 import { Textarea } from '../../components/ui/form/textarea/Textarea'
 import { selectCategory } from '../../data/select/selectCategory'
 import { selectClassification } from '../../data/select/selectClassification'
@@ -85,6 +86,10 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 		validate: validateCreateProductForm,
 	})
 
+	const handleSelectChange = (selectedOption: any, fieldName: any) => {
+		formik.setFieldValue(fieldName, selectedOption.value)
+	}
+
 	return (
 		<div className={cn('containerAdminDark')}>
 			<form
@@ -112,27 +117,51 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 				</div>
 
 				<Input label={'Name Product'} name={'title'} formik={formik} />
-
-				<Select
-					formik={formik}
-					name={'category'}
-					label={'category'}
-					options={selectCategory}
-				/>
-
-				<Select
-					formik={formik}
-					label={'classification'}
-					name={'classification'}
-					options={selectClassification}
-				/>
-
-				<Select
-					formik={formik}
-					name={'type_of_aroma'}
-					label={'type aroma'}
-					options={selectTypeAroma}
-				/>
+				<div className='selectCreateProduct'>
+					<label>Category</label>
+					<Select
+						className='basic-single'
+						classNamePrefix='select'
+						name='category'
+						options={selectCategory}
+						value={selectCategory.filter(
+							option => option.value === formik.values.category,
+						)}
+						onChange={(e: any) => {
+							handleSelectChange(e, 'category')
+						}}
+					/>
+				</div>
+				<div className='selectCreateProduct'>
+					<label>Classification</label>
+					<Select
+						className='basic-single'
+						classNamePrefix='select'
+						name='classification'
+						options={selectClassification}
+						value={selectClassification.filter(
+							option => option.value === formik.values.classification,
+						)}
+						onChange={(e: any) => {
+							handleSelectChange(e, 'classification')
+						}}
+					/>
+				</div>
+				<div className='selectCreateProduct'>
+					<label>Type Aroma</label>
+					<Select
+						className='basic-single'
+						classNamePrefix='select'
+						name='type_of_aroma'
+						options={selectTypeAroma}
+						value={selectTypeAroma.filter(
+							option => option.value === formik.values.type_of_aroma,
+						)}
+						onChange={(e: any) => {
+							handleSelectChange(e, 'type_of_aroma')
+						}}
+					/>
+				</div>
 
 				<Input label={'Price'} name={'price'} formik={formik} />
 
@@ -157,6 +186,7 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 				<Textarea label={'Description'} id={'description'} formik={formik} />
 				<div className={'createButton'}>
 					<button
+						className='mainButton'
 						type='submit'
 						onClick={() => {
 							setValidateAfterSubmit(true)

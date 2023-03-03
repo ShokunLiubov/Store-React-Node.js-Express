@@ -9,6 +9,8 @@ interface IInput {
 	placeholder?: string
 	type?: string
 	onBlur?: any
+	onChange?: any
+	value?: any
 }
 
 export const Input: React.FC<IInput> = ({
@@ -18,6 +20,8 @@ export const Input: React.FC<IInput> = ({
 	formik,
 	type,
 	onBlur,
+	onChange,
+	value,
 }) => {
 	const error = formik.errors[name] && (
 		<div className={'error'}>{formik.errors[name]}</div>
@@ -35,8 +39,8 @@ export const Input: React.FC<IInput> = ({
 					type={type ? type : 'text'}
 					name={name}
 					placeholder={placeholder}
-					onChange={formik.handleChange}
-					value={formik.values[name]}
+					onChange={onChange ? onChange : formik.handleChange}
+					value={value ? value : formik.values[name]}
 					onBlur={onBlur}
 				/>
 			</div>

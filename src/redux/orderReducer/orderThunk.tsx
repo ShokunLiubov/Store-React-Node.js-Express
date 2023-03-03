@@ -9,12 +9,14 @@ export const getOrders = (
 	currentPage: number,
 	sortField: string,
 	sortOrder: string,
+	filters: any,
 ) => {
 	return async (dispatch: Dispatch) => {
 		let response = await orderService.getOrders(
 			currentPage,
 			sortField,
 			sortOrder,
+			filters,
 		)
 
 		const { docs, page, totalPages } = response.data

@@ -2,6 +2,7 @@ import cn from 'classnames'
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import FiltersOrders from '../../components/admin/filters/filtersOrders/FiltersOrders'
 import Paginator from '../../components/common/pagination/Pagination'
 import { getOrders } from '../../redux/orderReducer/orderThunk'
 import { AppStateType } from '../../redux/redux-store'
@@ -9,7 +10,12 @@ import { IOrder } from '../../shared/interfaces/order.interface'
 import styles from './orders.module.scss'
 
 interface IOrdersProps {
-	getOrders: (page: number, sortField: string, sortOrder: string) => void
+	getOrders: (
+		page: number,
+		sortField: string,
+		sortOrder: string,
+		filters: any,
+	) => void
 	ordersData: Array<IOrder>
 	page: number
 	totalPages: number
@@ -26,13 +32,13 @@ export const Orders: React.FC<IOrdersProps> = ({
 	sortOrder,
 }) => {
 	useEffect(() => {
-		getOrders(page, sortField, sortOrder)
+		getOrders(page, sortField, sortOrder, {})
 	}, [])
 
 	const [sort, setSort] = useState(true)
 
 	const onPageChange = (page: number) => {
-		getOrders(page, sortField, sortOrder)
+		getOrders(page, sortField, sortOrder, {})
 	}
 
 	const setSortCatalog = (sortField: string, sort: boolean) => {
@@ -44,7 +50,7 @@ export const Orders: React.FC<IOrdersProps> = ({
 			sortOrder = 'desc'
 		}
 
-		getOrders(1, sortField, sortOrder)
+		getOrders(1, sortField, sortOrder, {})
 	}
 
 	const sortArrow = (
@@ -55,6 +61,8 @@ export const Orders: React.FC<IOrdersProps> = ({
 
 	return (
 		<div className={cn('containerAdminDark')}>
+			<FiltersOrders />
+			<div className={styles.line}></div>
 			<table className={styles.table}>
 				<thead>
 					<tr>

@@ -11,6 +11,7 @@ export const getProducts = (
 	filters: any,
 ) => {
 	return async (dispatch: Dispatch) => {
+		dispatch(AC.setFilters(filters))
 		const response = await productService.getProducts(
 			currentPage,
 			sortField,

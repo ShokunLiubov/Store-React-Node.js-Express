@@ -2,14 +2,14 @@ import { IProduct } from '../../shared/interfaces/product.interface'
 import * as actionType from './productActionType'
 
 export const setProducts = (
-	productsData: Array<IProduct>,
+	docs: Array<IProduct>,
 	page: number,
 	totalPages: number,
 	sortField: string,
 	sortOrder: string,
 ) => ({
 	type: actionType.SET_PRODUCTS,
-	productsData,
+	docs,
 	page,
 	totalPages,
 	sortField,
@@ -24,4 +24,9 @@ export const setDeleteProduct = (productId: string) => ({
 export const setProductForEdit = (product: IProduct) => ({
 	type: actionType.SET_PRODUCT_FOR_EDIT,
 	product,
+})
+
+export const setFilters = (filters: any) => ({
+	type: actionType.SET_FILTERS_FOR_PRODUCTS,
+	filters,
 })

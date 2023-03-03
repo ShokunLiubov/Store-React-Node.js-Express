@@ -21,6 +21,58 @@
     font-size: 13px;
     font-weight: 400;
   }
+  .selectCreateProduct {
+    display: flex;
+    label {
+      
+      text-transform: capitalize;
+      width: 16%;
+    }
+    select {
+      margin: 7px 0px 7px 0px;
+      
+      padding: 5px;
+      cursor: pointer;
+      box-shadow: none;
+      background-color: initial;
+      
+      color: hsla(0, 0%, 100%, 0.6);
+      
+      
+    }
+    .basic-single {
+      width: 70%;
+      height: 40px;
+      margin: 7px 0px 7px 0px;
+      color: hsla(0, 0%, 100%, 0.8);
+      background-color: initial;
+    }
+    .css-1dimb5e-singleValue {
+        color: hsla(0, 0%, 100%, 0.8);
+      
+    }
+    .css-13cymwt-control {
+      cursor: pointer;
+      background-color: #27293c;
+      border: 1px solid #2b3553;
+      border-radius: 0.25rem;
+      color: hsla(0, 0%, 100%, 0.8);
+    }
+    .select__control--is-focused {
+      cursor: pointer;
+      background-color: #27293c;
+      border: 1px solid #2b3553;
+      border-radius: 0.25rem;
+      color: hsla(0, 0%, 100%, 0.8);
+    }
+    .select__menu {
+      background-color: #27293c;
+      .select__option {
+        cursor: pointer;
+        color: hsla(0, 0%, 100%, 0.8);
+      }
+    }
+  }
 
   .fieldInput {
     flex-direction: row;
@@ -33,27 +85,10 @@
     }
   }
  
-    .fieldSelect {
-      display: flex;
-      label {
+    // .fieldSelect {
+    //   display: flex;
       
-        text-transform: capitalize;
-        width: 16%;
-      }
-      select {
-        margin: 7px 0px 7px 0px;
-        border: 1px solid #2b3553;
-        padding: 5px;
-        cursor: pointer;
-        box-shadow: none;
-        background-color: initial;
-        background-color: #27293c;
-        color: hsla(0, 0%, 100%, 0.6);
-        width: 70%;
-        height: 40px;
-        
-      }
-    }
+    // }
 
 
   .fieldTextarea {

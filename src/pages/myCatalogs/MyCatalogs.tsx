@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
-import FiltersMyCatalog from '../../components/admin/filters/FiltersMyCatalog'
+import FiltersMyCatalog from '../../components/admin/filters/filtersMyCatalog/FiltersMyCatalog'
 import Paginator from '../../components/common/pagination/Pagination'
 import {
 	deleteProduct,
@@ -28,6 +28,7 @@ interface IMyCatalogsProps {
 	editProduct: (productId: string) => void
 	sortField: string
 	sortOrder: string
+	filters: any
 }
 
 export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
@@ -39,6 +40,7 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 	editProduct,
 	sortField,
 	sortOrder,
+	filters,
 }) => {
 	useEffect(() => {
 		getProducts(currentPage, sortField, sortOrder, {})
@@ -47,7 +49,7 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 	const [sort, setSort] = useState(true)
 
 	const onPageChange = (page: number) => {
-		getProducts(page, sortField, sortOrder, {})
+		getProducts(page, sortField, sortOrder, filters)
 	}
 
 	const setSortCatalog = (sortField: string, sort: boolean) => {
@@ -58,7 +60,7 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 			setSort(!sort)
 			sortOrder = 'desc'
 		}
-		getProducts(1, sortField, sortOrder, {})
+		getProducts(1, sortField, sortOrder, filters)
 	}
 
 	const sortArrow = (
@@ -160,6 +162,7 @@ const mapStateToProps = (state: AppStateType) => {
 		totalPages: state.product.totalPages,
 		sortField: state.product.sortField,
 		sortOrder: state.product.sortOrder,
+		filters: state.product.filters,
 	}
 }
 

@@ -6,6 +6,7 @@ interface ISearch {
 	value: string
 	placeholder?: string
 	onBlur?: any
+	onInput?: any
 }
 
 export const Search: React.FC<ISearch> = ({
@@ -14,6 +15,7 @@ export const Search: React.FC<ISearch> = ({
 	value,
 	placeholder,
 	onBlur,
+	onInput,
 }) => {
 	return (
 		<>
@@ -25,6 +27,7 @@ export const Search: React.FC<ISearch> = ({
 				onChange={onChange}
 				placeholder={placeholder}
 				onBlur={onBlur}
+				onInput={onInput}
 			/>
 		</>
 	)
