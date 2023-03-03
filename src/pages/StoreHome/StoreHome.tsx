@@ -19,6 +19,7 @@ interface IStoreHome {
 		currentPage: number,
 		sortField: string,
 		sortOrder: string,
+		filter: any,
 	) => void
 	addToBasket: (id: string) => void
 	getUserInfo: () => void
@@ -40,15 +41,15 @@ export const StoreHome: React.FC<IStoreHome> = ({
 }) => {
 	const basket = useBasketModal()
 	useEffect(() => {
-		getProducts(currentPage, sortField, sortOrder)
+		getProducts(currentPage, sortField, sortOrder, {})
 	}, [])
 
 	const onPageChange = (page: number) => {
-		getProducts(page, sortField, sortOrder)
+		getProducts(page, sortField, sortOrder, {})
 	}
 
 	const setSortCatalog = (sortField: string, sortOrder: string) => {
-		getProducts(1, sortField, sortOrder)
+		getProducts(1, sortField, sortOrder, {})
 	}
 
 	return (

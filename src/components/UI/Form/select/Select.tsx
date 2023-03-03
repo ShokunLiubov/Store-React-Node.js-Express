@@ -3,7 +3,7 @@ import React from 'react'
 import './select.scss'
 
 interface ISelect {
-	options: Array<string>
+	options: Array<any>
 	name: string
 	formik: any
 	label: string
@@ -27,7 +27,7 @@ export const Select: React.FC<ISelect> = ({ options, name, formik, label }) => {
 					onChange={formik.handleChange}
 				>
 					{options.map(opti => (
-						<option key={opti} value={formik.values[opti]}>
+						<option key={opti.label} value={formik.values[opti.label]}>
 							{opti}
 						</option>
 					))}

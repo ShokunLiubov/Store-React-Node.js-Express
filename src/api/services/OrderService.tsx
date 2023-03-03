@@ -7,6 +7,7 @@ export class orderService {
 		page: number,
 		sortField: string,
 		sortOrder: string,
+		filters: any,
 	): Promise<AxiosResponse<any>> {
 		return $API.get<any>(
 			`orders?page=${page}&limit=25&sortField=${sortField}&sortOrder=${sortOrder}`,

@@ -8,10 +8,30 @@ export class productService {
 		page: number,
 		sortField: string,
 		sortOrder: string,
+		filters: any,
 	): Promise<AxiosResponse<any>> {
-		return $API.get<any>(
-			`products?page=${page}&limit=12&sortField=${sortField}&sortOrder=${sortOrder}`,
-		)
+		const { search, category, count, price } = filters
+		let url = `products?page=${page}&limit=12&sortField=${sortField}&sortOrder=${sortOrder}`
+		if (search) {
+			url += `&search=${search}`
+		}
+		if (category) {
+			url += `&category=${category}`
+		}
+		if (count) {
+			const { $gte, $lte } = count
+			if ($gte && $lte) {
+				url += `&count[$gte]=${$gte}&count[$lte]=${$lte}`
+			}
+		}
+		if (price) {
+			const { $gte, $lte } = price
+			if ($gte && $lte) {
+				url += `&price[$gte]=${$gte}&price[$lte]=${$lte}`
+			}
+		}
+
+		return $API.get<any>(url)
 	}
 
 	static async deleteProduct(productId: string): Promise<AxiosResponse> {
