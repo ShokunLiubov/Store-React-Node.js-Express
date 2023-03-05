@@ -10,7 +10,7 @@ export class orderService {
 		filters: any,
 	): Promise<AxiosResponse<any>> {
 		return $API.get<any>(
-			`orders?page=${page}&limit=25&sortField=${sortField}&sortOrder=${sortOrder}`,
+			`orders?page=${page}&limit=15&sortField=${sortField}&sortOrder=${sortOrder}`,
 		)
 	}
 

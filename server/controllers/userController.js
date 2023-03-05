@@ -24,7 +24,7 @@ class userController {
     try {
       const { page, limit, sortField, sortOrder } = req.query
 
-      const users = await User.paginate({ roles: "USERS" }, {
+      const users = await User.paginate({ roles: "USER" }, {
         page, limit,
         select: 'username userInfo',
         populate: {

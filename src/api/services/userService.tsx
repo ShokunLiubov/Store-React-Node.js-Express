@@ -9,7 +9,7 @@ export class userService {
 		sortOrder: string,
 	): Promise<AxiosResponse<any>> {
 		return $API.get<any>(
-			`users?page=${page}&limit=25&sortField=${sortField}&sortOrder=${sortOrder}`,
+			`users?page=${page}&limit=15&sortField=${sortField}&sortOrder=${sortOrder}`,
 		)
 	}
 

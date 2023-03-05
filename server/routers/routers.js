@@ -1,4 +1,5 @@
-export { authRouter } from "./authRouter";
-export { productsRouter } from "./productsRouter";
-export { userRouter } from "./userRouter";
-export { orderRouter } from "./orderRouter";
+export { authRouter } from "./authRouter"
+export { orderRouter } from "./orderRouter"
+export { productsRouter } from "./productsRouter"
+export { userRouter } from "./userRouter"
+

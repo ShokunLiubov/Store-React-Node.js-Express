@@ -4,8 +4,8 @@ import mongoosePaginate from 'mongoose-paginate-v2'
 const Products = new Schema({
   image: { type: String, required: true },
   title: { type: String, required: true },
-  category: { type: String, required: true },
-  classification: { type: String, required: true },
+  category: { type: Schema.Types.ObjectId, ref: 'Category' },
+  classification: { type: Schema.Types.ObjectId, ref: 'Classification' },
   price: { type: Number, required: true },
   count: { type: Number, required: true },
   gender: { type: String, required: true },
@@ -18,4 +18,4 @@ const Products = new Schema({
 
 Products.plugin(mongoosePaginate)
 Products.index({ title: 1, price: -1 }, { name: 'title' })
-export default model("products", Products)
+export default model("Products", Products)
