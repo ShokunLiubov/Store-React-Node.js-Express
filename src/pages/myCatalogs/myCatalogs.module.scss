@@ -14,7 +14,7 @@
   position: relative;
   span {
     position: absolute;
-    top: 13px
+    top: 23px
   }
 }
 
@@ -61,6 +61,11 @@
 .catalogs {
   display: flex;
   flex-wrap: wrap;
+  .title {
+    font-size: 30px;
+    color: #333;
+    margin-bottom: 20px;
+  }
 }
 
 .catalogTable {

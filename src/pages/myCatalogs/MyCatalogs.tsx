@@ -71,6 +71,7 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 
 	return (
 		<div className={cn('containerAdminWhite', styles.catalogs)}>
+			<span className={styles.title}>My Catalog</span>
 			<FiltersMyCatalog />
 			<div className={styles.line}></div>
 			<table className={styles.catalogTable}>
@@ -117,7 +118,7 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 								</td>
 								<td>
 									<div className={styles.titleCategory}>
-										<span>{product.category}</span>
+										<span>{product.category.name}</span>
 									</div>
 								</td>
 								<td className={cn('numberDark')}>{product.count}</td>

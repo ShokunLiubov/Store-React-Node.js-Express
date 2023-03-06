@@ -1,4 +1,5 @@
 import ProductBasketDto from "../dto/productBasketDto"
+import Category from '../models/Category'
 import Products from "../models/Products"
 import productService from "../service/productService"
 
@@ -15,7 +16,9 @@ class productsController {
         filters.title = new RegExp(`${search}`, "i")
       }
       if (category) {
-        filters.category = { $in: category.split(',') }
+        const categories = category.split(',')
+        const categoryIds = await Category.find({ name: { $in: categories } }, '_id')
+        filters.category = { $in: categoryIds }
       }
       if (count) {
         const { $gte, $lte } = count
@@ -27,7 +30,14 @@ class productsController {
         filters.price = { $gte, $lte }
       }
 
-      const products = await Products.paginate(filters, { page, limit, sort: [[sortField, sortOrder]] })
+      const products = await Products.paginate(filters, {
+        page, limit,
+        sort: [[sortField, sortOrder]],
+        populate: [
+          { path: "category", select: 'name -_id' },
+          { path: "classification", select: 'name -_id' },
+        ],
+      })
 
       return res.json(products)
     } catch (e) {
