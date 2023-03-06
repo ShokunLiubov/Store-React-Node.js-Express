@@ -4,7 +4,7 @@ import mongoosePaginate from 'mongoose-paginate-v2'
 const User = new Schema({
   username: { type: String, unique: true, required: true },
   password: { type: String, required: true },
-  roles: { type: Schema.Types.ObjectId, ref: "Role" },
+  roles: [{ type: Schema.Types.ObjectId, ref: "Role" }],
   userInfo: { type: Schema.Types.ObjectId, ref: "UserInfo" },
   orders: [{ type: Schema.Types.ObjectId, ref: "Order" }],
 })

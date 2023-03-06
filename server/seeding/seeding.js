@@ -1,3 +1,5 @@
+import Category from '../models/Category'
+import Classification from '../models/Classification'
 import Order from '../models/Order'
 import Products from '../models/Products'
 import Token from '../models/Token'
@@ -18,6 +20,8 @@ class seeding {
             await Order.deleteMany({})
             await Products.deleteMany({})
             await Token.deleteMany({})
+            await Category.deleteMany({})
+            await Classification.deleteMany({})
         } catch (e) {
             console.log(e)
         }

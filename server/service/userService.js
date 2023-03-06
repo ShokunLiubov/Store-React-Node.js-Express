@@ -22,7 +22,7 @@ class UserService {
     const user = await User.create({
       username,
       password: hashPassword,
-      roles: [userRole.value],
+      roles: [userRole._id],
     })
     const userDto = new UserDto(user) // id, username
     const tokens = tokenService.generateTokens({ ...userDto })
@@ -37,7 +37,11 @@ class UserService {
 
   async login(username, password) {
 
-    const user = await User.findOne({ username })
+    const user = await User
+      .findOne({ username })
+      .populate({
+        path: "roles",
+      })
 
     // Check User presence
     if (!user) {
@@ -80,7 +84,7 @@ class UserService {
       throw AuthError.UnauthorizedError()
     }
 
-    const user = await User.findById(userData.id)
+    const user = await User.findById(userData.id).populate('roles')
     const userDto = new UserDto(user) // id, username
     const tokens = tokenService.generateTokens({ ...userDto })
     await tokenService.saveToken(userDto.id, tokens.refreshToken)

@@ -10,7 +10,6 @@ class userController {
       const user = await User.findById({ _id: id }).populate({
         path: "userInfo",
         model: "UserInfo",
-        // select:
       })
 
       return res.json(user.userInfo)
@@ -24,14 +23,20 @@ class userController {
     try {
       const { page, limit, sortField, sortOrder } = req.query
 
-      const users = await User.paginate({ roles: "USER" }, {
+      const users = await User.paginate({}, {
         page, limit,
         select: 'username userInfo',
         populate: {
-          path: "userInfo",
-          model: "UserInfo",
-          select: 'email phone address -_id',
+
         },
+        populate: [
+          {
+            path: "userInfo",
+            model: "UserInfo",
+            select: 'email phone address -_id',
+          },
+          { path: "roles", match: { value: 'USER' } },
+        ],
         sort: [[sortField, sortOrder]],
       })
 

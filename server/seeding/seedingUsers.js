@@ -15,7 +15,7 @@ class seedingUsers {
                 const user = await User.create({
                     username: faker.internet.userName(),
                     password: hashPassword,
-                    roles: userRole._id,
+                    roles: [userRole._id],
                 })
                 const userInfo = await UserInfo.create({
                     fullName: faker.name.fullName(),
