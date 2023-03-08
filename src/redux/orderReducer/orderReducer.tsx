@@ -8,6 +8,7 @@ interface IOrderState {
 	totalPages: number
 	sortField: string
 	sortOrder: string
+	filters: any
 }
 
 let initialState: IOrderState = {
@@ -16,6 +17,7 @@ let initialState: IOrderState = {
 	totalPages: 0,
 	sortField: '_id',
 	sortOrder: 'asc',
+	filters: {},
 }
 
 export const orderReducer = (
@@ -31,6 +33,11 @@ export const orderReducer = (
 				totalPages: action.totalPages,
 				sortField: action.sortField,
 				sortOrder: action.sortOrder,
+			}
+		case actionType.SET_FILTERS_FOR_ORDERS:
+			return {
+				...state,
+				filters: action.filters,
 			}
 
 		default:

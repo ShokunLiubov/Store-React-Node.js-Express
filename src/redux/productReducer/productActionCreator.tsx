@@ -30,3 +30,13 @@ export const setFilters = (filters: any) => ({
 	type: actionType.SET_FILTERS_FOR_PRODUCTS,
 	filters,
 })
+
+export const setCategory = (categories: any) => ({
+	type: actionType.SET_CATEGORIES_FOR_PRODUCTS,
+	categories,
+})
+
+export const setClassifications = (classifications: any) => ({
+	type: actionType.SET_CLASSIFICATIONS_FOR_PRODUCTS,
+	classifications,
+})

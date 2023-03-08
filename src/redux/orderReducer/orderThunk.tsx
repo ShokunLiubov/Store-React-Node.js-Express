@@ -12,6 +12,7 @@ export const getOrders = (
 	filters: any,
 ) => {
 	return async (dispatch: Dispatch) => {
+		dispatch(AC.setFiltersOrders(filters))
 		let response = await orderService.getOrders(
 			currentPage,
 			sortField,

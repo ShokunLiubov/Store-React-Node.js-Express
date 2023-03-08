@@ -5,7 +5,6 @@ import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { compose } from 'redux'
 import * as Yup from 'yup'
-import { selectCategory } from '../../../../data/select/selectCategory'
 import { getProducts } from '../../../../redux/productReducer/productThunk'
 import { AppStateType } from '../../../../redux/redux-store'
 import { handleInputChange } from '../../../../utils/debounce/handleInputChange'
@@ -23,7 +22,7 @@ interface IFiltersMyCatalog {
 		sortOrder: string,
 		values: any,
 	) => void
-	filters: any
+	categories: any
 }
 
 interface FormValues {
@@ -43,8 +42,11 @@ export const FiltersMyCatalog: React.FC<IFiltersMyCatalog> = ({
 	sortField,
 	sortOrder,
 	getProducts,
-	filters,
+	categories,
 }) => {
+	const selectCategory = categories.map((category: any) => {
+		return { value: category._id, label: category.name }
+	})
 	const validationSchema = Yup.object().shape({
 		search: Yup.string(),
 		category: Yup.array(),
@@ -143,7 +145,7 @@ export const FiltersMyCatalog: React.FC<IFiltersMyCatalog> = ({
 						isMulti
 						name='colors'
 						options={selectCategory}
-						value={selectCategory.filter(option =>
+						value={selectCategory.filter((option: any) =>
 							formik.values.category.includes(option.value),
 						)}
 						onChange={(e: any) => {
@@ -174,7 +176,7 @@ const mapStateToProps = (state: AppStateType) => {
 	return {
 		sortField: state.product.sortField,
 		sortOrder: state.product.sortOrder,
-		filters: state.product.filters,
+		categories: state.product.categories,
 	}
 }
 

@@ -6,13 +6,40 @@
   height: 100%;
 }
 
-.sort {
-  cursor: pointer;
+.containerAdminDark {
   position: relative;
-  span {
-    position: absolute;
+  .pageNavbar {
+    .selectedPage, .navigationButton {
+      color: #bfbfc6;
+    }
+  }
+  .title {
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+  label {
     color: #bfbfc6;
-    top: 13px
+  }
+  span{
+    color: #bfbfc6;
+  }
+  .selectedPageActive {
+    color: #792c9b !important;
+  }
+  .line {
+    width: 100%;
+    border-bottom: 1px solid #3e3e50;
+    margin: 20px 0px 15px;
+  }
+}
+
+.sort {
+  margin: 0px;
+  display: flex;
+  cursor: pointer;
+  span {
+
+    color: #bfbfc6;
   }
 }
 

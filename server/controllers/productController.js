@@ -1,5 +1,4 @@
 import ProductBasketDto from "../dto/productBasketDto"
-import Category from '../models/Category'
 import Products from "../models/Products"
 import productService from "../service/productService"
 
@@ -17,8 +16,7 @@ class productsController {
       }
       if (category) {
         const categories = category.split(',')
-        const categoryIds = await Category.find({ name: { $in: categories } }, '_id')
-        filters.category = { $in: categoryIds }
+        filters.category = { $in: categories }
       }
       if (count) {
         const { $gte, $lte } = count

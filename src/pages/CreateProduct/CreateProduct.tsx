@@ -1,19 +1,17 @@
 import cn from 'classnames'
 import { useFormik } from 'formik'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
+import Select from 'react-select'
 import { compose } from 'redux'
 import { Input } from '../../components/ui/form/input/Input'
 import { Radio } from '../../components/ui/form/radio/Radio'
-// import { Select } from '../../components/ui/form/select/Select'
-import Select from 'react-select'
 import { Textarea } from '../../components/ui/form/textarea/Textarea'
-import { selectCategory } from '../../data/select/selectCategory'
-import { selectClassification } from '../../data/select/selectClassification'
 import { selectTypeAroma } from '../../data/select/selectTypeAroma'
 import {
 	createNewProduct,
+	getSelectData,
 	updateProduct,
 } from '../../redux/productReducer/productThunk'
 import { AppStateType } from '../../redux/redux-store'
@@ -25,13 +23,28 @@ interface CreateProductProps {
 	createNewProduct: (formData: any) => void
 	updateProduct: (formData: any, id: any) => void
 	editProduct: IProduct
+	getSelectData: any
+	categories: any
+	classifications: any
 }
 
 export const CreateProduct: React.FC<CreateProductProps> = ({
 	createNewProduct,
 	editProduct,
 	updateProduct,
+	getSelectData,
+	categories,
+	classifications,
 }) => {
+	useEffect(() => {
+		getSelectData()
+	}, [])
+	const selectClassification = classifications.map((classification: any) => {
+		return { value: classification._id, label: classification.name }
+	})
+	const selectCategory = categories.map((category: any) => {
+		return { value: category._id, label: category.name }
+	})
 	const navigate = useNavigate()
 	let pathnameEditProduct = useLocation().pathname === '/edit-product'
 	const [validateAfterSubmit, setValidateAfterSubmit] = useState(false)
@@ -125,7 +138,7 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 						name='category'
 						options={selectCategory}
 						value={selectCategory.filter(
-							option => option.value === formik.values.category,
+							(option: any) => option.value === formik.values.category,
 						)}
 						onChange={(e: any) => {
 							handleSelectChange(e, 'category')
@@ -140,7 +153,7 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 						name='classification'
 						options={selectClassification}
 						value={selectClassification.filter(
-							option => option.value === formik.values.classification,
+							(option: any) => option.value === formik.values.classification,
 						)}
 						onChange={(e: any) => {
 							handleSelectChange(e, 'classification')
@@ -205,9 +218,11 @@ const mapStateToProps = (state: AppStateType) => {
 	return {
 		productsData: state.product.productsData,
 		editProduct: state.product.editProduct,
+		categories: state.product.categories,
+		classifications: state.product.classifications,
 	}
 }
 
 export default compose(
-	connect(mapStateToProps, { createNewProduct, updateProduct }),
+	connect(mapStateToProps, { createNewProduct, updateProduct, getSelectData }),
 )(CreateProduct)

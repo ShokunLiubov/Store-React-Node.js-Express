@@ -1,4 +1,6 @@
 import { Dispatch } from 'redux'
+import { categoryService } from '../../api/services/categoryService'
+import { classificationService } from '../../api/services/classificationsService'
 import { productService } from '../../api/services/productService'
 import { IProduct } from '../../shared/interfaces/product.interface'
 import { AppStateType } from '../redux-store'
@@ -11,6 +13,8 @@ export const getProducts = (
 	filters: any,
 ) => {
 	return async (dispatch: Dispatch) => {
+		const category = await categoryService.getAllCategory()
+		dispatch(AC.setCategory(category))
 		dispatch(AC.setFilters(filters))
 		const response = await productService.getProducts(
 			currentPage,
@@ -18,6 +22,7 @@ export const getProducts = (
 			sortOrder,
 			filters,
 		)
+
 		const { docs, page, totalPages } = response.data
 
 		dispatch(AC.setProducts(docs, page, totalPages, sortField, sortOrder))
@@ -55,5 +60,14 @@ export const updateProduct = (productEdit: IProduct, id: string) => {
 		const { currentPage, sortField, sortOrder } = product
 		await productService.updateProductEdit(productEdit, id)
 		dispatch(getProducts(currentPage, sortField, sortOrder, {}))
+	}
+}
+
+export const getSelectData = () => {
+	return async (dispatch: any) => {
+		const categories = await categoryService.getAllCategory()
+		dispatch(AC.setCategory(categories))
+		const classifications = await classificationService.getAllClassifications()
+		dispatch(AC.setClassifications(classifications))
 	}
 }

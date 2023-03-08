@@ -15,3 +15,8 @@ export const setOrders = (
 	sortField,
 	sortOrder,
 })
+
+export const setFiltersOrders = (filters: any) => ({
+	type: actionType.SET_FILTERS_FOR_ORDERS,
+	filters,
+})

@@ -6,7 +6,6 @@ class productService {
     async createProduct(payload, filename) {
 
         const { title, category, classification, price, count, gender, volume, type_of_aroma, country_of_TM, made_in, description } = payload
-
         await Products.createIndexes()
         const product = await Products.create({
             image: "./../../image_product/" + filename,

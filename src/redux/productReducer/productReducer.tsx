@@ -10,6 +10,8 @@ interface IProductState {
 	sortField: string
 	sortOrder: string
 	filters: any
+	categories: any
+	classifications: any
 }
 
 let initialState: IProductState = {
@@ -19,18 +21,9 @@ let initialState: IProductState = {
 	editProduct: {},
 	sortField: '_id',
 	sortOrder: 'asc',
-	filters: {
-		search: '',
-		category: [],
-		count: {
-			$gte: '',
-			$lte: '',
-		},
-		price: {
-			$gte: '',
-			$lte: '',
-		},
-	},
+	filters: {},
+	categories: [],
+	classifications: [],
 }
 
 export const productReducer = (
@@ -52,7 +45,16 @@ export const productReducer = (
 				...state,
 				filters: action.filters,
 			}
-
+		case actionType.SET_CATEGORIES_FOR_PRODUCTS:
+			return {
+				...state,
+				categories: action.categories,
+			}
+		case actionType.SET_CLASSIFICATIONS_FOR_PRODUCTS:
+			return {
+				...state,
+				classifications: action.classifications,
+			}
 		case actionType.DELETE_PRODUCT:
 			return {
 				...state,

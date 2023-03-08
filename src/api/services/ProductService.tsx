@@ -53,8 +53,6 @@ export class productService {
 	}
 
 	static async updateProductEdit(product: IProduct, productId: string) {
-		// console.log(product)
-
 		return $API.put(`products/edit/${productId}`, product)
 	}
 }

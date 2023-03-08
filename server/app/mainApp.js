@@ -35,6 +35,8 @@ app.use("/auth", routers.authRouter)
 app.use("/products", routers.productsRouter)
 app.use("/orders", routers.orderRouter)
 app.use("/users", routers.userRouter)
+app.use("/category", routers.categoryRouter)
+app.use("/classification", routers.classificationRouter)
 
 app.use(errorMiddleware)
 
