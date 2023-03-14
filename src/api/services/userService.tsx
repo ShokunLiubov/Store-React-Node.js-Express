@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios'
-import { IUserInfo } from '../../shared/interfaces/userInfo.interface'
+import { IUserInfo } from '../../shared/interfaces/userInterface/userInfo.interface'
 import { $API } from '../api'
 
 export class userService {
@@ -7,10 +7,21 @@ export class userService {
 		page: number,
 		sortField: string,
 		sortOrder: string,
+		filters: any,
 	): Promise<AxiosResponse<any>> {
-		return $API.get<any>(
-			`users?page=${page}&limit=15&sortField=${sortField}&sortOrder=${sortOrder}`,
-		)
+		const { search, city } = filters
+
+		let url = `users?page=${page}&limit=15&sortField=${sortField}&sortOrder=${sortOrder}`
+
+		if (search) {
+			url += `&search=${search}`
+		}
+
+		if (city) {
+			url += `&city=${city}`
+		}
+
+		return $API.get<any>(url)
 	}
 
 	static async getUserInfoForDelivery(): Promise<AxiosResponse<IUserInfo>> {

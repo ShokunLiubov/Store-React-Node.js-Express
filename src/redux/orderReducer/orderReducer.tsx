@@ -1,4 +1,5 @@
 import { AnyAction } from 'redux'
+import { IFiltersOrders } from '../../shared/filters/filtersOrders.interface'
 import { IOrder } from '../../shared/interfaces/order.interface'
 import * as actionType from './orderActionType'
 
@@ -8,16 +9,19 @@ interface IOrderState {
 	totalPages: number
 	sortField: string
 	sortOrder: string
-	filters: any
+	filters: IFiltersOrders
 }
 
 let initialState: IOrderState = {
 	ordersData: [],
 	currentPage: 1,
 	totalPages: 0,
-	sortField: '_id',
-	sortOrder: 'asc',
-	filters: {},
+	sortField: 'createdAt',
+	sortOrder: 'desc',
+	filters: {
+		city: [],
+		status: [],
+	},
 }
 
 export const orderReducer = (

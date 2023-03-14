@@ -1,5 +1,4 @@
 import { model, Schema } from "mongoose"
-import mongoosePaginate from 'mongoose-paginate-v2'
 
 const UserInfo = new Schema({
   fullName: { type: String },
@@ -12,5 +11,4 @@ const UserInfo = new Schema({
   },
 })
 
-UserInfo.plugin(mongoosePaginate)
 export default model("UserInfo", UserInfo)

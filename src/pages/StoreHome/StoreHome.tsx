@@ -10,7 +10,7 @@ import { addToBasket } from '../../redux/basketReducer/basketThunk'
 import { getProducts } from '../../redux/productReducer/productThunk'
 import { AppStateType } from '../../redux/redux-store'
 import { getUserInfo } from '../../redux/userReducer/userThunk'
-import { IProduct } from '../../shared/interfaces/product.interface'
+import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import styles from './storeHome.module.scss'
 
 interface IStoreHome {

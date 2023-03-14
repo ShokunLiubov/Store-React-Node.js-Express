@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
 import { useBasketModal } from '../../../context/basketModalContext'
 import { AppStateType } from '../../../redux/redux-store'
-import { IProductBasket } from '../../../shared/interfaces/productBasket.interface'
+import { IProductBasket } from '../../../shared/interfaces/productInterface/productBasket.interface'
 import './basketModal.scss'
 import ProductItem from './productItem'
 

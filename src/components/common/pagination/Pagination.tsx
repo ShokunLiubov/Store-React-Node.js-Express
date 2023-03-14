@@ -73,84 +73,90 @@ const Paginator: React.FC<IPaginator> = ({
 	}
 
 	return (
-		<nav>
-			{totalPages && (
-				<div className={'pageNavbar'}>
-					{/* prev button */}
-					<span
-						className={`${'navigationButton'} ${
-							currentPage === 1 ? 'navigationPreventNone' : ''
-						}`}
-						onClick={e => {
-							changeCurrentHandler(prevPage)
-						}}
-					>
-						&laquo;
-					</span>
-					{/* prev button */}
+		<>
+			{totalPages <= 1 ? (
+				''
+			) : (
+				<nav>
+					{totalPages && (
+						<div className={'pageNavbar'}>
+							{/* prev button */}
+							<span
+								className={`${'navigationButton'} ${
+									currentPage === 1 ? 'navigationPreventNone' : ''
+								}`}
+								onClick={e => {
+									changeCurrentHandler(prevPage)
+								}}
+							>
+								&laquo;
+							</span>
+							{/* prev button */}
 
-					{/* first button */}
-					{HTMLFirst}
-					{/* first button */}
+							{/* first button */}
+							{HTMLFirst}
+							{/* first button */}
 
-					{/* block buttons */}
-					<span
-						className={`${'selectedPage'} 
+							{/* block buttons */}
+							<span
+								className={`${'selectedPage'} 
                 ${currentPage === 1 ? 'prevNone' : ''}
                 `}
-						onClick={e => {
-							changeCurrentHandler(prevPage)
-						}}
-					>
-						{prevPage}
-					</span>
+								onClick={e => {
+									changeCurrentHandler(prevPage)
+								}}
+							>
+								{prevPage}
+							</span>
 
-					<span
-						className={`${'selectedPage'} ${'selectedPageActive'} `}
-						onClick={e => {
-							changeCurrentHandler(currentPage)
-						}}
-					>
-						{currentPage}
-					</span>
+							<span
+								className={`${'selectedPage'} ${'selectedPageActive'} `}
+								onClick={e => {
+									changeCurrentHandler(currentPage)
+								}}
+							>
+								{currentPage}
+							</span>
 
-					<span
-						className={`${'selectedPage'} 
+							<span
+								className={`${'selectedPage'} 
                 ${currentPage === lastPage ? 'prevNone' : ''}
                 `}
-						onClick={e => {
-							changeCurrentHandler(nextPage)
-						}}
-					>
-						{nextPage}
-					</span>
+								onClick={e => {
+									changeCurrentHandler(nextPage)
+								}}
+							>
+								{nextPage}
+							</span>
 
-					{/* three button */}
-					{HTMLThree}
+							{/* three button */}
+							{HTMLThree}
 
-					{/* three button */}
+							{/* three button */}
 
-					{/* block buttons */}
+							{/* block buttons */}
 
-					{/* last button */}
-					{HTMLLast}
-					{/* last button */}
+							{/* last button */}
+							{HTMLLast}
+							{/* last button */}
 
-					{/* next button */}
-					<span
-						className={`${'navigationButton'} ${
-							currentPage === lastPage ? 'navigationPreventNone' : ''
-						}`}
-						onClick={e => {
-							changeCurrentHandler(nextPage)
-						}}
-					>
-						&raquo;
-					</span>
-					{/* next button */}
-				</div>
+							{/* next button */}
+							<span
+								className={`${'navigationButton'} ${
+									currentPage === lastPage ? 'navigationPreventNone' : ''
+								}`}
+								onClick={e => {
+									changeCurrentHandler(nextPage)
+								}}
+							>
+								&raquo;
+							</span>
+							{/* next button */}
+						</div>
+					)}
+				</nav>
 			)}
-		</nav>
+		</>
 	)
 }
 

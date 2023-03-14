@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux'
 import { orderService } from '../../api/services/orderService'
-import { IProductBasket } from '../../shared/interfaces/productBasket.interface'
+import { IFiltersOrders } from '../../shared/filters/filtersOrders.interface'
+import { IProductBasket } from '../../shared/interfaces/productInterface/productBasket.interface'
 import { setEmptyBasket } from '../basketReducer/basketActionCreator'
 import { AppStateType } from '../redux-store'
 import * as AC from './orderActionCreator'
@@ -9,10 +10,11 @@ export const getOrders = (
 	currentPage: number,
 	sortField: string,
 	sortOrder: string,
-	filters: any,
+	filters: IFiltersOrders,
 ) => {
 	return async (dispatch: Dispatch) => {
 		dispatch(AC.setFiltersOrders(filters))
+
 		let response = await orderService.getOrders(
 			currentPage,
 			sortField,

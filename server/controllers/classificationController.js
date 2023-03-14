@@ -4,7 +4,7 @@ class classificationController {
 
     async getAllClassification(req, res, next) {
         try {
-            const classifications = await Classification.find({})
+            const classifications = await Classification.find({}).select('name slug')
 
             return res.status(200).json(classifications)
         } catch (e) {

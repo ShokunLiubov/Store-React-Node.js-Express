@@ -4,7 +4,7 @@ class categoryController {
 
     async getAllCategory(req, res, next) {
         try {
-            const categories = await Category.find({})
+            const categories = await Category.find({}).select('name slug')
 
             return res.status(200).json(categories)
         } catch (e) {

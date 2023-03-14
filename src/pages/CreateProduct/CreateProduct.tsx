@@ -15,7 +15,7 @@ import {
 	updateProduct,
 } from '../../redux/productReducer/productThunk'
 import { AppStateType } from '../../redux/redux-store'
-import { IProduct } from '../../shared/interfaces/product.interface'
+import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import { validateCreateProductForm } from '../../utils/validate/Validate'
 import './createProduct.scss'
 

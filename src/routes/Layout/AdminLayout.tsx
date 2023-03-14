@@ -8,7 +8,7 @@ import { Notfound } from '../../pages/notfound/Notfound'
 import { AppStateType } from '../../redux/redux-store'
 import { IHeader } from '../../shared/interfaces/header.interface'
 import { ISidebar } from '../../shared/interfaces/sidebar.interface'
-import { IUser } from '../../shared/interfaces/user.interface'
+import { IUser } from '../../shared/interfaces/userInterface/user.interface'
 
 const HEADER_ADMIN_MENU: Array<IHeader> = [
 	{ path: '/setting', icon: 'settings' },

@@ -1,19 +1,22 @@
-.ordersFilters {
+.filtersDark {
     position: relative;
     margin: 20px 0px;
     display: flex;
-    .calendarItem {
-      .rdrDefinedRangesWrapper {
-        display: none;
+    .select__multi-value {
+      background: #3d425f;
+      border-radius: 3px;
     }
-    .rdrDateDisplayWrapper {
-        display: none;
-    }
-    .rdrCalendarWrapper {
-        position: absolute;
-        top: 24px;
-        left: -30px;
-    }
+    .select__multi-value__label {
+      color: #cbcbd2;
+    } 
+
+    .overlay {
+      background-color: #f6f5f700;
+      padding-top: 186px;
+      // left: -21vw;
+      justify-content: flex-start;
+      padding-left: 9vw;
+      align-items: flex-start;
     }
     
     .calendar {
@@ -21,6 +24,7 @@
         width: 200px;
         flex-direction: column;
         height: 80px;
+        
         .calendarIcon {
             margin-top: 10px;
             color: #2480f7;
@@ -31,6 +35,10 @@
             border-radius: 0.4285rem;
             cursor: pointer;
         }
+    }
+    .calendarItem {
+      position: fixed;
+      z-index: 1000000;
     }
     .filtersOrder {
         display: flex;
@@ -84,6 +92,11 @@
           .select__option {
             cursor: pointer;
             color: #333;
+          }
+        }
+        .rdrYearPicker {
+          select {
+            max-height: 300px;
           }
         }
         label {

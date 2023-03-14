@@ -1,5 +1,6 @@
 import { AnyAction } from 'redux'
-import { IUser } from '../../shared/interfaces/user.interface'
+import { IFiltersCustomers } from '../../shared/filters/filtersCustomers.interface'
+import { IUser } from '../../shared/interfaces/userInterface/user.interface'
 import * as actionType from './userActionType'
 
 interface IUserState {
@@ -9,6 +10,7 @@ interface IUserState {
 	totalPages: number
 	sortField: string
 	sortOrder: string
+	filters: IFiltersCustomers
 }
 
 let initialState: IUserState = {
@@ -18,6 +20,9 @@ let initialState: IUserState = {
 	totalPages: 0,
 	sortField: '_id',
 	sortOrder: 'asc',
+	filters: {
+		city: [],
+	},
 }
 
 export const userReducer = (
@@ -37,6 +42,11 @@ export const userReducer = (
 
 		case actionType.SET_USER_INFO:
 			return { ...state, userInfo: action.userInfo }
+		case actionType.SET_FILTERS_FOR_USERS:
+			return {
+				...state,
+				filters: action.filters,
+			}
 		default:
 			return state
 	}

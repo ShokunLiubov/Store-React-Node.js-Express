@@ -1,4 +1,4 @@
-import { IUserInfo } from "./userInfo.interface";
+import { IUserInfo } from "./userInfo.interface"
 
 export interface IUser {
   _id: string;

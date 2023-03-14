@@ -1,5 +1,6 @@
 import User from "../models/User"
 import userService from "../service/userService"
+import aggregatePaginate from '../utils/aggregatePaginate/aggregatePaginate'
 
 class userController {
 
@@ -21,27 +22,41 @@ class userController {
   async getUsers(req, res, next) {
 
     try {
-      const { page, limit, sortField, sortOrder } = req.query
+      let { page, limit, sortField, sortOrder, search } = req.query
+      page = Number(page)
+      const regex = new RegExp(search, 'i')
 
-      const users = await User.paginate({}, {
-        page, limit,
-        select: 'username userInfo',
-        populate: {
+      const aggregateBody = [{
+        $lookup: {
+          from: "userinfos",
+          localField: "userInfo",
+          foreignField: "_id",
+          as: "userInfo"
+        }
+      },
+      {
+        $unwind: "$userInfo"
+      },
+      {
+        $match: {
+          $or: [
+            { "userInfo.email": regex },
+            { "userInfo.phone": regex },
+            { "username": regex }
+          ]
+        }
+      }]
 
-        },
-        populate: [
-          {
-            path: "userInfo",
-            model: "UserInfo",
-            select: 'email phone address -_id',
-          },
-          { path: "roles", match: { value: 'USER' } },
-        ],
-        sort: [[sortField, sortOrder]],
+      const sort = { [sortField]: sortOrder }
+
+      const { docs, totalPages } = await aggregatePaginate.aggregatePaginate(page, limit, User, aggregateBody, sort)
+
+      return res.json({
+        docs,
+        totalPages, page
       })
 
 
-      return res.json(users)
     } catch (e) {
       console.log(e)
     }

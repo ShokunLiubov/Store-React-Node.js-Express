@@ -33,6 +33,18 @@
   }
 }
 
+.notFoundByFilters {
+  width: 94%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  span {
+    font-size: 36px;
+    color: #bfbfc6;
+  }
+}
+
 .sort {
   margin: 0px;
   display: flex;

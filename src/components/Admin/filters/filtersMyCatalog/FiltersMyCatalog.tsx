@@ -7,38 +7,26 @@ import { compose } from 'redux'
 import * as Yup from 'yup'
 import { getProducts } from '../../../../redux/productReducer/productThunk'
 import { AppStateType } from '../../../../redux/redux-store'
+import { IFiltersProduct } from '../../../../shared/filters/filtersProducts.interface'
 import { handleInputChange } from '../../../../utils/debounce/handleInputChange'
 import { handleSelectChange } from '../../../../utils/debounce/handleSelectChange'
 import { Input } from '../../../ui/form/input/Input'
 import { Search } from '../../search/Search'
 import './filtersMyCatalog.scss'
 
-interface IFiltersMyCatalog {
+interface IFiltersMyCatalogProps {
 	sortField: string
 	sortOrder: string
 	getProducts: (
 		page: number,
 		sortField: string,
 		sortOrder: string,
-		values: any,
+		values: IFiltersProduct,
 	) => void
 	categories: any
 }
 
-interface FormValues {
-	search: string
-	category: Array<string>
-	count: {
-		$gte: string
-		$lte: string
-	}
-	price: {
-		$gte: string
-		$lte: string
-	}
-}
-
-export const FiltersMyCatalog: React.FC<IFiltersMyCatalog> = ({
+export const FiltersMyCatalog: React.FC<IFiltersMyCatalogProps> = ({
 	sortField,
 	sortOrder,
 	getProducts,
@@ -66,7 +54,7 @@ export const FiltersMyCatalog: React.FC<IFiltersMyCatalog> = ({
 	const [priceGte, setPriceGte] = useState('')
 	const [priceLte, setPriceLte] = useState('')
 
-	const formik = useFormik<FormValues>({
+	const formik = useFormik<IFiltersProduct>({
 		initialValues: {
 			search: '',
 			category: [],
@@ -80,13 +68,13 @@ export const FiltersMyCatalog: React.FC<IFiltersMyCatalog> = ({
 			},
 		},
 		validationSchema,
-		onSubmit: values => {
+		onSubmit: (values: IFiltersProduct) => {
 			getProducts(1, sortField, sortOrder, values)
 		},
 	})
 
 	return (
-		<form className={'catalogFilters'} onSubmit={formik.handleSubmit}>
+		<form className={'filters'} onSubmit={formik.handleSubmit}>
 			<div className={'filterFromTo'}>
 				<span>Count</span>
 				<div className={'inputFromTo'}>

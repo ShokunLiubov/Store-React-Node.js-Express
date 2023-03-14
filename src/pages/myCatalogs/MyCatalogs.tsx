@@ -11,31 +11,32 @@ import {
 	getProducts,
 } from '../../redux/productReducer/productThunk'
 import { AppStateType } from '../../redux/redux-store'
-import { IProduct } from '../../shared/interfaces/product.interface'
+import { IFiltersProduct } from '../../shared/filters/filtersProducts.interface'
+import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import styles from './myCatalogs.module.scss'
 
 interface IMyCatalogsProps {
 	getProducts: (
-		currentPage: number,
+		page: number,
 		sortField: string,
 		sortOrder: string,
-		values: any,
+		filters: IFiltersProduct,
 	) => void
 	productsData: Array<IProduct>
 	deleteProduct: (id: string) => void
-	currentPage: number
+	page: number
 	totalPages: number
 	editProduct: (productId: string) => void
 	sortField: string
 	sortOrder: string
-	filters: any
+	filters: IFiltersProduct
 }
 
 export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 	getProducts,
 	productsData,
 	deleteProduct,
-	currentPage,
+	page,
 	totalPages,
 	editProduct,
 	sortField,
@@ -43,7 +44,7 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 	filters,
 }) => {
 	useEffect(() => {
-		getProducts(currentPage, sortField, sortOrder, {})
+		getProducts(page, sortField, sortOrder, filters)
 	}, [])
 
 	const [sort, setSort] = useState(true)
@@ -74,81 +75,91 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 			<span className={styles.title}>My Catalog</span>
 			<FiltersMyCatalog />
 			<div className={styles.line}></div>
-			<table className={styles.catalogTable}>
-				<thead>
-					<tr>
-						<th>Image</th>
-						<th
-							onClick={() => setSortCatalog('title', sort)}
-							className={cn(styles.sort)}
-						>
-							Title
-							{sortArrow}
-						</th>
-						<th className={styles.thSmall}>Category</th>
-						<th className={styles.thSmall}>Count</th>
-						<th
-							className={cn(styles.thSmall, styles.sort)}
-							onClick={() => setSortCatalog('price', sort)}
-						>
-							Price
-							{sortArrow}
-						</th>
-						<th className={styles.thSmall}>Edit</th>
-						<th className={styles.thSmall}>Delete</th>
-					</tr>
-				</thead>
-				<tbody>
-					{productsData.length > 0 &&
-						productsData.map((product: any) => (
-							<tr key={product._id} className={styles.cardProduct}>
-								<td>
-									<img
-										src={
-											product.image
-												? product.image
-												: './../../image_product/112cd464-94fd-4fbe-9200-5e7e83fe4c69_640x490_fit.jpeg'
-										}
-									/>
-								</td>
-								<td>
-									<div className={styles.titleProduct}>
-										<span>{product.title}</span>
-									</div>
-								</td>
-								<td>
-									<div className={styles.titleCategory}>
-										<span>{product.category.name}</span>
-									</div>
-								</td>
-								<td className={cn('numberDark')}>{product.count}</td>
-								<td className={cn('numberDark')}>{product.price}$</td>
-								<td>
-									<NavLink
-										to={'/edit-product'}
-										className={cn('material-symbols-outlined', styles.editIcon)}
-										onClick={() => editProduct(product._id)}
-									>
-										edit_square
-									</NavLink>
-								</td>
-								<td>
-									<span
-										className={cn(
-											'material-symbols-outlined',
-											styles.deleteIcon,
-										)}
-										onClick={() => deleteProduct(product._id)}
-									>
-										delete
-									</span>
-								</td>
-							</tr>
-						))}
-				</tbody>
-			</table>
+
+			{!productsData.length ? (
+				<div className={styles.notFound}>
+					<span>Products Not Found </span>
+				</div>
+			) : (
+				<table className={styles.catalogTable}>
+					<thead>
+						<tr>
+							<th>Image</th>
+							<th
+								onClick={() => setSortCatalog('title', sort)}
+								className={cn(styles.sort)}
+							>
+								Title
+								{sortArrow}
+							</th>
+							<th className={styles.thSmall}>Category</th>
+							<th className={styles.thSmall}>Count</th>
+							<th
+								className={cn(styles.thSmall, styles.sort)}
+								onClick={() => setSortCatalog('price', sort)}
+							>
+								Price
+								{sortArrow}
+							</th>
+							<th className={styles.thSmall}>Edit</th>
+							<th className={styles.thSmall}>Delete</th>
+						</tr>
+					</thead>
+					<tbody>
+						{productsData.length > 0 &&
+							productsData.map((product: any) => (
+								<tr key={product._id} className={styles.cardProduct}>
+									<td>
+										<img
+											src={
+												product.image
+													? product.image
+													: './../../image_product/112cd464-94fd-4fbe-9200-5e7e83fe4c69_640x490_fit.jpeg'
+											}
+										/>
+									</td>
+									<td>
+										<div className={styles.titleProduct}>
+											<span>{product.title}</span>
+										</div>
+									</td>
+									<td>
+										<div className={styles.titleCategory}>
+											<span>{product.category.name}</span>
+										</div>
+									</td>
+									<td className={cn('numberDark')}>{product.count}</td>
+									<td className={cn('numberDark')}>{product.price}$</td>
+									<td>
+										<NavLink
+											to={'/edit-product'}
+											className={cn(
+												'material-symbols-outlined',
+												styles.editIcon,
+											)}
+											onClick={() => editProduct(product._id)}
+										>
+											edit_square
+										</NavLink>
+									</td>
+									<td>
+										<span
+											className={cn(
+												'material-symbols-outlined',
+												styles.deleteIcon,
+											)}
+											onClick={() => deleteProduct(product._id)}
+										>
+											delete
+										</span>
+									</td>
+								</tr>
+							))}
+					</tbody>
+				</table>
+			)}
 			<Paginator
-				currentPage={currentPage}
+				currentPage={page}
 				totalPages={totalPages}
 				onPageChange={onPageChange}
 			/>
@@ -159,7 +170,7 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 const mapStateToProps = (state: AppStateType) => {
 	return {
 		productsData: state.product.productsData,
-		currentPage: state.product.currentPage,
+		page: state.product.currentPage,
 		totalPages: state.product.totalPages,
 		sortField: state.product.sortField,
 		sortOrder: state.product.sortOrder,

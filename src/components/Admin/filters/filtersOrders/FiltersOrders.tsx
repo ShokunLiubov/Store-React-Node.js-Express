@@ -14,35 +14,25 @@ import { useCalendar } from '../../../../context/calendarContext'
 import { orderStatusArray } from '../../../../enums/orderStatus'
 import { getOrders } from '../../../../redux/orderReducer/orderThunk'
 import { AppStateType } from '../../../../redux/redux-store'
+import { IFiltersOrders } from '../../../../shared/filters/filtersOrders.interface'
 import { handleInputChange } from '../../../../utils/debounce/handleInputChange'
 import { handleSelectChange } from '../../../../utils/debounce/handleSelectChange'
 import { Input } from '../../../ui/form/input/Input'
 import { Search } from '../../search/Search'
 import './filtersOrders.scss'
 
-interface IFiltersOrders {
+interface IFiltersOrdersProps {
 	sortField: string
 	sortOrder: string
 	getOrders: (
 		page: number,
 		sortField: string,
 		sortOrder: string,
-		filters: any,
+		filters: IFiltersOrders,
 	) => void
 }
 
-interface FormValues {
-	search: string
-	createdAt: any
-	city: any
-	price: {
-		$gte: string
-		$lte: string
-	}
-	status: any
-}
-
-export const FiltersOrders: React.FC<IFiltersOrders> = ({
+export const FiltersOrders: React.FC<IFiltersOrdersProps> = ({
 	sortField,
 	sortOrder,
 	getOrders,
@@ -51,30 +41,16 @@ export const FiltersOrders: React.FC<IFiltersOrders> = ({
 		return { value: status, label: status }
 	})
 
-	// const validationSchema = Yup.object().shape({
-	// 	search: Yup.string(),
-	// 	category: Yup.array(),
-	// 	count: Yup.object().shape({
-	// 		$gte: Yup.number().nullable().integer(),
-	// 		$lte: Yup.number().nullable().integer(),
-	// 	}),
-	// 	price: Yup.object().shape({
-	// 		$gte: Yup.number().nullable().positive(),
-	// 		$lte: Yup.number().nullable().positive(),
-	// 	}),
-	// })
 	const animatedComponents = makeAnimated()
 	const [search, setSearch] = useState('')
-	const [countGte, setCountGte] = useState('')
-	const [countLte, setCountLte] = useState('')
 	const [priceGte, setPriceGte] = useState('')
 	const [priceLte, setPriceLte] = useState('')
 	const calendar = useCalendar()
 
-	const formik = useFormik<FormValues>({
+	const formik = useFormik<IFiltersOrders>({
 		initialValues: {
 			search: '',
-			createdAt: {},
+			dataRange: {},
 			city: [],
 			price: {
 				$gte: '',
@@ -82,8 +58,8 @@ export const FiltersOrders: React.FC<IFiltersOrders> = ({
 			},
 			status: [],
 		},
-		// validationSchema,
 		onSubmit: values => {
+			calendar.closeCalendar()
 			getOrders(1, sortField, sortOrder, values)
 		},
 	})
@@ -96,36 +72,35 @@ export const FiltersOrders: React.FC<IFiltersOrders> = ({
 
 	const handleSelect = (ranges: any) => {
 		setRange(ranges.selection)
-		formik.setFieldValue('createdAt', ranges)
-		calendar.toggleCalendar(true, true)
-		if (formik.values.createdAt.selection) {
-			debounce(() => {
-				formik.submitForm()
-				calendar.toggleCalendar(false, false)
-			}, 2000)()
-		}
+		formik.setFieldValue('dataRange', ranges)
+		debounce(() => {
+			formik.submitForm()
+		}, 2000)()
 	}
 
 	return (
-		<form className={'ordersFilters'} onSubmit={formik.handleSubmit}>
+		<form className={'filtersDark'} onSubmit={formik.handleSubmit}>
 			<div className={'calendar'}>
 				<label>Data checkout</label>
-				{calendar.calendar.calendar ? (
-					<div className='calendarItem'>
-						<DateRangePicker ranges={[range]} onChange={handleSelect} />
+				{calendar.calendar ? (
+					<div>
+						<div className='overlay' onClick={calendar.toggleOverlay}>
+							<div className='calendarItem'>
+								<div>
+									<DateRangePicker ranges={[range]} onChange={handleSelect} />
+								</div>
+							</div>
+						</div>
 					</div>
 				) : (
-					<div onClick={e => calendar.toggleCalendar(true, false)}>
+					<div onClick={calendar.openCalendar}>
 						<span className={cn('material-symbols-outlined', 'calendarIcon')}>
 							calendar_month
 						</span>
 					</div>
 				)}
 			</div>
-			<div
-				// onClick={() => calendar.toggleCalendar(false)}
-				className='filtersOrder'
-			>
+			<div className='filtersOrder'>
 				<div className={'filterFromTo'}>
 					<span>Total Price</span>
 					<div className={'inputFromTo'}>

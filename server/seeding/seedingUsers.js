@@ -20,7 +20,7 @@ class seedingUsers {
                 const userInfo = await UserInfo.create({
                     fullName: faker.name.fullName(),
                     email: faker.internet.email(),
-                    phone: faker.phone.number('+380 ## ### ## ##'),
+                    phone: faker.phone.number('+380#########'),
                     address: {
                         city: faker.address.cityName(),
                         street: faker.address.street(),

@@ -1,4 +1,7 @@
-import { IProduct } from '../../shared/interfaces/product.interface'
+import { IFiltersProduct } from '../../shared/filters/filtersProducts.interface'
+import { ICategory } from '../../shared/interfaces/productInterface/category.interface'
+import { IClassification } from '../../shared/interfaces/productInterface/classification.interface'
+import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import * as actionType from './productActionType'
 
 export const setProducts = (
@@ -26,17 +29,19 @@ export const setProductForEdit = (product: IProduct) => ({
 	product,
 })
 
-export const setFilters = (filters: any) => ({
+export const setFilters = (filters: IFiltersProduct) => ({
 	type: actionType.SET_FILTERS_FOR_PRODUCTS,
 	filters,
 })
 
-export const setCategory = (categories: any) => ({
+export const setCategory = (categories: Array<ICategory>) => ({
 	type: actionType.SET_CATEGORIES_FOR_PRODUCTS,
 	categories,
 })
 
-export const setClassifications = (classifications: any) => ({
+export const setClassifications = (
+	classifications: Array<IClassification>,
+) => ({
 	type: actionType.SET_CLASSIFICATIONS_FOR_PRODUCTS,
 	classifications,
 })

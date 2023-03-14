@@ -9,26 +9,27 @@ export class orderService {
 		sortOrder: string,
 		filters: any,
 	): Promise<AxiosResponse<any>> {
-		const { search, createdAt, status, price, city } = filters
+		const { search, dataRange, status, price, city } = filters
 
 		let url = `orders?page=${page}&limit=15&sortField=${sortField}&sortOrder=${sortOrder}`
+
 		if (search) {
 			url += `&search=${search}`
 		}
+
 		if (status) {
 			url += `&status=${status}`
 		}
+
 		if (city) {
 			url += `&city=${city}`
 		}
-		if (createdAt) {
-			if (createdAt.selection) {
-				const { endDate, startDate } = createdAt.selection
-				if (endDate && startDate) {
-					url += `&createdAt[endDate]=${endDate}&createdAt[startDate]=${startDate}`
-				}
-			}
+
+		if (dataRange && dataRange.selection) {
+			const { endDate, startDate } = dataRange.selection
+			url += `&dataRange[to]=${endDate}&dataRange[from]=${startDate}`
 		}
+
 		if (price) {
 			const { $gte, $lte } = price
 			if ($gte && $lte) {

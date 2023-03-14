@@ -2,7 +2,7 @@ import { Dispatch } from 'redux'
 import { categoryService } from '../../api/services/categoryService'
 import { classificationService } from '../../api/services/classificationsService'
 import { productService } from '../../api/services/productService'
-import { IProduct } from '../../shared/interfaces/product.interface'
+import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import { AppStateType } from '../redux-store'
 import * as AC from './productActionCreator'
 
@@ -14,6 +14,8 @@ export const getProducts = (
 ) => {
 	return async (dispatch: Dispatch) => {
 		const category = await categoryService.getAllCategory()
+		console.log(category)
+
 		dispatch(AC.setCategory(category))
 		dispatch(AC.setFilters(filters))
 		const response = await productService.getProducts(
