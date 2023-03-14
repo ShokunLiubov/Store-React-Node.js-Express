@@ -1,194 +1,181 @@
+import cn from 'classnames'
 import { useFormik } from 'formik'
+import { debounce } from 'lodash'
 import { useState } from 'react'
-import Datetime from 'react-datetime'
+import { DateRangePicker } from 'react-date-range'
+import 'react-date-range/dist/styles.css' // main css file
+import 'react-date-range/dist/theme/default.css' // theme css file
 import 'react-datetime/css/react-datetime.css'
 import { connect } from 'react-redux'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { compose } from 'redux'
+import { useCalendar } from '../../../../context/calendarContext'
+import { orderStatusArray } from '../../../../enums/orderStatus'
 import { getOrders } from '../../../../redux/orderReducer/orderThunk'
 import { AppStateType } from '../../../../redux/redux-store'
+import { IFiltersOrders } from '../../../../shared/filters/filtersOrders.interface'
 import { handleInputChange } from '../../../../utils/debounce/handleInputChange'
 import { handleSelectChange } from '../../../../utils/debounce/handleSelectChange'
 import { Input } from '../../../ui/form/input/Input'
 import { Search } from '../../search/Search'
-
 import './filtersOrders.scss'
 
-interface IFiltersOrders {
+interface IFiltersOrdersProps {
 	sortField: string
 	sortOrder: string
 	getOrders: (
 		page: number,
 		sortField: string,
 		sortOrder: string,
-		filters: any,
+		filters: IFiltersOrders,
 	) => void
 }
 
-interface FormValues {
-	search: string
-	createdAt: {
-		from: string
-		to: string
-	}
-	city: any
-	price: {
-		$gte: string
-		$lte: string
-	}
-	status: string
-}
-
-export const FiltersOrders: React.FC<IFiltersOrders> = ({
+export const FiltersOrders: React.FC<IFiltersOrdersProps> = ({
 	sortField,
 	sortOrder,
 	getOrders,
 }) => {
-	// const validationSchema = Yup.object().shape({
-	// 	search: Yup.string(),
-	// 	category: Yup.array(),
-	// 	count: Yup.object().shape({
-	// 		$gte: Yup.number().nullable().integer(),
-	// 		$lte: Yup.number().nullable().integer(),
-	// 	}),
-	// 	price: Yup.object().shape({
-	// 		$gte: Yup.number().nullable().positive(),
-	// 		$lte: Yup.number().nullable().positive(),
-	// 	}),
-	// })
+	const orderStatus = orderStatusArray.map((status: any) => {
+		return { value: status, label: status }
+	})
+
 	const animatedComponents = makeAnimated()
 	const [search, setSearch] = useState('')
-	const [countGte, setCountGte] = useState('')
-	const [countLte, setCountLte] = useState('')
 	const [priceGte, setPriceGte] = useState('')
 	const [priceLte, setPriceLte] = useState('')
+	const calendar = useCalendar()
 
-	const formik = useFormik<FormValues>({
+	const formik = useFormik<IFiltersOrders>({
 		initialValues: {
 			search: '',
-			createdAt: {
-				from: '',
-				to: '',
-			},
+			dataRange: {},
 			city: [],
 			price: {
 				$gte: '',
 				$lte: '',
 			},
-			status: '',
+			status: [],
 		},
-		// validationSchema,
 		onSubmit: values => {
-			console.log(values)
-
-			// getOrders(1, sortField, sortOrder, values)
+			calendar.closeCalendar()
+			getOrders(1, sortField, sortOrder, values)
 		},
 	})
 
-	const handleFromDateChange = (moment: any) => {
-		formik.setFieldValue('fromDate', moment.format('YYYY-MM-DD'))
-	}
+	const [range, setRange] = useState({
+		endDate: new Date(),
+		startDate: new Date(),
+		key: 'selection',
+	})
 
-	const handleToDateChange = (moment: any) => {
-		formik.setFieldValue('toDate', moment.format('YYYY-MM-DD'))
+	const handleSelect = (ranges: any) => {
+		setRange(ranges.selection)
+		formik.setFieldValue('dataRange', ranges)
+		debounce(() => {
+			formik.submitForm()
+		}, 2000)()
 	}
 
 	return (
-		<form className={'catalogFilters'} onSubmit={formik.handleSubmit}>
-			<div className={'filterFromTo'}>
-				<Datetime
-					// name='fromDate'
-					value={formik.values.createdAt.from}
-					onChange={handleFromDateChange}
-				/>
+		<form className={'filtersDark'} onSubmit={formik.handleSubmit}>
+			<div className={'calendar'}>
+				<label>Data checkout</label>
+				{calendar.calendar ? (
+					<div>
+						<div className='overlay' onClick={calendar.toggleOverlay}>
+							<div className='calendarItem'>
+								<div>
+									<DateRangePicker ranges={[range]} onChange={handleSelect} />
+								</div>
+							</div>
+						</div>
+					</div>
+				) : (
+					<div onClick={calendar.openCalendar}>
+						<span className={cn('material-symbols-outlined', 'calendarIcon')}>
+							calendar_month
+						</span>
+					</div>
+				)}
+			</div>
+			<div className='filtersOrder'>
+				<div className={'filterFromTo'}>
+					<span>Total Price</span>
+					<div className={'inputFromTo'}>
+						<Input
+							name={'price.$gte'}
+							label={'from'}
+							formik={formik}
+							type={'number'}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+								setPriceGte(e.target.value)
+								handleInputChange(e, 'price.$gte', formik)
+							}}
+						/>
+						<Input
+							name={'price.$lte'}
+							label={'to'}
+							formik={formik}
+							type={'number'}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+								setPriceLte(e.target.value)
+								handleInputChange(e, 'price.$lte', formik)
+							}}
+						/>
+					</div>
+				</div>
+				<div>
+					<span>Status Order</span>
+					<div className={'select'}>
+						<Select
+							isMulti
+							name='colors'
+							options={orderStatus}
+							value={orderStatus.filter((option: any) =>
+								formik.values.status.includes(option.value),
+							)}
+							onChange={(e: any) => {
+								handleSelectChange(e, 'status', formik)
+							}}
+							classNamePrefix='select'
+							closeMenuOnSelect={false}
+							components={animatedComponents}
+						/>
+					</div>
+				</div>
 
-				<label htmlFor='toDate'>To Date</label>
-				<Datetime
-					// name='toDate'
-					value={formik.values.createdAt.to}
-					onChange={handleToDateChange}
-				/>
-
-				<span>Count</span>
-				<div className={'inputFromTo'}>
-					<Input
-						name={'count.$gte'}
-						label={'from'}
-						formik={formik}
-						type={'number'}
+				<div>
+					<span>City</span>
+					<div className={'select'}>
+						<Select
+							isMulti
+							name='colors'
+							// options={orderStatus}
+							// value={orderStatus.filter((option: any) =>
+							// 	formik.values.status.includes(option.value),
+							// )}
+							// onChange={(e: any) => {
+							// 	handleSelectChange(e, 'status', formik)
+							// }}
+							classNamePrefix='select'
+							closeMenuOnSelect={false}
+							components={animatedComponents}
+						/>
+					</div>
+				</div>
+				<div className={'search'}>
+					<Search
+						name='search'
 						onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-							setCountGte(e.target.value)
-							handleInputChange(e, 'count.$gte', formik)
+							setSearch(e.target.value)
+							handleInputChange(e, 'search', formik)
 						}}
-					/>
-					<Input
-						name={'count.$lte'}
-						label={'to'}
-						formik={formik}
-						type={'number'}
-						onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-							setCountLte(e.target.value)
-							handleInputChange(e, 'count.$lte', formik)
-						}}
+						value={search}
+						placeholder={'Search clients...'}
 					/>
 				</div>
-			</div>
-
-			<div className={'filterFromTo'}>
-				<span>Price</span>
-				<div className={'inputFromTo'}>
-					<Input
-						name={'price.$gte'}
-						label={'from'}
-						formik={formik}
-						type={'number'}
-						onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-							setPriceGte(e.target.value)
-							handleInputChange(e, 'price.$gte', formik)
-						}}
-					/>
-					<Input
-						name={'price.$lte'}
-						label={'to'}
-						formik={formik}
-						type={'number'}
-						onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-							setPriceLte(e.target.value)
-							handleInputChange(e, 'price.$lte', formik)
-						}}
-					/>
-				</div>
-			</div>
-			<div>
-				<span>Category</span>
-				<div className={'selectCategory'}>
-					<Select
-						isMulti
-						name='colors'
-						// options={selectCategory}
-						// value={selectCategory.filter(option =>
-						// 	formik.values.category.includes(option.value),
-						// )}
-						onChange={(e: any) => {
-							handleSelectChange(e, 'category', formik)
-						}}
-						classNamePrefix='select'
-						closeMenuOnSelect={false}
-						components={animatedComponents}
-					/>
-				</div>
-			</div>
-			<div className={'search'}>
-				<Search
-					name='search'
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-						setSearch(e.target.value)
-						handleInputChange(e, 'search', formik)
-					}}
-					value={search}
-					placeholder={'Search products...'}
-				/>
 			</div>
 		</form>
 	)

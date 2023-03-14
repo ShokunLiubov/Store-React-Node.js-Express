@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios'
-import { IProduct } from '../../shared/interfaces/product.interface'
-import { IProductBasket } from '../../shared/interfaces/productBasket.interface'
+import { IFiltersProduct } from '../../shared/filters/filtersProducts.interface'
+import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
+import { IProductBasket } from '../../shared/interfaces/productInterface/productBasket.interface'
 import { $API } from '../api'
 
 export class productService {
@@ -8,7 +9,7 @@ export class productService {
 		page: number,
 		sortField: string,
 		sortOrder: string,
-		filters: any,
+		filters: IFiltersProduct,
 	): Promise<AxiosResponse<any>> {
 		const { search, category, count, price } = filters
 		let url = `products?page=${page}&limit=12&sortField=${sortField}&sortOrder=${sortOrder}`
@@ -53,8 +54,6 @@ export class productService {
 	}
 
 	static async updateProductEdit(product: IProduct, productId: string) {
-		// console.log(product)
-
 		return $API.put(`products/edit/${productId}`, product)
 	}
 }

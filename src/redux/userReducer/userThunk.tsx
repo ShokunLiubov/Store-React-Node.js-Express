@@ -1,18 +1,22 @@
 import { Dispatch } from 'redux'
 import { userService } from '../../api/services/userService'
-import { IUserInfo } from '../../shared/interfaces/userInfo.interface'
+import { IFiltersCustomers } from '../../shared/filters/filtersCustomers.interface'
+import { IUserInfo } from '../../shared/interfaces/userInterface/userInfo.interface'
 import * as AC from './userActionCreator'
 
 export const getUsers = (
 	currentPage: number,
 	sortField: string,
 	sortOrder: string,
+	filters: IFiltersCustomers,
 ) => {
 	return async (dispatch: Dispatch) => {
+		dispatch(AC.setFiltersUsers(filters))
 		const response = await userService.fetchUsers(
 			currentPage,
 			sortField,
 			sortOrder,
+			filters,
 		)
 
 		const { docs, page, totalPages } = response.data

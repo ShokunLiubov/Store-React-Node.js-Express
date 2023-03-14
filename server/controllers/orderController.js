@@ -1,3 +1,4 @@
+import orderFilters from '../filters/orderFilters'
 import Order from '../models/Order'
 import orderService from "../service/orderService"
 
@@ -8,9 +9,11 @@ class orderController {
     try {
       const { page, limit, sortField, sortOrder } = req.query
 
-      const orders = await Order.paginate({}, { page, limit, sort: [[sortField, sortOrder]] })
+      const filters = await orderFilters.orderFilters(req.query)
 
-      return res.json(orders)
+      const orders = await Order.paginate(filters, { page, limit, sort: [[sortField, sortOrder]] })
+
+      return res.status(200).json(orders)
     } catch (e) {
       console.log(e)
     }

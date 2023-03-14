@@ -1,5 +1,5 @@
 import ProductBasketDto from "../dto/productBasketDto"
-import Category from '../models/Category'
+import productFilters from '../filters/productFilters'
 import Products from "../models/Products"
 import productService from "../service/productService"
 
@@ -9,26 +9,9 @@ class productsController {
   async getProducts(req, res, next) {
 
     try {
-      const { page, limit, sortField, sortOrder, search, category, count, price } = req.query
-      const filters = {}
+      const { page, limit, sortField, sortOrder } = req.query
 
-      if (search) {
-        filters.title = new RegExp(`${search}`, "i")
-      }
-      if (category) {
-        const categories = category.split(',')
-        const categoryIds = await Category.find({ name: { $in: categories } }, '_id')
-        filters.category = { $in: categoryIds }
-      }
-      if (count) {
-        const { $gte, $lte } = count
-
-        filters.count = { $gte, $lte }
-      }
-      if (price) {
-        const { $gte, $lte } = price
-        filters.price = { $gte, $lte }
-      }
+      const filters = await productFilters.productFilters(req.query)
 
       const products = await Products.paginate(filters, {
         page, limit,
@@ -39,14 +22,14 @@ class productsController {
         ],
       })
 
-      return res.json(products)
+      return res.status(200).json(products)
     } catch (e) {
       console.log(e)
       res.status(400).json({ message: "Products error" })
     }
   }
 
-  async getProduct(req, res, next) {
+  async getProductForBasket(req, res, next) {
 
     try {
       const product = await Products.findById(req.params.id)

@@ -1,6 +1,6 @@
-import { validationResult } from "express-validator";
-import userService from "../service/userService";
-import AuthError from "../exception/authError";
+import { validationResult } from "express-validator"
+import AuthError from "../exception/authError"
+import userService from "../service/userService"
 
 class authController {
 
@@ -8,70 +8,70 @@ class authController {
 
     try {
       // Validation
-      const errors = validationResult(req);
+      const errors = validationResult(req)
       if (!errors.isEmpty()) {
-        return next(AuthError.BadRequest("Validation error", errors.array()));
+        return next(AuthError.BadRequest("Validation error", errors.array()))
       }
 
-      const { username, password } = req.body;
-      const userData = await userService.registration(username, password);
+      const { username, password } = req.body
+      const userData = await userService.registration(username, password)
       res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
-      });
+      })
 
-      return res.json(userData);
+      return res.json(userData)
 
     } catch (e) {
-      next(e);
+      next(e)
     }
   }
 
   async login(req, res, next) {
 
     try {
-      const { username, password } = req.body;
-      const userData = await userService.login(username, password);
+      const { username, password } = req.body
+      const userData = await userService.login(username, password)
       res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
-      });
+      })
 
-      return res.json(userData);
+      return res.json(userData)
     } catch (e) {
-      next(e);
+      next(e)
     }
   }
 
   async logout(req, res, next) {
 
     try {
-      const { refreshToken } = req.cookies;
-      const token = await userService.logout(refreshToken);
-      res.clearCookie("refreshToken");
+      const { refreshToken } = req.cookies
+      const token = await userService.logout(refreshToken)
+      res.clearCookie("refreshToken")
 
-      return res.json(token);
+      return res.json(token)
     } catch (e) {
-      next(e);
+      next(e)
     }
   }
 
   async refresh(req, res, next) {
 
     try {
-      const { refreshToken } = req.cookies;
-      const userData = await userService.refresh(refreshToken);
+      const { refreshToken } = req.cookies
+      const userData = await userService.refresh(refreshToken)
       res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
-      });
+      })
 
-      return res.json(userData);
+      return res.json(userData)
     } catch (e) {
-      next(e);
+      next(e)
     }
   }
 
 }
 
-export default new authController();
+export default new authController()

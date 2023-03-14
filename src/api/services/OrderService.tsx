@@ -9,9 +9,35 @@ export class orderService {
 		sortOrder: string,
 		filters: any,
 	): Promise<AxiosResponse<any>> {
-		return $API.get<any>(
-			`orders?page=${page}&limit=15&sortField=${sortField}&sortOrder=${sortOrder}`,
-		)
+		const { search, dataRange, status, price, city } = filters
+
+		let url = `orders?page=${page}&limit=15&sortField=${sortField}&sortOrder=${sortOrder}`
+
+		if (search) {
+			url += `&search=${search}`
+		}
+
+		if (status) {
+			url += `&status=${status}`
+		}
+
+		if (city) {
+			url += `&city=${city}`
+		}
+
+		if (dataRange && dataRange.selection) {
+			const { endDate, startDate } = dataRange.selection
+			url += `&dataRange[to]=${endDate}&dataRange[from]=${startDate}`
+		}
+
+		if (price) {
+			const { $gte, $lte } = price
+			if ($gte && $lte) {
+				url += `&price[$gte]=${$gte}&price[$lte]=${$lte}`
+			}
+		}
+
+		return $API.get<any>(url)
 	}
 
 	static async createOrder(order: IOrder): Promise<AxiosResponse<IOrder[]>> {

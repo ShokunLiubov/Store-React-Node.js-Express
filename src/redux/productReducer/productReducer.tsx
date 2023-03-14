@@ -1,5 +1,8 @@
 import { AnyAction } from 'redux'
-import { IProduct } from '../../shared/interfaces/product.interface'
+import { IFiltersProduct } from '../../shared/filters/filtersProducts.interface'
+import { ICategory } from '../../shared/interfaces/productInterface/category.interface'
+import { IClassification } from '../../shared/interfaces/productInterface/classification.interface'
+import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import * as actionType from './productActionType'
 
 interface IProductState {
@@ -9,7 +12,9 @@ interface IProductState {
 	editProduct: any
 	sortField: string
 	sortOrder: string
-	filters: any
+	filters: IFiltersProduct
+	categories: Array<ICategory>
+	classifications: Array<IClassification>
 }
 
 let initialState: IProductState = {
@@ -20,17 +25,10 @@ let initialState: IProductState = {
 	sortField: '_id',
 	sortOrder: 'asc',
 	filters: {
-		search: '',
 		category: [],
-		count: {
-			$gte: '',
-			$lte: '',
-		},
-		price: {
-			$gte: '',
-			$lte: '',
-		},
 	},
+	categories: [],
+	classifications: [],
 }
 
 export const productReducer = (
@@ -52,7 +50,16 @@ export const productReducer = (
 				...state,
 				filters: action.filters,
 			}
-
+		case actionType.SET_CATEGORIES_FOR_PRODUCTS:
+			return {
+				...state,
+				categories: action.categories,
+			}
+		case actionType.SET_CLASSIFICATIONS_FOR_PRODUCTS:
+			return {
+				...state,
+				classifications: action.classifications,
+			}
 		case actionType.DELETE_PRODUCT:
 			return {
 				...state,

@@ -1,0 +1,127 @@
+.filtersDark {
+    position: relative;
+    margin: 20px 0px;
+    display: flex;
+    .select__multi-value {
+      background: #3d425f;
+      border-radius: 3px;
+    }
+    .select__multi-value__label {
+      color: #cbcbd2;
+    } 
+
+    .overlay {
+      background-color: #f6f5f700;
+      padding-top: 186px;
+      // left: -21vw;
+      justify-content: flex-start;
+      padding-left: 9vw;
+      align-items: flex-start;
+    }
+    
+    .calendar {
+        display: flex;
+        width: 200px;
+        flex-direction: column;
+        height: 80px;
+        
+        .calendarIcon {
+            margin-top: 10px;
+            color: #2480f7;
+            font-weight: 300;
+            border: 1px solid #2480f7;
+            box-shadow: none;
+            padding: 10px 22px;
+            border-radius: 0.4285rem;
+            cursor: pointer;
+        }
+    }
+    .calendarItem {
+      position: fixed;
+      z-index: 1000000;
+    }
+    .filtersOrder {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .filterFromTo {
+        display: flex;
+        flex-direction: column;
+        .inputFromTo {
+            margin-top: 13px;
+          display: flex;
+          text-align: center;
+        }
+        label {
+          margin: 9px 0px 0px;
+        }
+        input {
+          background-color: #f4f3f5;
+          border: 1px solid #ccc;
+          border-radius: 0px;
+          height: 22px;
+          width: 46px;
+          line-height: 26px;
+          padding: 2px 5px;
+          margin: 5px 6px 0px;
+          font-size: 15px;
+        }
+      }
+
+      .select {
+        display: flex;
+        flex-direction: column;
+        .css-13cymwt-control {
+          cursor: pointer;
+          margin-top: 12px;
+          border-radius: 0px;
+          background-color: #f4f3f5;
+          border: 1px solid #ccc;
+          width: 17vw;
+        }
+        .select__control--is-focused {
+          margin-top: 12px;
+          border-radius: 0px;
+          background-color: #f4f3f5;
+          border: 1px solid #ccc;
+          width: 17vw;
+        }
+        .select__menu {
+          background-color: #f4f3f5;
+          .select__option {
+            cursor: pointer;
+            color: #333;
+          }
+        }
+        .rdrYearPicker {
+          select {
+            max-height: 300px;
+          }
+        }
+        label {
+          margin: 3px 0px;
+        }
+        input {
+          padding: 2px 5px;
+          font-size: 15px;
+        }
+      }
+
+      .search {
+        display: flex;
+        margin-top: 30px;
+        flex-direction: column;
+        input {
+          background-color: #f4f3f5;
+          border: 1px solid #ccc;
+          width: 17vw;
+          height: 39px;
+          padding: 2px 5px;
+          margin: 0px 6px;
+        }
+        input:focus {
+          outline: 1px solid #2684FF;
+        }
+      }
+}
