@@ -24,9 +24,13 @@ export const RouterCombiner: React.FC<IRouterCombiner> = ({
 		}
 	}, [])
 
-	const RoutesMap = routes.map(({ Private, Layout, Component, path }) => (
+	const RoutesMap = routes.map(({ Layout, Component, path, baseUrl }) => (
 		<Route key={path} element={isLoading ? <Preloader /> : <Layout />}>
-			<Route key={path} path={path} element={<Component />} />
+			<Route
+				key={path}
+				path={baseUrl ? `${baseUrl}${path}` : path}
+				element={<Component />}
+			/>
 		</Route>
 	))
 	return <Routes>{RoutesMap}</Routes>

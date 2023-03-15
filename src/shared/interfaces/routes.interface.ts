@@ -6,4 +6,5 @@ export interface IRoutes {
   exact?: any;
   LayoutPath?: any;
   Layoutd?: any;
+  baseUrl?: any
 }
