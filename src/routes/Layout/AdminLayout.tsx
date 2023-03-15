@@ -10,18 +10,34 @@ import { IHeader } from '../../shared/interfaces/header.interface'
 import { ISidebar } from '../../shared/interfaces/sidebar.interface'
 import { IUser } from '../../shared/interfaces/userInterface/user.interface'
 
+export const adminUrl = '/make-up-admin/'
+
 const HEADER_ADMIN_MENU: Array<IHeader> = [
 	{ path: '/setting', icon: 'settings' },
 	{ path: '/auth/login', icon: 'logout' },
 ]
 
 const SIDEBAR_ADMIN_MENU: Array<ISidebar> = [
-	{ path: 'my-catalogs', icon: 'menu_book', title: 'My Catalogs', id: 1 },
-	{ path: 'new-product', icon: 'library_add', title: 'New Product', id: 2 },
-	{ path: 'orders', icon: 'list_alt', title: 'Orders', id: 3 },
-	{ path: 'customers', icon: 'group', title: 'Customers', id: 4 },
-	{ path: 'shipping', icon: 'local_shipping', title: 'Shipping', id: 5 },
-	{ path: 'stats', icon: 'signal_cellular_alt', title: 'Stats', id: 6 },
+	{
+		path: adminUrl + 'my-catalogs',
+		icon: 'menu_book',
+		title: 'My Catalogs',
+		id: 1,
+	},
+	{
+		path: adminUrl + 'new-product',
+		icon: 'library_add',
+		title: 'New Product',
+		id: 2,
+	},
+	{ path: adminUrl + 'orders', icon: 'list_alt', title: 'Orders', id: 3 },
+	{ path: adminUrl + 'customers', icon: 'group', title: 'Customers', id: 4 },
+	{
+		path: adminUrl + 'stats',
+		icon: 'signal_cellular_alt',
+		title: 'Stats',
+		id: 6,
+	},
 ]
 
 interface AdminLayoutProps {

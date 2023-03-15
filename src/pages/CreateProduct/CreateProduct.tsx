@@ -15,6 +15,7 @@ import {
 	updateProduct,
 } from '../../redux/productReducer/productThunk'
 import { AppStateType } from '../../redux/redux-store'
+import { adminUrl } from '../../routes/layout/AdminLayout'
 import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import { validateCreateProductForm } from '../../utils/validate/Validate'
 import './createProduct.scss'
@@ -46,7 +47,7 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 		return { value: category._id, label: category.name }
 	})
 	const navigate = useNavigate()
-	let pathnameEditProduct = useLocation().pathname === '/edit-product'
+	let pathnameEditProduct = useLocation().pathname === adminUrl + 'edit-product'
 	const [validateAfterSubmit, setValidateAfterSubmit] = useState(false)
 
 	const title = pathnameEditProduct ? editProduct.title : ''
@@ -92,7 +93,7 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 				createNewProduct(formData)
 			}
 
-			navigate('/my-catalogs')
+			navigate(adminUrl + 'my-catalogs')
 		},
 		enableReinitialize: true,
 		validateOnChange: validateAfterSubmit,

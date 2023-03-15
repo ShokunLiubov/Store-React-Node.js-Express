@@ -14,7 +14,6 @@ export const getProducts = (
 ) => {
 	return async (dispatch: Dispatch) => {
 		const category = await categoryService.getAllCategory()
-		console.log(category)
 
 		dispatch(AC.setCategory(category))
 		dispatch(AC.setFilters(filters))

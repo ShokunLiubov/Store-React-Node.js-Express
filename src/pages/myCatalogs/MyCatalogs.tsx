@@ -11,6 +11,7 @@ import {
 	getProducts,
 } from '../../redux/productReducer/productThunk'
 import { AppStateType } from '../../redux/redux-store'
+import { adminUrl } from '../../routes/layout/AdminLayout'
 import { IFiltersProduct } from '../../shared/filters/filtersProducts.interface'
 import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import styles from './myCatalogs.module.scss'
@@ -132,7 +133,7 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 									<td className={cn('numberDark')}>{product.price}$</td>
 									<td>
 										<NavLink
-											to={'/edit-product'}
+											to={adminUrl + 'edit-product'}
 											className={cn(
 												'material-symbols-outlined',
 												styles.editIcon,
