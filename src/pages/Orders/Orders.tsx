@@ -128,10 +128,7 @@ export const Orders: React.FC<IOrdersProps> = ({
 											<div
 												className={cn(
 													order.status === 'Availability is check'
-														? 'count'
-														: 'statusNot',
-													order.status === 'Availability is check'
-														? 'count'
+														? 'availabilityIs'
 														: '',
 													order.status === 'Awaiting shipment' ? 'await' : '',
 													order.status === 'Sent' ? 'sent' : '',

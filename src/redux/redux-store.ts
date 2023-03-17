@@ -1,15 +1,16 @@
 import {
   applyMiddleware,
   combineReducers,
-  legacy_createStore as createStore,
-} from "redux";
-import thunkMiddleware from "redux-thunk";
-import { authReducer } from "./authReducer/authReducer";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { orderReducer } from "./orderReducer/orderReducer";
-import { productReducer } from "./productReducer/productReducer";
-import { userReducer } from "./userReducer/userReducer";
-import { basketReducer } from "./basketReducer/basketReducer";
+  legacy_createStore as createStore
+} from "redux"
+import { composeWithDevTools } from "redux-devtools-extension"
+import thunkMiddleware from "redux-thunk"
+import { authReducer } from "./authReducer/authReducer"
+import { basketReducer } from "./basketReducer/basketReducer"
+import { orderReducer } from "./orderReducer/orderReducer"
+import { productReducer } from "./productReducer/productReducer"
+import { productStoreReducer } from './productStoreReducer/productStoreReducer'
+import { userReducer } from "./userReducer/userReducer"
 
 const rootReducer = combineReducers({
   order: orderReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   auth: authReducer,
   basket: basketReducer,
+  productStore: productStoreReducer
 });
 
 type RootReducerType = typeof rootReducer;

@@ -1,16 +1,20 @@
-import React from "react";
-// import React, { createContext, PropsWithChildren, useState } from "react";
+import React, { useContext, useState } from 'react'
 
-// export const AuthContext = createContext({} as IContext);
+const AuthContext = React.createContext<any>({})
 
-// const AuthProvider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
-//   const [user, setUser] = useState<TypeUserState>(null);
+export const useAuth = () => {
+	return useContext(AuthContext)
+}
 
-//   return (
-//     <AuthContext.Provider value={{ user, setUser }}>
-//       {children}
-//     </AuthContext.Provider>
-//   );
-// };
+export const AuthProvider: React.FC<any> = ({ children }) => {
+	const [user, setUser] = useState(null)
 
-// export default AuthProvider;
+	const authUser = (newUser: any) => {
+		setUser(newUser)
+	}
+	return (
+		<AuthContext.Provider value={{ user, authUser }}>
+			{children}
+		</AuthContext.Provider>
+	)
+}

@@ -62,8 +62,8 @@ export const AppRoutes: Array<IRoutes> = [
 		baseUrl: publicUrl,
 	},
 	{
-		path: ':id',
-		Component: Pages.StoreHome, //component Product
+		path: 'product/:id',
+		Component: Pages.ProductPage,
 		Layout: Layouts.PublicLayout,
 		baseUrl: publicUrl,
 	},

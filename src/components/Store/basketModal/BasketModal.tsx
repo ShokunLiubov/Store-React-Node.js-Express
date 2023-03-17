@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
 import { useBasketModal } from '../../../context/basketModalContext'
 import { AppStateType } from '../../../redux/redux-store'
+import { publicUrl } from '../../../routes/layout/PublicLayout'
 import { IProductBasket } from '../../../shared/interfaces/productInterface/productBasket.interface'
 import './basketModal.scss'
 import ProductItem from './productItem'
@@ -47,7 +48,7 @@ export const BasketModal: React.FC<IBasketModal> = ({
 					<div className='bottom'>
 						<span onClick={basket.toggleBasketModal}>Continue Shopping</span>
 						{productsBasket.length ? (
-							<NavLink to={'/checkout'}>
+							<NavLink to={publicUrl + 'checkout'}>
 								<button onClick={basket.toggleBasketModal}>Checkout</button>
 							</NavLink>
 						) : (
