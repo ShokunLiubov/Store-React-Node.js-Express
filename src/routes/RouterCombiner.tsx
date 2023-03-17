@@ -11,12 +11,14 @@ interface IRouterCombiner {
 	routes: Array<IRoutes>
 	checkAuth: () => void
 	isLoading: boolean
+	user: any
 }
 
 export const RouterCombiner: React.FC<IRouterCombiner> = ({
 	routes,
 	checkAuth,
 	isLoading,
+	user,
 }) => {
 	useEffect(() => {
 		if (localStorage.getItem('token')) {

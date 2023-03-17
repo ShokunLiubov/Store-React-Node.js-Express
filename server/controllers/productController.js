@@ -29,10 +29,35 @@ class productsController {
     }
   }
 
+  async getProductForPage(req, res, next) {
+    try {
+      const product = await Products
+        .findById(req.params.id)
+        .populate("category", "name -_id")
+        .populate("classification", "name -_id")
+
+
+
+      if (!product) {
+        return res.status(404).json({ message: "Product Not Found" })
+      }
+
+      return res.status(200).json(product)
+
+    } catch (e) {
+      console.log(e)
+      res.status(400).json({ message: "Product error" })
+    }
+  }
+
   async getProductForBasket(req, res, next) {
 
     try {
-      const product = await Products.findById(req.params.id)
+      const product = await Products
+        .findById(req.params.id)
+        .populate("category", "name -_id")
+        .populate("classification", "name -_id")
+        .select('title count category image price classification')
 
       if (!product) {
         return res.status(404).json({ message: "Product Not Found" })
@@ -46,7 +71,6 @@ class productsController {
       return res.json({ ...productBasketDto })
 
     } catch (e) {
-
       console.log(e)
       res.status(400).json({ message: "Product error" })
     }

@@ -1,14 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 import { compose } from 'redux'
 import { Header } from '../../components/admin/header/Header'
 import { Sidebar } from '../../components/admin/sidebar/Sidebar'
-import { Notfound } from '../../pages/notfound/Notfound'
+import { Preloader } from '../../components/common/Preloader'
 import { AppStateType } from '../../redux/redux-store'
 import { IHeader } from '../../shared/interfaces/header.interface'
 import { ISidebar } from '../../shared/interfaces/sidebar.interface'
-import { IUser } from '../../shared/interfaces/userInterface/user.interface'
 
 export const adminUrl = '/make-up-admin/'
 
@@ -41,32 +40,34 @@ const SIDEBAR_ADMIN_MENU: Array<ISidebar> = [
 ]
 
 interface AdminLayoutProps {
-	user: IUser
-	isLoading: boolean
+	user: any
 }
 
 export const AdminLayout: React.FC<AdminLayoutProps> = ({ user }) => {
-	const role = user.roles
-	let navigate = useNavigate()
+	const [isLoading, setIsLoading] = useState(true)
 
-	let ADMIN = false
-	if (role != undefined) {
-		ADMIN = role[0].value === 'ADMIN'
+	useEffect(() => {
+		if (user) {
+			setIsLoading(false)
+		}
+	}, [user])
+
+	if (isLoading) {
+		return <Preloader />
+	}
+
+	if (user?.roles?.[0]?.value !== 'ADMIN') {
+		return <Navigate to='make-up' />
 	}
 
 	return (
-		<>
-			{ADMIN && (
-				<div className='AdminLayout'>
-					<Header items={HEADER_ADMIN_MENU} logo={'Make Up Admin'} />
-					<div className='adminContainer'>
-						<Sidebar items={SIDEBAR_ADMIN_MENU} />
-						<Outlet />
-					</div>
-				</div>
-			)}
-			{!ADMIN && <Notfound styleAdmin={'styleAdmin'} />}
-		</>
+		<div className='AdminLayout'>
+			<Header items={HEADER_ADMIN_MENU} logo={'Make Up Admin'} />
+			<div className='adminContainer'>
+				<Sidebar items={SIDEBAR_ADMIN_MENU} />
+				<Outlet />
+			</div>
+		</div>
 	)
 }
 
