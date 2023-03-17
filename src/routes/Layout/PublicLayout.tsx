@@ -12,7 +12,6 @@ export const PublicLayout: React.FC<PublicLayoutProps> = () => {
 			<HeaderStore />
 
 			<div className='storeContainer'>
-				{/* <MenuStore /> */}
 				<Outlet />
 			</div>
 		</div>

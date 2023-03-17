@@ -1,9 +1,11 @@
+import { ICategory } from './category.interface'
+import { IClassification } from './classification.interface'
 export interface IProduct {
   _id?: string;
   image?: string;
   title: string;
-  category: string;
-  classification: string;
+  category: ICategory;
+  classification: IClassification;
   count: number;
   price: number;
   gender: string;

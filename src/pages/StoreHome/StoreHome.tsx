@@ -10,6 +10,7 @@ import { addToBasket } from '../../redux/basketReducer/basketThunk'
 import { getProducts } from '../../redux/productReducer/productThunk'
 import { AppStateType } from '../../redux/redux-store'
 import { getUserInfo } from '../../redux/userReducer/userThunk'
+import { publicUrl } from '../../routes/layout/PublicLayout'
 import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import styles from './storeHome.module.scss'
 
@@ -55,7 +56,6 @@ export const StoreHome: React.FC<IStoreHome> = ({
 	return (
 		<>
 			<MenuStore />
-
 			<div className={styles.carousel}>
 				<img src='./../../shopImg/bcgimg.jpeg' />
 			</div>
@@ -66,14 +66,19 @@ export const StoreHome: React.FC<IStoreHome> = ({
 			<div className={styles.productsStore}>
 				{productsData.length &&
 					productsData.map((product: any) => (
-						<NavLink to={''} key={product._id} className={styles.product}>
+						<NavLink
+							to={publicUrl + 'product/' + product._id}
+							key={product._id}
+							className={styles.product}
+						>
 							<img src={product.image} />
 							<div className={styles.info}>
 								<h1>{product.title}</h1>
 								<p>{product.price}$</p>
 								<div onClick={basket.toggleBasketModal}>
 									<button
-										onClick={() => {
+										onClick={e => {
+											e.preventDefault()
 											addToBasket(product._id)
 											getUserInfo()
 										}}
