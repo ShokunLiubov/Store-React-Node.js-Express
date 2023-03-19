@@ -40,8 +40,6 @@ export const userReducer = (
 				sortOrder: action.sortOrder,
 			}
 
-		case actionType.SET_USER_INFO:
-			return { ...state, userInfo: action.userInfo }
 		case actionType.SET_FILTERS_FOR_USERS:
 			return {
 				...state,

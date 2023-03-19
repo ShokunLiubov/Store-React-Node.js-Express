@@ -3,9 +3,10 @@ import { connect } from 'react-redux'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { compose } from 'redux'
 import ProductItem from '../../components/store/basketModal/productItem'
+import { useUserInfo } from '../../context/editUserInfoContext'
+import { getUserInfo } from '../../redux/authReducer/authThunk'
 import { createOrder } from '../../redux/orderReducer/orderThunk'
 import { AppStateType } from '../../redux/redux-store'
-import { getUserInfo } from '../../redux/userReducer/userThunk'
 import { publicUrl } from '../../routes/layout/PublicLayout'
 import './createOrder.scss'
 import FormUserInfo from './formUserInfo'
@@ -23,6 +24,7 @@ export const CreateOrder: React.FC<ICreateOrder> = ({
 	createOrder,
 	products,
 }) => {
+	const editUserInfo = useUserInfo()
 	const navigate = useNavigate()
 	useEffect(() => {
 		getUserInfo()
@@ -59,15 +61,19 @@ export const CreateOrder: React.FC<ICreateOrder> = ({
 							<div>{togetherPrice} $</div>
 						</div>
 					</div>
-					<div
-						className='checkout'
-						onClick={() => {
-							if (products.length) {
-								navigate('/make-up')
-							}
-						}}
-					>
-						<button onClick={() => createOrder(togetherPrice)}>Checkout</button>
+					<div className='checkout'>
+						{!editUserInfo.editUserInfo ? (
+							<button
+								onClick={() => {
+									createOrder(togetherPrice)
+									navigate(publicUrl + 'complete')
+								}}
+							>
+								Checkout
+							</button>
+						) : (
+							''
+						)}
 					</div>
 				</div>
 			</div>

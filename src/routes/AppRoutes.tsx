@@ -74,6 +74,12 @@ export const AppRoutes: Array<IRoutes> = [
 		baseUrl: publicUrl,
 	},
 	{
+		path: 'complete',
+		Component: Pages.CompleteOrder,
+		Layout: Layouts.PublicLayout,
+		baseUrl: publicUrl,
+	},
+	{
 		path: '*',
 		Component: Pages.Notfound,
 		Layout: Layouts.AuthLayout,

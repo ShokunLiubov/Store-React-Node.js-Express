@@ -1,14 +1,15 @@
 import { AnyAction } from 'redux'
-import { IUser } from '../../shared/interfaces/userInterface/user.interface'
 import * as actionType from './authActionType'
 
 interface IAuthState {
 	user: any
 	isAuth: boolean
 	isLoading: boolean
+	userInfo: any
 }
 
 let initialState: IAuthState = {
+	userInfo: {},
 	user: {},
 	isAuth: false,
 	isLoading: false,
@@ -28,7 +29,8 @@ export const authReducer = (
 		case actionType.OUT_AUTH:
 			return {
 				...state,
-				user: {} as IUser,
+				user: {},
+				userInfo: {},
 				isAuth: false,
 			}
 		case actionType.SET_LOADING:
@@ -36,6 +38,8 @@ export const authReducer = (
 				...state,
 				isLoading: action.boolean,
 			}
+		case actionType.SET_USER_INFO:
+			return { ...state, userInfo: action.userInfo }
 		default:
 			return state
 	}
