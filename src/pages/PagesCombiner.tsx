@@ -1,3 +1,4 @@
+import CompleteOrder from './completeOrder/CompleteOrder'
 import CreateOrder from './createOrder/createOrder'
 import CreateProduct from './createProduct/CreateProduct'
 import Customers from './customers/Customers'
@@ -22,4 +23,5 @@ export const Pages = {
 	StoreHome: () => <StoreHome />,
 	CreateOrder: () => <CreateOrder />,
 	ProductPage: () => <ProductPage />,
+	CompleteOrder: () => <CompleteOrder />,
 }

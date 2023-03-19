@@ -1,14 +1,15 @@
 import { useFormik } from 'formik'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { Input } from '../../components/ui/form/input/Input'
-import { AppStateType } from '../../redux/redux-store'
+import { useUserInfo } from '../../context/editUserInfoContext'
 import {
 	createUserInfo,
 	getUserInfo,
 	updateUserInfo,
-} from '../../redux/userReducer/userThunk'
+} from '../../redux/authReducer/authThunk'
+import { AppStateType } from '../../redux/redux-store'
 import { IUserInfo } from '../../shared/interfaces/userInterface/userInfo.interface'
 import './createOrder.scss'
 
@@ -25,14 +26,14 @@ export const FormUserInfo: React.FC<IFormUserInfo> = ({
 	createUserInfo,
 	updateUserInfo,
 }) => {
+	const editUserInfo = useUserInfo()
 	useEffect(() => {
 		getUserInfo()
 		if (!Object.keys(userInfo).length) {
-			setEditData(true)
+			editUserInfo.visibleEditUserInfo()
 		}
 	}, [userInfo])
 
-	const [editData, setEditData] = useState(false)
 	const address = userInfo.address
 
 	const formik = useFormik({
@@ -55,17 +56,16 @@ export const FormUserInfo: React.FC<IFormUserInfo> = ({
 				createUserInfo(userAndDeliveryInfo)
 			}
 			updateUserInfo(userAndDeliveryInfo)
-
-			setEditData(false)
+			editUserInfo.notVisibleEditUserInfo()
 		},
 	})
 
 	return (
 		<>
-			{!editData && (
+			{!editUserInfo.editUserInfo && (
 				<>
 					<div className='formUserInfo'>
-						<h5>Personal data :</h5>
+						<h5>Personal information :</h5>
 
 						<div className='userInfo'>
 							<span className='labelForInfo'>First and last name</span>
@@ -74,12 +74,12 @@ export const FormUserInfo: React.FC<IFormUserInfo> = ({
 							<span>{userInfo.email}</span>
 							<span className='labelForInfo'>Phone</span>
 							<span>{userInfo.phone}</span>
-							<button
-								onClick={() => setEditData(true)}
-								className='submitFormInfo'
+							<span
+								onClick={() => editUserInfo.visibleEditUserInfo()}
+								className='editFormInfo'
 							>
-								Change contact information
-							</button>
+								Change information
+							</span>
 						</div>
 					</div>
 					<div className='formDeliveryInfo'>
@@ -92,12 +92,12 @@ export const FormUserInfo: React.FC<IFormUserInfo> = ({
 							<span>{address && address.city}</span>
 							<span className='labelForInfo'>Post office</span>
 							<span>{address && address.postOffice}</span>
-							<button
-								onClick={() => setEditData(true)}
+							{/* <button
+								onClick={() => editUserInfo.visibleEditUserInfo()}
 								className='submitFormInfo'
 							>
-								Change address
-							</button>
+								Change information
+							</button> */}
 						</div>
 					</div>
 				</>
@@ -105,7 +105,7 @@ export const FormUserInfo: React.FC<IFormUserInfo> = ({
 
 			{/* formEdit */}
 
-			{editData && (
+			{editUserInfo.editUserInfo && (
 				<>
 					<form className='InfoForm' onSubmit={formik.handleSubmit}>
 						<div className='formUserInfo'>
@@ -117,6 +117,9 @@ export const FormUserInfo: React.FC<IFormUserInfo> = ({
 							/>
 							<Input label={'E-mail'} name={'email'} formik={formik} />
 							<Input label={'Phone'} name={'phone'} formik={formik} />
+							<button type='submit' className='submitFormInfo'>
+								Save
+							</button>
 						</div>
 						<div className='formDeliveryInfo'>
 							<h5>Delivery information :</h5>
@@ -131,9 +134,6 @@ export const FormUserInfo: React.FC<IFormUserInfo> = ({
 								name={'postOffice'}
 								formik={formik}
 							/>
-							<button type='submit' className='submitFormInfo'>
-								Save
-							</button>
 						</div>
 					</form>
 				</>
@@ -144,7 +144,7 @@ export const FormUserInfo: React.FC<IFormUserInfo> = ({
 
 const mapStateToProps = (state: AppStateType) => {
 	return {
-		userInfo: state.user.userInfo,
+		userInfo: state.auth.userInfo,
 	}
 }
 

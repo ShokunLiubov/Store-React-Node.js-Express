@@ -24,6 +24,7 @@ class UserService {
       password: hashPassword,
       roles: [userRole._id],
     })
+
     const userDto = new UserDto(user) // id, username
     const tokens = tokenService.generateTokens({ ...userDto })
     await tokenService.saveToken(userDto.id, tokens.refreshToken)

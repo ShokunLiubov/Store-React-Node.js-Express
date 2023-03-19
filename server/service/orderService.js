@@ -4,7 +4,7 @@ import User from "../models/User"
 
 class orderService {
 
-  async createOrder(payload) {
+  async createOrder(payload, userId) {
 
     const { fullName, address, allPrice, products } = payload
 
@@ -32,7 +32,7 @@ class orderService {
       )
     })
 
-    const userId = { _id: req.id }
+
 
     const userUpdate = await User.findByIdAndUpdate(
       userId,
@@ -41,7 +41,6 @@ class orderService {
       },
       { new: true, useFindAndModify: false },
     )
-
     return { order, userUpdate }
   }
 }

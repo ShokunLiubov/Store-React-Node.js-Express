@@ -1,0 +1,16 @@
+.completeOrder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 10vh;
+    span {
+        font-size: 30px;
+    }
+    a {
+        font-size: 15px;
+        font-weight: 300;
+        margin-top: 2vh;
+    }
+}

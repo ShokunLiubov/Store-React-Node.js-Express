@@ -31,13 +31,14 @@ export const getOrders = (
 export const createOrder = (togetherPrice: number) => {
 	return async (dispatch: Dispatch, getState: () => AppStateType) => {
 		try {
-			const { basket, user } = getState()
+			const { basket, auth } = getState()
 
-			const { address, fullName } = user.userInfo
+			const { address, fullName } = auth.userInfo
 
 			const products = basket.productsBasket.map((product: IProductBasket) => {
 				return { productId: product.id, count: product.count }
 			})
+			dispatch(setEmptyBasket())
 
 			const order = {
 				products: products,
@@ -46,7 +47,6 @@ export const createOrder = (togetherPrice: number) => {
 				allPrice: togetherPrice,
 			}
 			await orderService.createOrder(order)
-			dispatch(setEmptyBasket())
 		} catch (e) {
 			console.log(e)
 		}
