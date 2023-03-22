@@ -12,7 +12,7 @@ import {
 } from '../../redux/productReducer/productThunk'
 import { AppStateType } from '../../redux/redux-store'
 import { adminUrl } from '../../routes/layout/AdminLayout'
-import { IFiltersProduct } from '../../shared/filters/filtersProducts.interface'
+import { IFiltersProducts } from '../../shared/filters/filtersProducts.interface'
 import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import styles from './myCatalogs.module.scss'
 
@@ -21,7 +21,7 @@ interface IMyCatalogsProps {
 		page: number,
 		sortField: string,
 		sortOrder: string,
-		filters: IFiltersProduct,
+		filters: IFiltersProducts,
 	) => void
 	productsData: Array<IProduct>
 	deleteProduct: (id: string) => void
@@ -30,7 +30,7 @@ interface IMyCatalogsProps {
 	editProduct: (productId: string) => void
 	sortField: string
 	sortOrder: string
-	filters: IFiltersProduct
+	filters: IFiltersProducts
 }
 
 export const MyCatalogs: React.FC<IMyCatalogsProps> = ({

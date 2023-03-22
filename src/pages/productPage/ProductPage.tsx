@@ -6,7 +6,7 @@ import { MenuStore } from '../../components/store/menuStore/MenuStore'
 import { useBasketModal } from '../../context/basketModalContext'
 import { getUserInfo } from '../../redux/authReducer/authThunk'
 import { addToBasket } from '../../redux/basketReducer/basketThunk'
-import { getProductsOnPage } from '../../redux/productStoreReducer/productStoreThunk'
+import { getProductsOnPage } from '../../redux/productReducer/productThunk'
 import { AppStateType } from '../../redux/redux-store'
 import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import './productPage.scss'
@@ -137,7 +137,7 @@ export const ProductPage: React.FC<IProductPageProps> = ({
 
 const mapStateToProps = (state: AppStateType) => {
 	return {
-		product: state.productStore.productForPage,
+		product: state.product.productForPage,
 	}
 }
 

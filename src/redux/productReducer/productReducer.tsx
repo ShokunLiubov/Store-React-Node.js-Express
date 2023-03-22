@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux'
-import { IFiltersProduct } from '../../shared/filters/filtersProducts.interface'
+import { IFiltersProducts } from '../../shared/filters/filtersProducts.interface'
 import { ICategory } from '../../shared/interfaces/productInterface/category.interface'
 import { IClassification } from '../../shared/interfaces/productInterface/classification.interface'
 import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
@@ -12,9 +12,13 @@ interface IProductState {
 	editProduct: any
 	sortField: string
 	sortOrder: string
-	filters: IFiltersProduct
+	filters: IFiltersProducts
 	categories: Array<ICategory>
 	classifications: Array<IClassification>
+	productForPage: any
+	countryTM: Array<string>
+	madeIn: Array<string>
+	typeAroma: Array<string>
 }
 
 let initialState: IProductState = {
@@ -26,9 +30,17 @@ let initialState: IProductState = {
 	sortOrder: 'asc',
 	filters: {
 		category: [],
+		classification: [],
+		type_of_aroma: [],
+		made_in: [],
+		country_of_TM: [],
 	},
 	categories: [],
 	classifications: [],
+	typeAroma: [],
+	madeIn: [],
+	countryTM: [],
+	productForPage: {},
 }
 
 export const productReducer = (
@@ -71,6 +83,27 @@ export const productReducer = (
 			return {
 				...state,
 				editProduct: action.product,
+			}
+		case actionType.SET_PRODUCT_ON_PAGE:
+			return {
+				...state,
+				productForPage: action.payload,
+			}
+
+		case actionType.SET_COUNTRY_TM_PRODUCTS:
+			return {
+				...state,
+				countryTM: action.countryTM,
+			}
+		case actionType.SET_MADE_IN_PRODUCTS:
+			return {
+				...state,
+				madeIn: action.madeIn,
+			}
+		case actionType.SET_TYPE_AROMA_PRODUCTS:
+			return {
+				...state,
+				typeAroma: action.typeAroma,
 			}
 
 		default:

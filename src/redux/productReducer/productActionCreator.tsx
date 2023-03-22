@@ -1,4 +1,4 @@
-import { IFiltersProduct } from '../../shared/filters/filtersProducts.interface'
+import { IFiltersProducts } from '../../shared/filters/filtersProducts.interface'
 import { ICategory } from '../../shared/interfaces/productInterface/category.interface'
 import { IClassification } from '../../shared/interfaces/productInterface/classification.interface'
 import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
@@ -29,7 +29,7 @@ export const setProductForEdit = (product: IProduct) => ({
 	product,
 })
 
-export const setFilters = (filters: IFiltersProduct) => ({
+export const setFilters = (filters: IFiltersProducts) => ({
 	type: actionType.SET_FILTERS_FOR_PRODUCTS,
 	filters,
 })
@@ -44,4 +44,24 @@ export const setClassifications = (
 ) => ({
 	type: actionType.SET_CLASSIFICATIONS_FOR_PRODUCTS,
 	classifications,
+})
+
+export const setProductOnPage = (payload: IProduct) => ({
+	type: actionType.SET_PRODUCT_ON_PAGE,
+	payload,
+})
+
+export const setCountryTM = (countryTM: Array<string>) => ({
+	type: actionType.SET_COUNTRY_TM_PRODUCTS,
+	countryTM,
+})
+
+export const setMadeIn = (madeIn: Array<string>) => ({
+	type: actionType.SET_MADE_IN_PRODUCTS,
+	madeIn,
+})
+
+export const setTypeAroma = (typeAroma: Array<string>) => ({
+	type: actionType.SET_TYPE_AROMA_PRODUCTS,
+	typeAroma,
 })

@@ -1,7 +1,11 @@
 import { Dispatch } from 'redux'
 import { categoryService } from '../../api/services/categoryService'
 import { classificationService } from '../../api/services/classificationsService'
+import { countryTMService } from '../../api/services/countryTMService'
+import { madeInService } from '../../api/services/madeInService'
 import { productService } from '../../api/services/productService'
+import { productStoreService } from '../../api/services/productStoreService'
+import { typeAromaService } from '../../api/services/typeAromaService'
 import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import { AppStateType } from '../redux-store'
 import * as AC from './productActionCreator'
@@ -27,6 +31,8 @@ export const getProducts = (
 		const { docs, page, totalPages } = response.data
 
 		dispatch(AC.setProducts(docs, page, totalPages, sortField, sortOrder))
+		const classifications = await classificationService.getAllClassifications()
+		dispatch(AC.setClassifications(classifications))
 	}
 }
 
@@ -70,5 +76,25 @@ export const getSelectData = () => {
 		dispatch(AC.setCategory(categories))
 		const classifications = await classificationService.getAllClassifications()
 		dispatch(AC.setClassifications(classifications))
+	}
+}
+
+export const getProductsOnPage = (id: string) => {
+	return async (dispatch: any) => {
+		const payload = await productStoreService.getProductForPage(id)
+		dispatch(AC.setProductOnPage(payload))
+	}
+}
+
+export const getDataForFilters = () => {
+	return async (dispatch: any) => {
+		const countryTM = await countryTMService.getAllCountryTM()
+		const madeIn = await madeInService.getAllMadeIn()
+		const typeAroma = await typeAromaService.getAllTypeAroma()
+		const classifications = await classificationService.getAllClassifications()
+		dispatch(AC.setClassifications(classifications))
+		dispatch(AC.setCountryTM(countryTM))
+		dispatch(AC.setMadeIn(madeIn))
+		dispatch(AC.setTypeAroma(typeAroma))
 	}
 }

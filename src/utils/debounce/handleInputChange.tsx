@@ -1,6 +1,6 @@
 import { debounce } from 'lodash'
 
-const delayedSubmit = (fieldName: string, value: any, formik: any) => {
+export const delayedSubmit = (fieldName: string, value: any, formik: any) => {
 	formik.setFieldValue(fieldName, value)
 	return debounce(() => {
 		formik.submitForm()
@@ -11,6 +11,7 @@ export const handleInputChange = (
 	e: React.ChangeEvent<HTMLInputElement>,
 	fieldName: string,
 	formik: any,
+	checked?: any,
 ) => {
 	const { value } = e.target
 	if (fieldName === 'search') {
@@ -21,6 +22,8 @@ export const handleInputChange = (
 			delayedSubmit(fieldName, value, formik)()
 		}
 	} else {
-		delayedSubmit(fieldName, value, formik)()
+		checked
+			? delayedSubmit(fieldName, checked, formik)()
+			: delayedSubmit(fieldName, value, formik)()
 	}
 }

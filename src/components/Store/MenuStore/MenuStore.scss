@@ -1,4 +1,5 @@
 .menuStore {
+ 
   .mainMenu {
     display: flex;
     justify-content: space-between;
@@ -12,6 +13,7 @@
       width: 100%;
       bottom: -15px;
     }
+    
     .menuLi {
       a {
         text-decoration: none;

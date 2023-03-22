@@ -1,14 +1,17 @@
 import * as dotenv from "dotenv"
 import express from "express"
 import mongoose from "mongoose"
-import { mainApp } from './app/mainApp'
+import { appConfig } from './config/app'
+import { appRouters } from './routers/routers'
 
 dotenv.config()
 
 const PORT = process.env.PORT || 5001
 const app = express()
 
-app.use(mainApp)
+app.use(appConfig)
+
+app.use(appRouters)
 
 const mongooseConfig = {
   autoIndex: false,

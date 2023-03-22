@@ -1,6 +1,11 @@
-export interface IFiltersProduct {
+export interface IFiltersProducts {
 	search?: string
 	category: Array<string>
+    classification: Array<string>
+    type_of_aroma: Array<string>
+    made_in: Array<string>
+    country_of_TM: Array<string>
+    gender?: any
 	count?: {
 		$gte: string
 		$lte: string
@@ -9,4 +14,9 @@ export interface IFiltersProduct {
 		$gte: string
 		$lte: string
 	}
+    volume?: {
+		$gte: string
+		$lte: string
+	}
 }
+

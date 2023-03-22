@@ -4,7 +4,7 @@ class productFilters {
     async productFilters(query) {
 
         try {
-            const { search, category, count, price } = query
+            const { search, category, count, price, classification, type_of_aroma, made_in, country_of_TM, volume, gender } = query
             const filters = {}
 
             if (search) {
@@ -16,15 +16,45 @@ class productFilters {
                 filters.category = { $in: categories }
             }
 
+            if (classification) {
+                const classifications = classification.split(',')
+                filters.classification = { $in: classifications }
+
+            }
+
+            if (gender) {
+                const genders = gender.split(',')
+                filters.gender = { $in: genders }
+            }
+
+            if (type_of_aroma) {
+                const typeAroma = type_of_aroma.split(',')
+                filters.type_of_aroma = { $in: typeAroma }
+            }
+
+            if (made_in) {
+                const madeIn = made_in.split(',')
+                filters.made_in = { $in: madeIn }
+            }
+
+            if (country_of_TM) {
+                const countryTM = country_of_TM.split(',')
+                filters.country_of_TM = { $in: countryTM }
+            }
+
             if (count) {
                 const { $gte, $lte } = count
-
                 filters.count = { $gte, $lte }
             }
 
             if (price) {
                 const { $gte, $lte } = price
                 filters.price = { $gte, $lte }
+            }
+
+            if (volume) {
+                const { $gte, $lte } = volume
+                filters.volume = { $gte, $lte }
             }
 
             return filters

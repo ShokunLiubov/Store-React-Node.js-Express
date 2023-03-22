@@ -18,7 +18,7 @@ import { IFiltersOrders } from '../../../../shared/filters/filtersOrders.interfa
 import { handleInputChange } from '../../../../utils/debounce/handleInputChange'
 import { handleSelectChange } from '../../../../utils/debounce/handleSelectChange'
 import { Input } from '../../../ui/form/input/Input'
-import { Search } from '../../search/Search'
+import { Search } from '../../../ui/form/search/Search'
 import './filtersOrders.scss'
 
 interface IFiltersOrdersProps {
