@@ -1,7 +1,7 @@
 import cn from 'classnames'
 import { useFormik } from 'formik'
 import { debounce } from 'lodash'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DateRangePicker } from 'react-date-range'
 import 'react-date-range/dist/styles.css' // main css file
 import 'react-date-range/dist/theme/default.css' // theme css file
@@ -12,7 +12,10 @@ import makeAnimated from 'react-select/animated'
 import { compose } from 'redux'
 import { useCalendar } from '../../../../context/calendarContext'
 import { orderStatusArray } from '../../../../enums/orderStatus'
-import { getOrders } from '../../../../redux/orderReducer/orderThunk'
+import {
+	getCityForOrders,
+	getOrders,
+} from '../../../../redux/orderReducer/orderThunk'
 import { AppStateType } from '../../../../redux/redux-store'
 import { IFiltersOrders } from '../../../../shared/filters/filtersOrders.interface'
 import { handleInputChange } from '../../../../utils/debounce/handleInputChange'
@@ -30,13 +33,24 @@ interface IFiltersOrdersProps {
 		sortOrder: string,
 		filters: IFiltersOrders,
 	) => void
+	getCityForOrders: any
+	city: Array<string>
 }
 
 export const FiltersOrders: React.FC<IFiltersOrdersProps> = ({
 	sortField,
 	sortOrder,
 	getOrders,
+	getCityForOrders,
+	city,
 }) => {
+	useEffect(() => {
+		getCityForOrders()
+	}, [])
+
+	const selectCity = city.map((madeIn: any) => {
+		return { value: madeIn, label: madeIn }
+	})
 	const orderStatus = orderStatusArray.map((status: any) => {
 		return { value: status, label: status }
 	})
@@ -152,13 +166,13 @@ export const FiltersOrders: React.FC<IFiltersOrdersProps> = ({
 						<Select
 							isMulti
 							name='colors'
-							// options={orderStatus}
-							// value={orderStatus.filter((option: any) =>
-							// 	formik.values.status.includes(option.value),
-							// )}
-							// onChange={(e: any) => {
-							// 	handleSelectChange(e, 'status', formik)
-							// }}
+							options={selectCity}
+							value={selectCity.filter((option: any) =>
+								formik.values.city.includes(option.value),
+							)}
+							onChange={(e: any) => {
+								handleSelectChange(e, 'city', formik)
+							}}
 							classNamePrefix='select'
 							closeMenuOnSelect={false}
 							components={animatedComponents}
@@ -185,7 +199,10 @@ const mapStateToProps = (state: AppStateType) => {
 	return {
 		sortField: state.order.sortField,
 		sortOrder: state.order.sortOrder,
+		city: state.order.city,
 	}
 }
 
-export default compose(connect(mapStateToProps, { getOrders }))(FiltersOrders)
+export default compose(
+	connect(mapStateToProps, { getOrders, getCityForOrders }),
+)(FiltersOrders)

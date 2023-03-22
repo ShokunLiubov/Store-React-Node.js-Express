@@ -21,3 +21,8 @@ export const setFiltersUsers = (filters: IFiltersCustomers) => ({
 	type: actionType.SET_FILTERS_FOR_USERS,
 	filters,
 })
+
+export const setCityForUsers = (city: Array<string>) => ({
+	type: actionType.SET_CITY_FOR_USERS,
+	city,
+})

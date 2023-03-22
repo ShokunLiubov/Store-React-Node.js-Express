@@ -52,3 +52,10 @@ export const createOrder = (togetherPrice: number) => {
 		}
 	}
 }
+
+export const getCityForOrders = (togetherPrice: number) => {
+	return async (dispatch: Dispatch) => {
+		let response = await orderService.getCity()
+		dispatch(AC.setCityForOrders(response))
+	}
+}

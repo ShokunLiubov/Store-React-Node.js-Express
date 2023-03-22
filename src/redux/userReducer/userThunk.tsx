@@ -22,3 +22,10 @@ export const getUsers = (
 		dispatch(AC.setUsers(docs, page, totalPages, sortField, sortOrder))
 	}
 }
+
+export const getCityForUsers = () => {
+	return async (dispatch: Dispatch) => {
+		let response = await userService.getCity()
+		dispatch(AC.setCityForUsers(response))
+	}
+}

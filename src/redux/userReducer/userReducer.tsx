@@ -11,6 +11,7 @@ interface IUserState {
 	sortField: string
 	sortOrder: string
 	filters: IFiltersCustomers
+	city: Array<string>
 }
 
 let initialState: IUserState = {
@@ -19,10 +20,11 @@ let initialState: IUserState = {
 	currentPage: 1,
 	totalPages: 0,
 	sortField: '_id',
-	sortOrder: 'asc',
+	sortOrder: '1',
 	filters: {
 		city: [],
 	},
+	city: [],
 }
 
 export const userReducer = (
@@ -44,6 +46,11 @@ export const userReducer = (
 			return {
 				...state,
 				filters: action.filters,
+			}
+		case actionType.SET_CITY_FOR_USERS:
+			return {
+				...state,
+				city: action.city,
 			}
 		default:
 			return state

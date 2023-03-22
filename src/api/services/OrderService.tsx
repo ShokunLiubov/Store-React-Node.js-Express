@@ -43,4 +43,8 @@ export class orderService {
 	static async createOrder(order: IOrder): Promise<AxiosResponse<IOrder[]>> {
 		return $API.post<IOrder[]>('orders', order)
 	}
+
+	static async getCity(): Promise<Array<any>> {
+		return $API.get<Array<any>>('orders/city').then(response => response.data)
+	}
 }

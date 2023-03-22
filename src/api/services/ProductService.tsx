@@ -11,8 +11,6 @@ export class productService {
 		sortOrder: string,
 		filters: IFiltersProducts,
 	): Promise<AxiosResponse<any>> {
-		console.log()
-
 		const {
 			search,
 			category,
