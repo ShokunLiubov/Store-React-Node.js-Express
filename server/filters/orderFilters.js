@@ -19,7 +19,7 @@ class orderFilters {
 
             if (city) {
                 const citySelect = city.split(',')
-                filters.address.city = { $in: 'Rock Hill' }
+                filters["address.city"] = { $in: citySelect }
             }
 
             if (dataRange) {

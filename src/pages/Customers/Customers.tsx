@@ -45,12 +45,12 @@ export const Customers: React.FC<IMyCatalogsProps> = ({
 	}
 
 	const setSortCatalog = (sortField: string, sort: boolean) => {
-		let sortOrder = 'asc'
+		let sortOrder = '1'
 		if (sort) {
 			setSort(!sort)
 		} else {
 			setSort(!sort)
-			sortOrder = 'desc'
+			sortOrder = '-1'
 		}
 
 		getUsers(1, sortField, sortOrder, filters)

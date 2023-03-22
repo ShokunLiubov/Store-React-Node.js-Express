@@ -1,16 +1,19 @@
 import cn from 'classnames'
 import { useFormik } from 'formik'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { compose } from 'redux'
 import * as Yup from 'yup'
 import { AppStateType } from '../../../../redux/redux-store'
-import { getUsers } from '../../../../redux/userReducer/userThunk'
+import {
+	getCityForUsers,
+	getUsers,
+} from '../../../../redux/userReducer/userThunk'
 import { IFiltersCustomers } from '../../../../shared/filters/filtersCustomers.interface'
-import { ICategory } from '../../../../shared/interfaces/productInterface/category.interface'
 import { handleInputChange } from '../../../../utils/debounce/handleInputChange'
+import { handleSelectChange } from '../../../../utils/debounce/handleSelectChange'
 import { Search } from '../../../ui/form/search/Search'
 import './filtersCustomers.scss'
 
@@ -23,14 +26,24 @@ interface IFiltersCustomersProps {
 		sortOrder: string,
 		values: IFiltersCustomers,
 	) => void
-	categories: Array<ICategory>
+	getCityForUsers: () => void
+	city: Array<string>
 }
 
 export const FiltersCustomers: React.FC<IFiltersCustomersProps> = ({
 	sortField,
 	sortOrder,
 	getUsers,
+	getCityForUsers,
+	city,
 }) => {
+	useEffect(() => {
+		getCityForUsers()
+	}, [])
+
+	const selectCity = city.map((madeIn: any) => {
+		return { value: madeIn, label: madeIn }
+	})
 	const validationSchema = Yup.object().shape({
 		search: Yup.string(),
 		city: Yup.array(),
@@ -71,13 +84,13 @@ export const FiltersCustomers: React.FC<IFiltersCustomersProps> = ({
 					<Select
 						isMulti
 						name='colors'
-						// options={selectCategory}
-						// value={selectCategory.filter((option: any) =>
-						// 	formik.values.category.includes(option.value),
-						// )}
-						// onChange={(e: any) => {
-						// 	handleSelectChange(e, 'category', formik)
-						// }}
+						options={selectCity}
+						value={selectCity.filter((option: any) =>
+							formik.values.city.includes(option.value),
+						)}
+						onChange={(e: any) => {
+							handleSelectChange(e, 'city', formik)
+						}}
 						classNamePrefix='select'
 						closeMenuOnSelect={false}
 						components={animatedComponents}
@@ -92,8 +105,10 @@ const mapStateToProps = (state: AppStateType) => {
 	return {
 		sortField: state.user.sortField,
 		sortOrder: state.user.sortOrder,
-		categories: state.product.categories,
+		city: state.user.city,
 	}
 }
 
-export default compose(connect(mapStateToProps, { getUsers }))(FiltersCustomers)
+export default compose(connect(mapStateToProps, { getUsers, getCityForUsers }))(
+	FiltersCustomers,
+)

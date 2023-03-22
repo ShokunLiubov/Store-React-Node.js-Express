@@ -39,4 +39,8 @@ export class userService {
 	): Promise<AxiosResponse<IUserInfo>> {
 		return $API.put<IUserInfo>('users/info', value)
 	}
+
+	static async getCity(): Promise<Array<any>> {
+		return $API.get<Array<any>>('users/city').then(response => response.data)
+	}
 }

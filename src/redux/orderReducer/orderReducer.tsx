@@ -10,6 +10,7 @@ interface IOrderState {
 	sortField: string
 	sortOrder: string
 	filters: IFiltersOrders
+	city: Array<string>
 }
 
 let initialState: IOrderState = {
@@ -22,6 +23,7 @@ let initialState: IOrderState = {
 		city: [],
 		status: [],
 	},
+	city: [],
 }
 
 export const orderReducer = (
@@ -43,7 +45,11 @@ export const orderReducer = (
 				...state,
 				filters: action.filters,
 			}
-
+		case actionType.SET_CITY_FOR_ORDERS:
+			return {
+				...state,
+				city: action.city,
+			}
 		default:
 			return state
 	}

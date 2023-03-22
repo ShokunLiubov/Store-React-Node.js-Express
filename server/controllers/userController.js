@@ -1,4 +1,5 @@
 import User from "../models/User"
+import UserInfo from '../models/UserInfo'
 import userService from "../service/userService"
 import aggregatePaginate from '../utils/aggregatePaginate/aggregatePaginate'
 
@@ -22,9 +23,17 @@ class userController {
   async getUsers(req, res, next) {
 
     try {
-      let { page, limit, sortField, sortOrder, search } = req.query
+      let { page, limit, sortField, sortOrder, search, city } = req.query
       page = Number(page)
+      sortOrder = Number(sortOrder)
+
       const regex = new RegExp(search, 'i')
+      const filters = {}
+
+      if (city && city.trim()) {
+        const citySelect = city.split(',')
+        filters["userInfo.address.city"] = { $in: citySelect }
+      }
 
       const aggregateBody = [{
         $lookup: {
@@ -43,7 +52,8 @@ class userController {
             { "userInfo.email": regex },
             { "userInfo.phone": regex },
             { "username": regex }
-          ]
+          ],
+          ...filters
         }
       }]
 
@@ -55,7 +65,6 @@ class userController {
         docs,
         totalPages, page
       })
-
 
     } catch (e) {
       console.log(e)
@@ -90,6 +99,20 @@ class userController {
       )
 
       return res.json(userInfo)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  async getCity(req, res, next) {
+    try {
+      const city = await UserInfo.aggregate([
+        { $group: { _id: '$address.city' } },
+        { $group: { _id: null, uniqueCity: { $push: '$_id' } } },
+        { $project: { _id: 0, uniqueCity: 1 } }
+      ])
+
+      return res.status(200).json(city[0].uniqueCity)
     } catch (e) {
       console.log(e)
     }

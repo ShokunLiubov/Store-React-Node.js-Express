@@ -30,6 +30,21 @@ class orderController {
       console.log(e)
     }
   }
+
+  async getCity(req, res, next) {
+
+    try {
+      const city = await Order.aggregate([
+        { $group: { _id: '$address.city' } },
+        { $group: { _id: null, uniqueCity: { $push: '$_id' } } },
+        { $project: { _id: 0, uniqueCity: 1 } }
+      ])
+
+      return res.status(200).json(city[0].uniqueCity)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 }
 
 export default new orderController()

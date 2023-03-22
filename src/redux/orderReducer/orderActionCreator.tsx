@@ -21,3 +21,8 @@ export const setFiltersOrders = (filters: IFiltersOrders) => ({
 	type: actionType.SET_FILTERS_FOR_ORDERS,
 	filters,
 })
+
+export const setCityForOrders = (city: Array<string>) => ({
+	type: actionType.SET_CITY_FOR_ORDERS,
+	city,
+})
