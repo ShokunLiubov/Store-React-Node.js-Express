@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios'
-import { IFiltersProduct } from '../../shared/filters/filtersProducts.interface'
+import { IFiltersProducts } from '../../shared/filters/filtersProducts.interface'
 import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import { IProductBasket } from '../../shared/interfaces/productInterface/productBasket.interface'
 import { $API } from '../api'
@@ -9,26 +9,71 @@ export class productService {
 		page: number,
 		sortField: string,
 		sortOrder: string,
-		filters: IFiltersProduct,
+		filters: IFiltersProducts,
 	): Promise<AxiosResponse<any>> {
-		const { search, category, count, price } = filters
+		console.log()
+
+		const {
+			search,
+			category,
+			count,
+			price,
+			volume,
+			type_of_aroma,
+			country_of_TM,
+			made_in,
+			classification,
+			gender,
+		} = filters
+
 		let url = `products?page=${page}&limit=12&sortField=${sortField}&sortOrder=${sortOrder}`
+
 		if (search) {
 			url += `&search=${search}`
 		}
+
 		if (category) {
 			url += `&category=${category}`
 		}
+
+		if (gender) {
+			url += `&gender=${gender}`
+		}
+
+		if (type_of_aroma) {
+			url += `&type_of_aroma=${type_of_aroma}`
+		}
+
+		if (country_of_TM) {
+			url += `&country_of_TM=${country_of_TM}`
+		}
+
+		if (made_in) {
+			url += `&made_in=${made_in}`
+		}
+
+		if (classification) {
+			url += `&classification=${classification}`
+		}
+
 		if (count) {
 			const { $gte, $lte } = count
 			if ($gte && $lte) {
 				url += `&count[$gte]=${$gte}&count[$lte]=${$lte}`
 			}
 		}
+
 		if (price) {
 			const { $gte, $lte } = price
 			if ($gte && $lte) {
 				url += `&price[$gte]=${$gte}&price[$lte]=${$lte}`
+			}
+		}
+
+		if (volume) {
+			const { $gte, $lte } = volume
+			if ($gte && $lte) {
+				url += `&volume[$gte]=${$gte}&volume[$lte]=${$lte}`
 			}
 		}
 

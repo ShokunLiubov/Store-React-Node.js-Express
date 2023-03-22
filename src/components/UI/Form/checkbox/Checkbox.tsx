@@ -10,16 +10,16 @@ interface ICheckbox {
 export const Checkbox: React.FC<ICheckbox> = ({ data, value, onChange }) => {
 	return (
 		<>
-			{data.map((name: any) => (
-				<label key={name} htmlFor={value}>
+			{data.map((checkbox: any) => (
+				<label key={checkbox.value} htmlFor={value}>
 					<input
-						id={name}
+						id={checkbox.value}
 						type='checkbox'
 						name={value}
-						value={name}
+						value={checkbox.value}
 						onChange={onChange}
 					/>
-					{name}
+					{checkbox.label}
 				</label>
 			))}
 		</>

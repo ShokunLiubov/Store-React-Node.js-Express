@@ -7,11 +7,10 @@ import { compose } from 'redux'
 import * as Yup from 'yup'
 import { getProducts } from '../../../../redux/productReducer/productThunk'
 import { AppStateType } from '../../../../redux/redux-store'
-import { IFiltersProduct } from '../../../../shared/filters/filtersProducts.interface'
 import { handleInputChange } from '../../../../utils/debounce/handleInputChange'
 import { handleSelectChange } from '../../../../utils/debounce/handleSelectChange'
 import { Input } from '../../../ui/form/input/Input'
-import { Search } from '../../search/Search'
+import { Search } from '../../../ui/form/search/Search'
 import './filtersMyCatalog.scss'
 
 interface IFiltersMyCatalogProps {
@@ -21,7 +20,7 @@ interface IFiltersMyCatalogProps {
 		page: number,
 		sortField: string,
 		sortOrder: string,
-		values: IFiltersProduct,
+		values: any,
 	) => void
 	categories: any
 }
@@ -54,7 +53,7 @@ export const FiltersMyCatalog: React.FC<IFiltersMyCatalogProps> = ({
 	const [priceGte, setPriceGte] = useState('')
 	const [priceLte, setPriceLte] = useState('')
 
-	const formik = useFormik<IFiltersProduct>({
+	const formik = useFormik<any>({
 		initialValues: {
 			search: '',
 			category: [],
@@ -68,7 +67,7 @@ export const FiltersMyCatalog: React.FC<IFiltersMyCatalogProps> = ({
 			},
 		},
 		validationSchema,
-		onSubmit: (values: IFiltersProduct) => {
+		onSubmit: (values: any) => {
 			getProducts(1, sortField, sortOrder, values)
 		},
 	})

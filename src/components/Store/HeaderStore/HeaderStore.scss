@@ -56,7 +56,6 @@
       }
     }
     .user {
-      width: 250px;
       display: flex;
       flex-direction: column;
 
@@ -112,11 +111,11 @@
         }
       }
       .basket {
-        cursor: pointer;
         display: flex;
         align-items: center;
         margin-top: 15px;
         span {
+          cursor: pointer;
           color: #792c9b;
           transition: color 0.5s;
         }
@@ -132,40 +131,6 @@
               color: #792c9b;
               transition: color 0.5s;
             }
-          }
-        }
-      }
-      .search {
-        display: flex;
-        justify-content: center;
-        position: relative;
-        .fieldInput {
-          margin: 20px;
-          label {
-            display: none;
-          }
-          input {
-            background-color: #f4f3f5;
-            border-radius: 0px;
-            border: 1px solid #cccccc;
-            font-size: 11px;
-            line-height: 32px;
-            height: 32px;
-            padding: 0 26px 0 11px;
-            width: 250px;
-          }
-        }
-        button {
-          position: absolute;
-          background-color: transparent;
-          padding: 0px;
-          margin: 0px;
-          top: 25px;
-          right: 7px;
-          span {
-            color: #b1afb3;
-            font-weight: 300;
-            font-size: 21px;
           }
         }
       }

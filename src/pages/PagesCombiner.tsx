@@ -1,3 +1,4 @@
+import CategoryPage from './categoryPage/CategoryPage'
 import CompleteOrder from './completeOrder/CompleteOrder'
 import CreateOrder from './createOrder/createOrder'
 import CreateProduct from './createProduct/CreateProduct'
@@ -24,4 +25,5 @@ export const Pages = {
 	CreateOrder: () => <CreateOrder />,
 	ProductPage: () => <ProductPage />,
 	CompleteOrder: () => <CompleteOrder />,
+	CategoryPage: () => <CategoryPage />,
 }

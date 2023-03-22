@@ -36,8 +36,6 @@ class productsController {
         .populate("category", "name -_id")
         .populate("classification", "name -_id")
 
-
-
       if (!product) {
         return res.status(404).json({ message: "Product Not Found" })
       }

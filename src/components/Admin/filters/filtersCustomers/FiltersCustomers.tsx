@@ -11,7 +11,7 @@ import { getUsers } from '../../../../redux/userReducer/userThunk'
 import { IFiltersCustomers } from '../../../../shared/filters/filtersCustomers.interface'
 import { ICategory } from '../../../../shared/interfaces/productInterface/category.interface'
 import { handleInputChange } from '../../../../utils/debounce/handleInputChange'
-import { Search } from '../../search/Search'
+import { Search } from '../../../ui/form/search/Search'
 import './filtersCustomers.scss'
 
 interface IFiltersCustomersProps {
@@ -30,11 +30,7 @@ export const FiltersCustomers: React.FC<IFiltersCustomersProps> = ({
 	sortField,
 	sortOrder,
 	getUsers,
-	categories,
 }) => {
-	const selectCategory = categories.map((category: any) => {
-		return { value: category._id, label: category.name }
-	})
 	const validationSchema = Yup.object().shape({
 		search: Yup.string(),
 		city: Yup.array(),
@@ -75,7 +71,7 @@ export const FiltersCustomers: React.FC<IFiltersCustomersProps> = ({
 					<Select
 						isMulti
 						name='colors'
-						options={selectCategory}
+						// options={selectCategory}
 						// value={selectCategory.filter((option: any) =>
 						// 	formik.values.category.includes(option.value),
 						// )}

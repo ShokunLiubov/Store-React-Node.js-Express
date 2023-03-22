@@ -10,7 +10,6 @@ export const PublicLayout: React.FC<PublicLayoutProps> = () => {
 	return (
 		<div className='PublicLayout'>
 			<HeaderStore />
-
 			<div className='storeContainer'>
 				<Outlet />
 			</div>
