@@ -92,6 +92,8 @@ export const getDataForFilters = () => {
 		const madeIn = await madeInService.getAllMadeIn()
 		const typeAroma = await typeAromaService.getAllTypeAroma()
 		const classifications = await classificationService.getAllClassifications()
+		const category = await categoryService.getAllCategory()
+		dispatch(AC.setCategory(category))
 		dispatch(AC.setClassifications(classifications))
 		dispatch(AC.setCountryTM(countryTM))
 		dispatch(AC.setMadeIn(madeIn))
