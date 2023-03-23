@@ -1,0 +1,1 @@
+export const SET_STORE_HOME_PRODUCTS: string = 'SET-STORE-HOME-PRODUCTS'

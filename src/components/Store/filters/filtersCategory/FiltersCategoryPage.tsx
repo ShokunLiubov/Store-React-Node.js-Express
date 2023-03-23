@@ -8,6 +8,7 @@ import * as Yup from 'yup'
 import { getProducts } from '../../../../redux/productReducer/productThunk'
 import { AppStateType } from '../../../../redux/redux-store'
 import { IFiltersProducts } from '../../../../shared/filters/filtersProducts.interface'
+import { ICategory } from '../../../../shared/interfaces/productInterface/category.interface'
 import { IClassification } from '../../../../shared/interfaces/productInterface/classification.interface'
 import './filtersCategory.scss'
 import FilterCategory from './filtersForCategoryPage/FilterCategory'
@@ -30,6 +31,7 @@ interface IFiltersCategoryProps {
 	) => void
 	classifications: Array<IClassification>
 	filters: IFiltersProducts
+	categories: Array<ICategory>
 }
 
 export const FiltersCategoryPage: React.FC<IFiltersCategoryProps> = ({
@@ -37,6 +39,7 @@ export const FiltersCategoryPage: React.FC<IFiltersCategoryProps> = ({
 	sortOrder,
 	getProducts,
 	classifications,
+	categories,
 }) => {
 	const { category } = useParams()
 
@@ -45,6 +48,17 @@ export const FiltersCategoryPage: React.FC<IFiltersCategoryProps> = ({
 
 	const classificationPage =
 		category === 'elite' || category === 'nisheva' || category === 'natural'
+
+	const categoriesPage =
+		category === 'face' ||
+		category === 'gifts' ||
+		category === 'perfumery' ||
+		category === 'hair' ||
+		category === 'makeup' ||
+		category === 'perfumery' ||
+		category === 'to-men' ||
+		category === 'health&care' ||
+		category === 'clothes'
 
 	const validationSchema = Yup.object().shape({
 		category: Yup.array(),
@@ -81,6 +95,7 @@ export const FiltersCategoryPage: React.FC<IFiltersCategoryProps> = ({
 		},
 		validationSchema,
 		onSubmit: (values: IFiltersProducts) => {
+			console.log(values)
 			getProducts(1, sortField, sortOrder, values)
 		},
 	})
@@ -93,6 +108,7 @@ export const FiltersCategoryPage: React.FC<IFiltersCategoryProps> = ({
 				formik.submitForm()
 			}, 0)
 		}
+
 		if (classifications.length && classificationPage) {
 			formik.setValues(formik.initialValues)
 			const classification = classifications.find(
@@ -104,6 +120,20 @@ export const FiltersCategoryPage: React.FC<IFiltersCategoryProps> = ({
 				formik.submitForm()
 			}, 0)
 		}
+
+		if (categories.length && categoriesPage) {
+			formik.setValues(formik.initialValues)
+			const currentCategory = categories.find(
+				(c: ICategory) => c.slug === category,
+			)
+			formik.setFieldValue('category', currentCategory?._id)
+
+			setTimeout(() => {
+				formik.submitForm()
+				console.log(currentCategory)
+			}, 0)
+		}
+
 		if (category === 'all') {
 			formik.setValues(formik.initialValues)
 			setTimeout(() => {
@@ -114,7 +144,7 @@ export const FiltersCategoryPage: React.FC<IFiltersCategoryProps> = ({
 
 	return (
 		<form className={cn('filtersCategory')} onSubmit={formik.handleSubmit}>
-			<FilterCategory formik={formik} />
+			{categoriesPage ? '' : <FilterCategory formik={formik} />}
 			{classificationPage ? '' : <FilterClassification formik={formik} />}
 			{genderPage ? '' : <FilterGender formik={formik} />}
 			<FilterTypeAroma formik={formik} />
