@@ -1,10 +1,6 @@
-import cn from 'classnames'
-import { useFormik } from 'formik'
-import { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { compose } from 'redux'
-import * as Yup from 'yup'
 import { getProducts } from '../../../../redux/productReducer/productThunk'
 import { AppStateType } from '../../../../redux/redux-store'
 import { IFiltersProducts } from '../../../../shared/filters/filtersProducts.interface'
@@ -20,6 +16,8 @@ import FilterMadeIn from './filtersForCategoryPage/FilterMadeIn'
 import { FilterPrice } from './filtersForCategoryPage/FilterPrice'
 import FilterTypeAroma from './filtersForCategoryPage/FilterTypeAroma'
 import { FilterVolume } from './filtersForCategoryPage/FilterVolume'
+import { useFiltersCategory } from './useFiltersCategory'
+
 interface IFiltersCategoryProps {
 	sortField: string
 	sortOrder: string
@@ -27,8 +25,8 @@ interface IFiltersCategoryProps {
 		page: number,
 		sortField: string,
 		sortOrder: string,
-		values: IFiltersProducts,
-	) => void
+		values: any,
+	) => any
 	classifications: Array<IClassification>
 	filters: IFiltersProducts
 	categories: Array<ICategory>
@@ -60,90 +58,19 @@ export const FiltersCategoryPage: React.FC<IFiltersCategoryProps> = ({
 		category === 'health&care' ||
 		category === 'clothes'
 
-	const validationSchema = Yup.object().shape({
-		category: Yup.array(),
-		count: Yup.object().shape({
-			$gte: Yup.number().nullable().integer(),
-			$lte: Yup.number().nullable().integer(),
-		}),
-		price: Yup.object().shape({
-			$gte: Yup.number().nullable().positive(),
-			$lte: Yup.number().nullable().positive(),
-		}),
+	const { formik } = useFiltersCategory({
+		getProducts,
+		sortField,
+		sortOrder,
+		genderPage,
+		classificationPage,
+		categoriesPage,
+		classifications,
+		categories,
 	})
-
-	const formik = useFormik<IFiltersProducts>({
-		initialValues: {
-			category: [],
-			classification: [],
-			gender: [],
-			type_of_aroma: [],
-			country_of_TM: [],
-			made_in: [],
-			count: {
-				$gte: '',
-				$lte: '',
-			},
-			price: {
-				$gte: '',
-				$lte: '',
-			},
-			volume: {
-				$gte: '',
-				$lte: '',
-			},
-		},
-		validationSchema,
-		onSubmit: (values: IFiltersProducts) => {
-			console.log(values)
-			getProducts(1, sortField, sortOrder, values)
-		},
-	})
-
-	useEffect(() => {
-		if (genderPage) {
-			formik.setValues(formik.initialValues)
-			formik.setFieldValue('gender', category)
-			setTimeout(() => {
-				formik.submitForm()
-			}, 0)
-		}
-
-		if (classifications.length && classificationPage) {
-			formik.setValues(formik.initialValues)
-			const classification = classifications.find(
-				(c: IClassification) => c.slug === category,
-			)
-			formik.setFieldValue('classification', classification?._id)
-
-			setTimeout(() => {
-				formik.submitForm()
-			}, 0)
-		}
-
-		if (categories.length && categoriesPage) {
-			formik.setValues(formik.initialValues)
-			const currentCategory = categories.find(
-				(c: ICategory) => c.slug === category,
-			)
-			formik.setFieldValue('category', currentCategory?._id)
-
-			setTimeout(() => {
-				formik.submitForm()
-				console.log(currentCategory)
-			}, 0)
-		}
-
-		if (category === 'all') {
-			formik.setValues(formik.initialValues)
-			setTimeout(() => {
-				formik.submitForm()
-			}, 0)
-		}
-	}, [category])
 
 	return (
-		<form className={cn('filtersCategory')} onSubmit={formik.handleSubmit}>
+		<form className={'filtersCategory'} onSubmit={formik.handleSubmit}>
 			{categoriesPage ? '' : <FilterCategory formik={formik} />}
 			{classificationPage ? '' : <FilterClassification formik={formik} />}
 			{genderPage ? '' : <FilterGender formik={formik} />}

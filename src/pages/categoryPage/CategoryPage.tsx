@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { NavLink, useParams } from 'react-router-dom'
+import {
+	NavLink,
+	useLocation,
+	useNavigate,
+	useParams,
+	useSearchParams,
+} from 'react-router-dom'
 import { compose } from 'redux'
 import Paginator from '../../components/common/pagination/Pagination'
 import FiltersCategoryPage from '../../components/store/filters/filtersCategory/FiltersCategoryPage'
@@ -21,14 +27,14 @@ import './categoryPage.scss'
 interface ICategoryPage {
 	productsData: Array<IProduct>
 	getProducts: (
-		currentPage: number,
+		page: number | string,
 		sortField: string,
 		sortOrder: string,
 		filter: any,
-	) => void
+	) => any
 	addToBasket: (id: string) => void
 	getUserInfo: () => void
-	currentPage: number
+	page: number
 	totalPages: number
 	sortField: string
 	sortOrder: string
@@ -41,7 +47,7 @@ export const CategoryPage: React.FC<ICategoryPage> = ({
 	getProducts,
 	addToBasket,
 	getUserInfo,
-	currentPage,
+	page,
 	totalPages,
 	sortField,
 	sortOrder,
@@ -49,30 +55,48 @@ export const CategoryPage: React.FC<ICategoryPage> = ({
 	filters,
 }) => {
 	const { category } = useParams()
+	const navigate = useNavigate()
+	const [searchParams] = useSearchParams()
+	const location = useLocation()
+
+	const pageGender =
+		category === 'woman'
+			? "women's"
+			: '' || category === 'man'
+			? "men's"
+			: '' || category === 'unisex'
+			? 'unisex'
+			: ''
+
+	const classificationPage =
+		category === 'elite' || category === 'nisheva' || category === 'natural'
+
 	const basket = useBasketModal()
 	useEffect(() => {
 		getDataForFilters()
-		getProducts(currentPage, sortField, sortOrder, filters)
 	}, [])
 
-	const onPageChange = (page: number) => {
-		getProducts(page, sortField, sortOrder, filters)
+	const onPageChange = async (page: number) => {
+		let url = await getProducts(page, sortField, sortOrder, filters)
+		navigate(
+			window.location.pathname + '?' + new URLSearchParams(url).toString(),
+		)
 	}
 
-	const setSortCatalog = (sortField: string, sortOrder: string) => {
-		getProducts(1, sortField, sortOrder, filters)
+	const setSortCatalog = async (sortField: string, sortOrder: string) => {
+		let url = await getProducts(1, sortField, sortOrder, filters)
+		navigate(
+			window.location.pathname + '?' + new URLSearchParams(url).toString(),
+		)
 	}
-
-	let pageHeader =
-		category === 'woman' ? "women's" : '' || category === 'man' ? "men's" : ''
 
 	return (
 		<>
 			<MenuStore />
 			<div className='pageHeader'>
-				<span>
-					{pageHeader ? pageHeader + ' perfumery' : category + ' perfumery'}
-				</span>
+				<span>{pageGender ? pageGender + ' perfumery' : ''}</span>
+				<span>{classificationPage ? category + ' perfumery' : ''}</span>
+				<span>{!classificationPage && !pageGender ? category : ''}</span>
 			</div>
 			<div className='containerCategoryPage'>
 				<div className='filtersProducts'>
@@ -114,7 +138,7 @@ export const CategoryPage: React.FC<ICategoryPage> = ({
 							))}
 					</div>
 					<Paginator
-						currentPage={currentPage}
+						currentPage={page}
 						totalPages={totalPages}
 						onPageChange={onPageChange}
 					/>
@@ -127,7 +151,7 @@ export const CategoryPage: React.FC<ICategoryPage> = ({
 const mapStateToProps = (state: AppStateType) => {
 	return {
 		productsData: state.product.productsData,
-		currentPage: state.product.currentPage,
+		page: state.product.currentPage,
 		totalPages: state.product.totalPages,
 		sortField: state.product.sortField,
 		sortOrder: state.product.sortOrder,

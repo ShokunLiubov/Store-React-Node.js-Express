@@ -14,6 +14,7 @@ export const handleInputChange = (
 	checked?: any,
 ) => {
 	const { value } = e.target
+	formik.setFieldValue('page', 1)
 	if (fieldName === 'search') {
 		if (value.length <= 1) {
 			delayedSubmit(fieldName, '', formik)()

@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { BasketModalProvider } from './context/basketModalContext'
 import { CalendarProvider } from './context/calendarContext'
 import { EditUserInfoProvider } from './context/editUserInfoContext'
+import { ParamsProvider } from './context/paramsContext'
 import { SidebarProvider } from './context/sidebarContext'
 import './global.scss'
 import store from './redux/redux-store'
@@ -15,15 +16,17 @@ const App: React.FC = () => {
 		<div>
 			<Provider store={store}>
 				<EditUserInfoProvider>
-					<SidebarProvider>
-						<CalendarProvider>
-							<BasketModalProvider>
-								<BrowserRouter>
-									<RouterCombiner routes={AppRoutes} />
-								</BrowserRouter>
-							</BasketModalProvider>
-						</CalendarProvider>
-					</SidebarProvider>
+					<ParamsProvider>
+						<SidebarProvider>
+							<CalendarProvider>
+								<BasketModalProvider>
+									<BrowserRouter>
+										<RouterCombiner routes={AppRoutes} />
+									</BrowserRouter>
+								</BasketModalProvider>
+							</CalendarProvider>
+						</SidebarProvider>
+					</ParamsProvider>
 				</EditUserInfoProvider>
 			</Provider>
 		</div>

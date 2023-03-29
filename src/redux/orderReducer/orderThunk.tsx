@@ -7,7 +7,7 @@ import { AppStateType } from '../redux-store'
 import * as AC from './orderActionCreator'
 
 export const getOrders = (
-	currentPage: number,
+	currentPage: number | string,
 	sortField: string,
 	sortOrder: string,
 	filters: IFiltersOrders,
@@ -25,6 +25,7 @@ export const getOrders = (
 		const { docs, page, totalPages } = response.data
 
 		dispatch(AC.setOrders(docs, page, totalPages, sortField, sortOrder))
+		return response.url
 	}
 }
 

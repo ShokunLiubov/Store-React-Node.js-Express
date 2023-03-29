@@ -1,11 +1,12 @@
 export interface IFiltersProducts {
+	[key: string]: any;
 	search?: string
 	category: Array<string>
     classification: Array<string>
     type_of_aroma: Array<string>
     made_in: Array<string>
     country_of_TM: Array<string>
-    gender?: any
+    gender: Array<string>
 	count?: {
 		$gte: string
 		$lte: string

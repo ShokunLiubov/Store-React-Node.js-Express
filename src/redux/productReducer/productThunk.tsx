@@ -11,7 +11,7 @@ import { AppStateType } from '../redux-store'
 import * as AC from './productActionCreator'
 
 export const getProducts = (
-	currentPage: number,
+	currentPage: number | string,
 	sortField: string,
 	sortOrder: string,
 	filters: any,
@@ -33,6 +33,7 @@ export const getProducts = (
 		dispatch(AC.setProducts(docs, page, totalPages, sortField, sortOrder))
 		const classifications = await classificationService.getAllClassifications()
 		dispatch(AC.setClassifications(classifications))
+		return response.url
 	}
 }
 

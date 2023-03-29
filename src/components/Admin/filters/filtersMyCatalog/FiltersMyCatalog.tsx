@@ -1,17 +1,17 @@
-import { useFormik } from 'formik'
 import { useState } from 'react'
 import { connect } from 'react-redux'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { compose } from 'redux'
-import * as Yup from 'yup'
 import { getProducts } from '../../../../redux/productReducer/productThunk'
 import { AppStateType } from '../../../../redux/redux-store'
+import { ICategory } from '../../../../shared/interfaces/productInterface/category.interface'
 import { handleInputChange } from '../../../../utils/debounce/handleInputChange'
 import { handleSelectChange } from '../../../../utils/debounce/handleSelectChange'
 import { Input } from '../../../ui/form/input/Input'
 import { Search } from '../../../ui/form/search/Search'
 import './filtersMyCatalog.scss'
+import { useFiltersMyCatalog } from './useFiltersMyCatalog'
 
 interface IFiltersMyCatalogProps {
 	sortField: string
@@ -21,8 +21,8 @@ interface IFiltersMyCatalogProps {
 		sortField: string,
 		sortOrder: string,
 		values: any,
-	) => void
-	categories: any
+	) => any
+	categories: Array<ICategory>
 }
 
 export const FiltersMyCatalog: React.FC<IFiltersMyCatalogProps> = ({
@@ -34,18 +34,7 @@ export const FiltersMyCatalog: React.FC<IFiltersMyCatalogProps> = ({
 	const selectCategory = categories.map((category: any) => {
 		return { value: category._id, label: category.name }
 	})
-	const validationSchema = Yup.object().shape({
-		search: Yup.string(),
-		category: Yup.array(),
-		count: Yup.object().shape({
-			$gte: Yup.number().nullable().integer(),
-			$lte: Yup.number().nullable().integer(),
-		}),
-		price: Yup.object().shape({
-			$gte: Yup.number().nullable().positive(),
-			$lte: Yup.number().nullable().positive(),
-		}),
-	})
+
 	const animatedComponents = makeAnimated()
 	const [search, setSearch] = useState('')
 	const [countGte, setCountGte] = useState('')
@@ -53,24 +42,7 @@ export const FiltersMyCatalog: React.FC<IFiltersMyCatalogProps> = ({
 	const [priceGte, setPriceGte] = useState('')
 	const [priceLte, setPriceLte] = useState('')
 
-	const formik = useFormik<any>({
-		initialValues: {
-			search: '',
-			category: [],
-			count: {
-				$gte: '',
-				$lte: '',
-			},
-			price: {
-				$gte: '',
-				$lte: '',
-			},
-		},
-		validationSchema,
-		onSubmit: (values: any) => {
-			getProducts(1, sortField, sortOrder, values)
-		},
-	})
+	const { formik } = useFiltersMyCatalog({ sortField, sortOrder, getProducts })
 
 	return (
 		<form className={'filters'} onSubmit={formik.handleSubmit}>

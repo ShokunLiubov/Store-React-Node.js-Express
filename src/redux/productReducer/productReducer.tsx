@@ -34,6 +34,7 @@ let initialState: IProductState = {
 		type_of_aroma: [],
 		made_in: [],
 		country_of_TM: [],
+		gender: [],
 	},
 	categories: [],
 	classifications: [],
