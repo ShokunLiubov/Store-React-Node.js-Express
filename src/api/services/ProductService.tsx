@@ -6,11 +6,11 @@ import { $API } from '../api'
 
 export class productService {
 	static async getProducts(
-		page: number,
+		page: number | string,
 		sortField: string,
 		sortOrder: string,
 		filters: IFiltersProducts,
-	): Promise<AxiosResponse<any>> {
+	): Promise<any> {
 		const {
 			search,
 			category,
@@ -24,33 +24,33 @@ export class productService {
 			gender,
 		} = filters
 
-		let url = `products?page=${page}&limit=12&sortField=${sortField}&sortOrder=${sortOrder}`
+		let url = `?page=${page}&limit=12&sortField=${sortField}&sortOrder=${sortOrder}`
 
 		if (search) {
 			url += `&search=${search}`
 		}
 
-		if (category) {
+		if (category && category.length) {
 			url += `&category=${category}`
 		}
 
-		if (gender) {
+		if (gender && gender.length) {
 			url += `&gender=${gender}`
 		}
 
-		if (type_of_aroma) {
+		if (type_of_aroma && type_of_aroma.length) {
 			url += `&type_of_aroma=${type_of_aroma}`
 		}
 
-		if (country_of_TM) {
+		if (country_of_TM && country_of_TM.length) {
 			url += `&country_of_TM=${country_of_TM}`
 		}
 
-		if (made_in) {
+		if (made_in && made_in.length) {
 			url += `&made_in=${made_in}`
 		}
 
-		if (classification) {
+		if (classification && classification.length) {
 			url += `&classification=${classification}`
 		}
 
@@ -75,7 +75,8 @@ export class productService {
 			}
 		}
 
-		return $API.get<any>(url)
+		const response = await $API.get<any>('products' + url)
+		return { data: response.data, url }
 	}
 
 	static async deleteProduct(productId: string): Promise<AxiosResponse> {

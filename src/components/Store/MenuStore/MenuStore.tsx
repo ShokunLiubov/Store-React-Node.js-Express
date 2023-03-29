@@ -1,5 +1,6 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { useParam } from '../../../context/paramsContext'
 import { publicUrl } from '../../../routes/layout/PublicLayout'
 import './menuStore.scss'
 
@@ -19,12 +20,22 @@ const DateMenu: Array<IItemMenu> = [
 ]
 
 export const MenuStore: React.FC = () => {
+	const location = useLocation()
+	const navigate = useNavigate()
+	const params = useParam()
+
+	const resetSearchParams = () => {
+		navigate(location.pathname)
+		params.clearParams()
+	}
 	return (
 		<nav className='menuStore'>
 			<ul className='mainMenu'>
 				{DateMenu.map(li => (
 					<li className='menuLi' key={li.title}>
-						<NavLink to={li.path}>{li.title}</NavLink>
+						<NavLink to={li.path} onClick={resetSearchParams}>
+							{li.title}
+						</NavLink>
 					</li>
 				))}
 			</ul>

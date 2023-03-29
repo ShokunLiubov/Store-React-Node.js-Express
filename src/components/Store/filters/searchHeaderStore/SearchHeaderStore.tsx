@@ -1,10 +1,12 @@
 import { useFormik } from 'formik'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { compose } from 'redux'
 import * as Yup from 'yup'
 import { getProducts } from '../../../../redux/productReducer/productThunk'
 import { AppStateType } from '../../../../redux/redux-store'
+import { publicUrl } from '../../../../routes/layout/PublicLayout'
 import { ICategory } from '../../../../shared/interfaces/productInterface/category.interface'
 import { handleInputChange } from '../../../../utils/debounce/handleInputChange'
 import { Search } from '../../../ui/form/search/Search'
@@ -18,7 +20,7 @@ interface ISearchHeaderStoreProps {
 		sortField: string,
 		sortOrder: string,
 		values: any,
-	) => void
+	) => any
 	categories: Array<ICategory>
 }
 
@@ -27,6 +29,14 @@ export const SearchHeaderStore: React.FC<ISearchHeaderStoreProps> = ({
 	sortOrder,
 	getProducts,
 }) => {
+	const navigate = useNavigate()
+	const [searchParams] = useSearchParams()
+	useEffect(() => {
+		getProducts(1, sortField, sortOrder, {
+			search: searchParams.get('search') || '',
+		})
+	}, [])
+
 	const validationSchema = Yup.object().shape({
 		search: Yup.string(),
 	})
@@ -37,8 +47,15 @@ export const SearchHeaderStore: React.FC<ISearchHeaderStoreProps> = ({
 			search: '',
 		},
 		validationSchema,
-		onSubmit: values => {
-			getProducts(1, sortField, sortOrder, values)
+		onSubmit: async values => {
+			navigate(publicUrl + 'search')
+
+			let url = await getProducts(1, sortField, sortOrder, values)
+			console.log(url)
+
+			navigate(
+				window.location.pathname + '?' + new URLSearchParams(url).toString(),
+			)
 		},
 	})
 

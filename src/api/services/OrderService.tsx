@@ -4,24 +4,24 @@ import { $API } from '../api'
 
 export class orderService {
 	static async getOrders(
-		page: number,
+		page: number | string,
 		sortField: string,
 		sortOrder: string,
 		filters: any,
-	): Promise<AxiosResponse<any>> {
+	): Promise<any> {
 		const { search, dataRange, status, price, city } = filters
 
-		let url = `orders?page=${page}&limit=15&sortField=${sortField}&sortOrder=${sortOrder}`
+		let url = `?page=${page}&limit=15&sortField=${sortField}&sortOrder=${sortOrder}`
 
 		if (search) {
 			url += `&search=${search}`
 		}
 
-		if (status) {
+		if (status && status.length) {
 			url += `&status=${status}`
 		}
 
-		if (city) {
+		if (city && city.length) {
 			url += `&city=${city}`
 		}
 
@@ -37,7 +37,8 @@ export class orderService {
 			}
 		}
 
-		return $API.get<any>(url)
+		const response = await $API.get<any>('orders' + url)
+		return { data: response.data, url }
 	}
 
 	static async createOrder(order: IOrder): Promise<AxiosResponse<IOrder[]>> {

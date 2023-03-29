@@ -1,7 +1,6 @@
 import cn from 'classnames'
-import { useFormik } from 'formik'
 import { debounce } from 'lodash'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { DateRangePicker } from 'react-date-range'
 import 'react-date-range/dist/styles.css' // main css file
 import 'react-date-range/dist/theme/default.css' // theme css file
@@ -12,10 +11,7 @@ import makeAnimated from 'react-select/animated'
 import { compose } from 'redux'
 import { useCalendar } from '../../../../context/calendarContext'
 import { orderStatusArray } from '../../../../enums/orderStatus'
-import {
-	getCityForOrders,
-	getOrders,
-} from '../../../../redux/orderReducer/orderThunk'
+import { getOrders } from '../../../../redux/orderReducer/orderThunk'
 import { AppStateType } from '../../../../redux/redux-store'
 import { IFiltersOrders } from '../../../../shared/filters/filtersOrders.interface'
 import { handleInputChange } from '../../../../utils/debounce/handleInputChange'
@@ -23,17 +19,17 @@ import { handleSelectChange } from '../../../../utils/debounce/handleSelectChang
 import { Input } from '../../../ui/form/input/Input'
 import { Search } from '../../../ui/form/search/Search'
 import './filtersOrders.scss'
+import { useFiltersOrders } from './useFiltersOrders'
 
 interface IFiltersOrdersProps {
 	sortField: string
 	sortOrder: string
 	getOrders: (
-		page: number,
+		page: number | string,
 		sortField: string,
 		sortOrder: string,
 		filters: IFiltersOrders,
-	) => void
-	getCityForOrders: any
+	) => any
 	city: Array<string>
 }
 
@@ -41,16 +37,14 @@ export const FiltersOrders: React.FC<IFiltersOrdersProps> = ({
 	sortField,
 	sortOrder,
 	getOrders,
-	getCityForOrders,
 	city,
 }) => {
-	useEffect(() => {
-		getCityForOrders()
-	}, [])
+	const { formik } = useFiltersOrders({ sortField, sortOrder, getOrders })
 
 	const selectCity = city.map((madeIn: any) => {
 		return { value: madeIn, label: madeIn }
 	})
+
 	const orderStatus = orderStatusArray.map((status: any) => {
 		return { value: status, label: status }
 	})
@@ -61,33 +55,18 @@ export const FiltersOrders: React.FC<IFiltersOrdersProps> = ({
 	const [priceLte, setPriceLte] = useState('')
 	const calendar = useCalendar()
 
-	const formik = useFormik<IFiltersOrders>({
-		initialValues: {
-			search: '',
-			dataRange: {},
-			city: [],
-			price: {
-				$gte: '',
-				$lte: '',
-			},
-			status: [],
-		},
-		onSubmit: values => {
-			calendar.closeCalendar()
-			getOrders(1, sortField, sortOrder, values)
-		},
-	})
-
 	const [range, setRange] = useState({
 		endDate: new Date(),
 		startDate: new Date(),
 		key: 'selection',
 	})
 
-	const handleSelect = (ranges: any) => {
+	const handleCalendar = (ranges: any) => {
 		setRange(ranges.selection)
 		formik.setFieldValue('dataRange', ranges)
+		formik.setFieldValue('page', 1)
 		debounce(() => {
+			calendar.closeCalendar()
 			formik.submitForm()
 		}, 2000)()
 	}
@@ -101,7 +80,7 @@ export const FiltersOrders: React.FC<IFiltersOrdersProps> = ({
 						<div className='overlay' onClick={calendar.toggleOverlay}>
 							<div className='calendarItem'>
 								<div>
-									<DateRangePicker ranges={[range]} onChange={handleSelect} />
+									<DateRangePicker ranges={[range]} onChange={handleCalendar} />
 								</div>
 							</div>
 						</div>
@@ -203,6 +182,4 @@ const mapStateToProps = (state: AppStateType) => {
 	}
 }
 
-export default compose(
-	connect(mapStateToProps, { getOrders, getCityForOrders }),
-)(FiltersOrders)
+export default compose(connect(mapStateToProps, { getOrders }))(FiltersOrders)

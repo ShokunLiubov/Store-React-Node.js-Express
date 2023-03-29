@@ -4,7 +4,7 @@ import { IFiltersCustomers } from '../../shared/filters/filtersCustomers.interfa
 import * as AC from './userActionCreator'
 
 export const getUsers = (
-	currentPage: number,
+	currentPage: number | string,
 	sortField: string,
 	sortOrder: string,
 	filters: IFiltersCustomers,
@@ -20,6 +20,8 @@ export const getUsers = (
 
 		const { docs, page, totalPages } = response.data
 		dispatch(AC.setUsers(docs, page, totalPages, sortField, sortOrder))
+
+		return response.url
 	}
 }
 

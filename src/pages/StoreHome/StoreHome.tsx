@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { compose } from 'redux'
 import { MenuStore } from '../../components/store/menuStore/MenuStore'
 import { useBasketModal } from '../../context/basketModalContext'
+import { useParam } from '../../context/paramsContext'
 import { getUserInfo } from '../../redux/authReducer/authThunk'
 import { addToBasket } from '../../redux/basketReducer/basketThunk'
 import {
@@ -31,6 +32,14 @@ export const StoreHome: React.FC<IStoreHome> = ({
 	homeProducts,
 	getDataForFilters,
 }) => {
+	const location = useLocation()
+	const navigate = useNavigate()
+	const params = useParam()
+
+	const resetSearchParams = () => {
+		navigate(location.pathname)
+		params.clearParams()
+	}
 	const basket = useBasketModal()
 	useEffect(() => {
 		getDataForFilters()
@@ -50,7 +59,10 @@ export const StoreHome: React.FC<IStoreHome> = ({
 						return (
 							<div key={category.name}>
 								<div className='category'>
-									<NavLink to={publicUrl + 'category/' + category.slug}>
+									<NavLink
+										to={publicUrl + 'category/' + category.slug}
+										onClick={resetSearchParams}
+									>
 										{category.name}
 									</NavLink>
 								</div>

@@ -1,28 +1,30 @@
 import cn from 'classnames'
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { compose } from 'redux'
 import FiltersCustomers from '../../components/admin/filters/filtersCustomers/FiltersCustomers'
 import Paginator from '../../components/common/pagination/Pagination'
 import { AppStateType } from '../../redux/redux-store'
-import { getUsers } from '../../redux/userReducer/userThunk'
+import { getCityForUsers, getUsers } from '../../redux/userReducer/userThunk'
 import { IFiltersCustomers } from '../../shared/filters/filtersCustomers.interface'
 import { IUser } from '../../shared/interfaces/userInterface/user.interface'
 import styles from './customers.module.scss'
 
 interface IMyCatalogsProps {
 	getUsers: (
-		page: number,
+		page: number | string,
 		sortField: string,
 		sortOrder: string,
 		filters: IFiltersCustomers,
-	) => void
+	) => any
 	usersData: Array<IUser>
 	page: number
 	totalPages: number
 	sortField: string
 	sortOrder: string
 	filters: IFiltersCustomers
+	getCityForUsers: any
 }
 
 export const Customers: React.FC<IMyCatalogsProps> = ({
@@ -33,28 +35,46 @@ export const Customers: React.FC<IMyCatalogsProps> = ({
 	sortField,
 	sortOrder,
 	filters,
+	getCityForUsers,
 }) => {
+	const [searchParams] = useSearchParams()
+	const navigate = useNavigate()
+	const location = useLocation()
+
 	useEffect(() => {
-		getUsers(page, sortField, sortOrder, filters)
-	}, [])
+		getCityForUsers()
+		const pageOrDefault = searchParams.get('page') || 1
+		getUsers(pageOrDefault, sortField, sortOrder, filters)
+	}, [location])
 
-	const [sort, setSort] = useState(true)
+	const [sort, setSort] = useState('1')
 
-	const onPageChange = (page: number) => {
-		getUsers(page, sortField, sortOrder, filters)
+	const onPageChange = async (page: number) => {
+		let url = await getUsers(page, sortField, sortOrder, filters)
+		navigate(
+			window.location.pathname + '?' + new URLSearchParams(url).toString(),
+		)
 	}
 
-	const setSortCatalog = (sortField: string, sort: boolean) => {
-		let sortOrder = '1'
-		if (sort) {
-			setSort(!sort)
+	const setSortCatalog = async (sortField: string, sortOrder: string) => {
+		if (sortOrder === '1') {
+			setSort('-1')
 		} else {
-			setSort(!sort)
+			setSort('1')
 			sortOrder = '-1'
 		}
 
-		getUsers(1, sortField, sortOrder, filters)
+		let url = await getUsers(1, sortField, sortOrder, filters)
+		navigate(
+			window.location.pathname + '?' + new URLSearchParams(url).toString(),
+		)
 	}
+
+	const sortOrderSpan = (
+		<span className='material-symbols-outlined'>
+			{sort === '1' ? 'expand_less' : 'expand_more'}
+		</span>
+	)
 
 	return (
 		<div className={cn('containerAdminDark')}>
@@ -75,9 +95,7 @@ export const Customers: React.FC<IMyCatalogsProps> = ({
 								className={cn(styles.sort)}
 							>
 								User Name
-								<span className='material-symbols-outlined'>
-									{sort ? 'expand_more' : 'expand_less'}
-								</span>
+								{sortOrderSpan}
 							</th>
 							<th
 								scope='col'
@@ -85,9 +103,7 @@ export const Customers: React.FC<IMyCatalogsProps> = ({
 								className={cn(styles.sort)}
 							>
 								Email
-								<span className='material-symbols-outlined'>
-									{sort ? 'expand_more' : 'expand_less'}
-								</span>
+								{sortOrderSpan}
 							</th>
 							<th
 								scope='col'
@@ -95,9 +111,7 @@ export const Customers: React.FC<IMyCatalogsProps> = ({
 								className={cn(styles.sort)}
 							>
 								Phone
-								<span className='material-symbols-outlined'>
-									{sort ? 'expand_more' : 'expand_less'}
-								</span>
+								{sortOrderSpan}
 							</th>
 							<th
 								scope='col'
@@ -105,9 +119,7 @@ export const Customers: React.FC<IMyCatalogsProps> = ({
 								className={cn(styles.sort)}
 							>
 								City
-								<span className='material-symbols-outlined'>
-									{sort ? 'expand_more' : 'expand_less'}
-								</span>
+								{sortOrderSpan}
 							</th>
 						</tr>
 					</thead>
@@ -155,4 +167,6 @@ const mapStateToProps = (state: AppStateType) => {
 	}
 }
 
-export default compose(connect(mapStateToProps, { getUsers }))(Customers)
+export default compose(connect(mapStateToProps, { getUsers, getCityForUsers }))(
+	Customers,
+)

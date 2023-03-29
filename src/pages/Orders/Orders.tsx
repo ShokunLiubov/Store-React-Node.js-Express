@@ -1,10 +1,14 @@
 import cn from 'classnames'
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { compose } from 'redux'
 import FiltersOrders from '../../components/admin/filters/filtersOrders/FiltersOrders'
 import Paginator from '../../components/common/pagination/Pagination'
-import { getOrders } from '../../redux/orderReducer/orderThunk'
+import {
+	getCityForOrders,
+	getOrders,
+} from '../../redux/orderReducer/orderThunk'
 import { AppStateType } from '../../redux/redux-store'
 import { IFiltersOrders } from '../../shared/filters/filtersOrders.interface'
 import { IOrder } from '../../shared/interfaces/order.interface'
@@ -12,17 +16,18 @@ import './orders.scss'
 
 interface IOrdersProps {
 	getOrders: (
-		page: number,
+		page: number | string,
 		sortField: string,
 		sortOrder: string,
 		filters: IFiltersOrders,
-	) => void
+	) => any
 	ordersData: Array<IOrder>
 	page: number
 	totalPages: number
 	sortField: string
 	sortOrder: string
 	filters: IFiltersOrders
+	getCityForOrders: any
 }
 
 export const Orders: React.FC<IOrdersProps> = ({
@@ -33,32 +38,44 @@ export const Orders: React.FC<IOrdersProps> = ({
 	sortField,
 	sortOrder,
 	filters,
+	getCityForOrders,
 }) => {
+	const [searchParams] = useSearchParams()
+	const navigate = useNavigate()
+	const location = useLocation()
+
 	useEffect(() => {
-		getOrders(page, sortField, sortOrder, filters)
-	}, [])
+		getCityForOrders()
+		const pageOrDefault = searchParams.get('page') || 1
+		getOrders(pageOrDefault, sortField, sortOrder, filters)
+	}, [location])
 
-	const [sort, setSort] = useState(true)
+	const [sort, setSort] = useState('1')
 
-	const onPageChange = (page: number) => {
-		getOrders(page, sortField, sortOrder, filters)
+	const onPageChange = async (page: number) => {
+		let url = await getOrders(page, sortField, sortOrder, filters)
+		navigate(
+			window.location.pathname + '?' + new URLSearchParams(url).toString(),
+		)
 	}
 
-	const setSortCatalog = (sortField: string, sort: boolean) => {
-		let sortOrder = 'asc'
-		if (sort) {
-			setSort(!sort)
+	const setSortCatalog = async (sortField: string, sortOrder: string) => {
+		if (sortOrder === '1') {
+			setSort('-1')
 		} else {
-			setSort(!sort)
-			sortOrder = 'desc'
+			setSort('1')
+			sortOrder = '-1'
 		}
 
-		getOrders(1, sortField, sortOrder, filters)
+		let url = await getOrders(1, sortField, sortOrder, filters)
+		navigate(
+			window.location.pathname + '?' + new URLSearchParams(url).toString(),
+		)
 	}
 
-	const sortArrow = (
+	const sortOrderSpan = (
 		<span className='material-symbols-outlined'>
-			{sort ? 'expand_more' : 'expand_less'}
+			{sort === '1' ? 'expand_less' : 'expand_more'}
 		</span>
 	)
 
@@ -82,7 +99,7 @@ export const Orders: React.FC<IOrdersProps> = ({
 								>
 									<span className={'sort'}>
 										Data checkout
-										{sortArrow}
+										{sortOrderSpan}
 									</span>
 								</th>
 								<th
@@ -91,7 +108,7 @@ export const Orders: React.FC<IOrdersProps> = ({
 								>
 									<span className={'sort'}>
 										Client Name
-										{sortArrow}
+										{sortOrderSpan}
 									</span>
 								</th>
 								<th scope='col'>City</th>
@@ -101,7 +118,7 @@ export const Orders: React.FC<IOrdersProps> = ({
 								>
 									<span className={'sort'}>
 										Total Price
-										{sortArrow}
+										{sortOrderSpan}
 									</span>
 								</th>
 								<th scope='col' className={'statusTh'}>
@@ -166,4 +183,6 @@ const mapStateToProps = (state: AppStateType) => {
 	}
 }
 
-export default compose(connect(mapStateToProps, { getOrders }))(Orders)
+export default compose(
+	connect(mapStateToProps, { getOrders, getCityForOrders }),
+)(Orders)

@@ -1,47 +1,55 @@
-import React from "react";
-import styles from "./sidebar.module.scss";
-import cn from "classnames";
-import { NavLink } from "react-router-dom";
-import { useSidebar } from "../../../context/sidebarContext";
-import { ISidebar } from "../../../shared/interfaces/sidebar.interface";
+import cn from 'classnames'
+import React from 'react'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { useParam } from '../../../context/paramsContext'
+import { useSidebar } from '../../../context/sidebarContext'
+import { ISidebar } from '../../../shared/interfaces/sidebar.interface'
+import styles from './sidebar.module.scss'
 
 interface ISidebarProps {
-  items: Array<ISidebar>;
+	items: Array<ISidebar>
 }
 
 export const Sidebar: React.FC<ISidebarProps> = ({ items }) => {
-  const sidebar = useSidebar();
+	const sidebar = useSidebar()
+	const location = useLocation()
+	const navigate = useNavigate()
+	const params = useParam()
 
-  const sidebarItem = items.map((item) => (
-    <li key={item.id}>
-      <NavLink
-        to={item.path}
-        className={(navData) =>
-          navData.isActive ? styles.active : styles.item
-        }
-      >
-        <span className={cn("material-symbols-outlined", styles.itemIcon)}>
-          {item.icon}
-        </span>
-        <div
-          className={cn(
-            styles.titleItem,
-            !sidebar.sidebar && styles.titleItemClose,
-          )}
-        >
-          {item.title}
-        </div>
-      </NavLink>
-    </li>
-  ));
+	const resetSearchParams = () => {
+		navigate(location.pathname)
+		params.clearParams()
+	}
 
-  return (
-    <nav>
-      <div
-        className={cn(styles.sidebar, !sidebar.sidebar && styles.sidebarClose)}
-      >
-        <ul>{sidebarItem}</ul>
-      </div>
-    </nav>
-  );
-};
+	const sidebarItem = items.map(item => (
+		<li key={item.id}>
+			<NavLink
+				to={item.path}
+				className={navData => (navData.isActive ? styles.active : styles.item)}
+				onClick={resetSearchParams}
+			>
+				<span className={cn('material-symbols-outlined', styles.itemIcon)}>
+					{item.icon}
+				</span>
+				<div
+					className={cn(
+						styles.titleItem,
+						!sidebar.sidebar && styles.titleItemClose,
+					)}
+				>
+					{item.title}
+				</div>
+			</NavLink>
+		</li>
+	))
+
+	return (
+		<nav>
+			<div
+				className={cn(styles.sidebar, !sidebar.sidebar && styles.sidebarClose)}
+			>
+				<ul>{sidebarItem}</ul>
+			</div>
+		</nav>
+	)
+}

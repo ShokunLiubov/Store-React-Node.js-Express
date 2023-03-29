@@ -86,6 +86,12 @@ export const AppRoutes: Array<IRoutes> = [
 		baseUrl: publicUrl,
 	},
 	{
+		path: 'search',
+		Component: Pages.CategoryPage,
+		Layout: Layouts.PublicLayout,
+		baseUrl: publicUrl,
+	},
+	{
 		path: '*',
 		Component: Pages.Notfound,
 		Layout: Layouts.AuthLayout,

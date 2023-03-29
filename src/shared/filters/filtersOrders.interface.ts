@@ -1,10 +1,11 @@
 export interface IFiltersOrders {
 	search?: string
 	dataRange?: any
-	city: Array<any>
+	city: Array<string>
 	price?: {
 		$gte: string
 		$lte: string
 	}
-	status: Array<any>
+	status: Array<string>
+	page?: number | string
 }

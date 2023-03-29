@@ -1,7 +1,12 @@
 import cn from 'classnames'
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import {
+	NavLink,
+	useLocation,
+	useNavigate,
+	useSearchParams,
+} from 'react-router-dom'
 import { compose } from 'redux'
 import FiltersMyCatalog from '../../components/admin/filters/filtersMyCatalog/FiltersMyCatalog'
 import Paginator from '../../components/common/pagination/Pagination'
@@ -18,11 +23,11 @@ import styles from './myCatalogs.module.scss'
 
 interface IMyCatalogsProps {
 	getProducts: (
-		page: number,
+		page: number | string,
 		sortField: string,
 		sortOrder: string,
 		filters: IFiltersProducts,
-	) => void
+	) => any
 	productsData: Array<IProduct>
 	deleteProduct: (id: string) => void
 	page: number
@@ -44,30 +49,41 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 	sortOrder,
 	filters,
 }) => {
+	const [searchParams] = useSearchParams()
+	const navigate = useNavigate()
+	const location = useLocation()
+
 	useEffect(() => {
-		getProducts(page, sortField, sortOrder, filters)
-	}, [])
+		const pageOrDefault = searchParams.get('page') || 1
+		getProducts(pageOrDefault, sortField, sortOrder, filters)
+	}, [location])
 
-	const [sort, setSort] = useState(true)
+	const [sort, setSort] = useState('1')
 
-	const onPageChange = (page: number) => {
-		getProducts(page, sortField, sortOrder, filters)
+	const onPageChange = async (page: number) => {
+		let url = await getProducts(page, sortField, sortOrder, filters)
+		navigate(
+			window.location.pathname + '?' + new URLSearchParams(url).toString(),
+		)
 	}
 
-	const setSortCatalog = (sortField: string, sort: boolean) => {
-		let sortOrder = 'asc'
-		if (sort) {
-			setSort(!sort)
+	const setSortCatalog = async (sortField: string, sortOrder: string) => {
+		if (sortOrder === '1') {
+			setSort('-1')
 		} else {
-			setSort(!sort)
-			sortOrder = 'desc'
+			setSort('1')
+			sortOrder = '-1'
 		}
-		getProducts(1, sortField, sortOrder, filters)
+
+		let url = await getProducts(1, sortField, sortOrder, filters)
+		navigate(
+			window.location.pathname + '?' + new URLSearchParams(url).toString(),
+		)
 	}
 
-	const sortArrow = (
+	const sortOrderSpan = (
 		<span className='material-symbols-outlined'>
-			{sort ? 'expand_more' : 'expand_less'}
+			{sort === '1' ? 'expand_less' : 'expand_more'}
 		</span>
 	)
 
@@ -91,16 +107,22 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 								className={cn(styles.sort)}
 							>
 								Title
-								{sortArrow}
+								{sortOrderSpan}
 							</th>
 							<th className={styles.thSmall}>Category</th>
-							<th className={styles.thSmall}>Count</th>
+							<th
+								onClick={() => setSortCatalog('count', sort)}
+								className={cn(styles.sort, styles.thSmall)}
+							>
+								Count
+								{sortOrderSpan}
+							</th>
 							<th
 								className={cn(styles.thSmall, styles.sort)}
 								onClick={() => setSortCatalog('price', sort)}
 							>
 								Price
-								{sortArrow}
+								{sortOrderSpan}
 							</th>
 							<th className={styles.thSmall}>Edit</th>
 							<th className={styles.thSmall}>Delete</th>
