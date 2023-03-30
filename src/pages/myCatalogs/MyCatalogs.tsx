@@ -89,7 +89,7 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 
 	return (
 		<div className={cn('containerAdminWhite', styles.catalogs)}>
-			<span className={styles.title}>My Catalog</span>
+			<span className={'titleAdminPage'}>My Catalog</span>
 			<FiltersMyCatalog />
 			<div className={styles.line}></div>
 

@@ -42,7 +42,12 @@ export const AppRoutes: Array<IRoutes> = [
 		Layout: Layouts.AdminLayout,
 		baseUrl: adminUrl,
 	},
-
+	{
+		path: 'delivery',
+		Component: Pages.Delivery,
+		Layout: Layouts.AdminLayout,
+		baseUrl: adminUrl,
+	},
 	{
 		path: 'login',
 		Component: Pages.Login,

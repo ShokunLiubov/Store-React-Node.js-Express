@@ -4,6 +4,7 @@ import { authRouter } from "./authRouter"
 import { categoryRouter } from './categoryRouter'
 import { classificationRouter } from './classificationRouter'
 import { countryTMRouter } from './countryTMRouter'
+import { deliveryRouter } from './deliveryRouter'
 import { madeInRouter } from './madeInRouter'
 import { orderRouter } from "./orderRouter"
 import { productsRouter } from "./productsRouter"
@@ -25,6 +26,7 @@ app.use("/type-aroma", typeAromaRouter)
 app.use("/made-in", madeInRouter)
 app.use("/country-tm", countryTMRouter)
 app.use("/store", storeRouter)
+app.use("/delivery", deliveryRouter)
 
 app.use(errorMiddleware)
 

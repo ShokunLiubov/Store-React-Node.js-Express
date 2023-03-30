@@ -22,7 +22,7 @@ export const Sidebar: React.FC<ISidebarProps> = ({ items }) => {
 	}
 
 	const sidebarItem = items.map(item => (
-		<li key={item.id}>
+		<li key={item.path}>
 			<NavLink
 				to={item.path}
 				className={navData => (navData.isActive ? styles.active : styles.item)}
