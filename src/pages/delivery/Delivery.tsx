@@ -1,6 +1,6 @@
 import cn from 'classnames'
 import { useFormik } from 'formik'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { Input } from '../../components/ui/form/input/Input'
@@ -24,6 +24,9 @@ const Delivery: React.FC<IDeliveryProps> = ({
 	getDeliveryOptions,
 	setPriceDelivery,
 }) => {
+	useEffect(() => {
+		getDeliveryOptions()
+	}, [])
 	const deliveryInfo = deliveryOptions.reduce(
 		(acc: any, option: IDeliveryOptions) => {
 			acc[option.deliveryType] = {
