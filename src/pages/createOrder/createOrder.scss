@@ -4,6 +4,8 @@
   justify-content: space-between;
   padding: 0px 20px;
   margin-bottom: 30px;
+  position: relative;
+  
   h5 {
     font-weight: 500 !important;
     margin: 15px 0px 5px;
@@ -16,12 +18,26 @@
   .order {
     width: 40%;
   }
+  .togetherPrice {
+    div {
+      margin: 9px 0px;
+    }
+  }
   .totalPrice {
     display: flex;
     width: 100%;
     justify-content: space-between;
-    div {
-      margin: 10px 0px;
+    margin: 17px 0px;
+    .select__control {
+      width: 16vw;
+      margin: 14px 0px;
+      font-size: 15px;
+    }
+    .select__value-container {
+      padding: 2px;
+    }
+    .select__indicator {
+      cursor: pointer;
     }
   }
   .order {

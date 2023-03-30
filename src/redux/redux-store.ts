@@ -7,6 +7,7 @@ import { composeWithDevTools } from "redux-devtools-extension"
 import thunkMiddleware from "redux-thunk"
 import { authReducer } from "./authReducer/authReducer"
 import { basketReducer } from "./basketReducer/basketReducer"
+import { deliveryReducer } from './deliveryReducer/deliveryReducer'
 import { orderReducer } from "./orderReducer/orderReducer"
 import { productReducer } from "./productReducer/productReducer"
 import { storeReducer } from './storeReducer/storeReducer'
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   user: userReducer,
   auth: authReducer,
   basket: basketReducer,
-  store: storeReducer
+  store: storeReducer,
+  delivery: deliveryReducer
 });
 
 type RootReducerType = typeof rootReducer;

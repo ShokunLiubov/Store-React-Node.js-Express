@@ -13,7 +13,6 @@
   margin-top: 20px;
   span {
     font-size: 36px;
-    color: #333;
   }
 }
 
@@ -65,7 +64,6 @@
 
   span {
     width: 60%;
-    color: #333;
     font-weight: 400;
   }
 }
@@ -73,11 +71,6 @@
 .catalogs {
   display: flex;
   flex-wrap: wrap;
-  .title {
-    font-size: 30px;
-    color: #333;
-    margin-bottom: 20px;
-  }
 }
 
 .catalogTable {
@@ -94,19 +87,15 @@ table {
     width: 20%;
     height: 50px;
     font-weight: 600;
-    // display: flex;
-    color: #333;
     text-align: center;
     span {
       margin-left: 10px;
-      color: #333;
     }
   }
   td {
     font-weight: 300;
     align-items: center;
     text-align: center;
-    color: #333;
     padding: 10px 10px;
     border-top: 1px solid hsla(3, 0%, 33%, 0.1);
   }
@@ -127,7 +116,6 @@ body .thSmall {
 
 .editIcon {
   font-weight: 300;
-  color: #333;
 }
 
 .deleteIcon {

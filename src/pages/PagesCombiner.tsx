@@ -3,6 +3,7 @@ import CompleteOrder from './completeOrder/CompleteOrder'
 import CreateOrder from './createOrder/createOrder'
 import CreateProduct from './createProduct/CreateProduct'
 import Customers from './customers/Customers'
+import Delivery from './delivery/Delivery'
 import Login from './login/Login'
 import MyCatalogs from './myCatalogs/MyCatalogs'
 import { Notfound } from './notfound/Notfound'
@@ -26,4 +27,5 @@ export const Pages = {
 	ProductPage: () => <ProductPage />,
 	CompleteOrder: () => <CompleteOrder />,
 	CategoryPage: () => <CategoryPage />,
+	Delivery: () => <Delivery />,
 }

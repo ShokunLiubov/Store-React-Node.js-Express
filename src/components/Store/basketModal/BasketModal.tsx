@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
 import { useBasketModal } from '../../../context/basketModalContext'
+import { getDeliveryOptions } from '../../../redux/deliveryReducer/deliveryThunk'
 import { AppStateType } from '../../../redux/redux-store'
 import { publicUrl } from '../../../routes/layout/PublicLayout'
 import { IProductBasket } from '../../../shared/interfaces/productInterface/productBasket.interface'
@@ -12,12 +13,17 @@ import ProductItem from './productItem'
 interface IBasketModal {
 	productsBasket: IProductBasket[]
 	basketSum: number
+	getDeliveryOptions: () => void
 }
 
 export const BasketModal: React.FC<IBasketModal> = ({
 	productsBasket,
 	basketSum,
+	getDeliveryOptions,
 }) => {
+	useEffect(() => {
+		getDeliveryOptions()
+	}, [])
 	const basket = useBasketModal()
 
 	return (
@@ -70,4 +76,6 @@ const mapStateToProps = (state: AppStateType) => {
 	}
 }
 
-export default compose(connect(mapStateToProps, {}))(BasketModal)
+export default compose(connect(mapStateToProps, { getDeliveryOptions }))(
+	BasketModal,
+)

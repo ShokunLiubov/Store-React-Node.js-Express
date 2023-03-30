@@ -11,7 +11,7 @@ import { IFiltersCustomers } from '../../shared/filters/filtersCustomers.interfa
 import { IUser } from '../../shared/interfaces/userInterface/user.interface'
 import styles from './customers.module.scss'
 
-interface IMyCatalogsProps {
+interface ICustomersProps {
 	getUsers: (
 		page: number | string,
 		sortField: string,
@@ -27,7 +27,7 @@ interface IMyCatalogsProps {
 	getCityForUsers: any
 }
 
-export const Customers: React.FC<IMyCatalogsProps> = ({
+export const Customers: React.FC<ICustomersProps> = ({
 	getUsers,
 	usersData,
 	page,

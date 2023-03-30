@@ -92,12 +92,6 @@ export const FormUserInfo: React.FC<IFormUserInfo> = ({
 							<span>{address && address.city}</span>
 							<span className='labelForInfo'>Post office</span>
 							<span>{address && address.postOffice}</span>
-							{/* <button
-								onClick={() => editUserInfo.visibleEditUserInfo()}
-								className='submitFormInfo'
-							>
-								Change information
-							</button> */}
 						</div>
 					</div>
 				</>
