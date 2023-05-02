@@ -1,4 +1,5 @@
-import { Dispatch } from 'redux'
+import { AnyAction, Dispatch } from 'redux'
+import { ThunkDispatch } from 'redux-thunk'
 import { authService } from '../../api/services/authService'
 import { userService } from '../../api/services/userService'
 import { IAuth } from '../../shared/interfaces/userInterface/auth.interface'
@@ -6,7 +7,7 @@ import { IUserInfo } from '../../shared/interfaces/userInterface/userInfo.interf
 import * as AC from './authActionCreator'
 
 export const registrationUser = (value: IAuth) => {
-	return async (dispatch: Dispatch) => {
+	return async (dispatch: Dispatch): Promise<void> => {
 		try {
 			const response = await authService.registration(value)
 			localStorage.setItem('token', response.data.accessToken)
@@ -18,7 +19,7 @@ export const registrationUser = (value: IAuth) => {
 }
 
 export const login = (value: IAuth) => {
-	return async (dispatch: Dispatch) => {
+	return async (dispatch: Dispatch): Promise<void> => {
 		try {
 			const response = await authService.login(value)
 			localStorage.setItem('token', response.data.accessToken)
@@ -29,8 +30,8 @@ export const login = (value: IAuth) => {
 	}
 }
 
-export const logout = (value: IAuth) => {
-	return async (dispatch: Dispatch) => {
+export const logout = () => {
+	return async (dispatch: Dispatch): Promise<void> => {
 		try {
 			await authService.logout()
 			localStorage.removeItem('token')
@@ -43,7 +44,7 @@ export const logout = (value: IAuth) => {
 }
 
 export const checkAuth = () => {
-	return async (dispatch: Dispatch) => {
+	return async (dispatch: Dispatch): Promise<void> => {
 		dispatch(AC.setLoading(true))
 		try {
 			const response = await authService.refreshToken()
@@ -59,21 +60,21 @@ export const checkAuth = () => {
 }
 
 export const getUserInfo = () => {
-	return async (dispatch: Dispatch) => {
+	return async (dispatch: Dispatch): Promise<void> => {
 		const response = await userService.getUserInfoForDelivery()
 		dispatch(AC.setUserInfo(response.data))
 	}
 }
 
 export const updateUserInfo = (value: IUserInfo) => {
-	return async (dispatch: any) => {
+	return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
 		await userService.updateUserInfoForDelivery(value)
 		dispatch(getUserInfo())
 	}
 }
 
 export const createUserInfo = (value: IUserInfo) => {
-	return async (dispatch: any) => {
+	return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
 		await userService.createUserInfoForDelivery(value)
 		dispatch(getUserInfo())
 	}

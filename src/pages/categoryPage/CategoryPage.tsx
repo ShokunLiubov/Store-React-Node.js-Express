@@ -1,12 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import {
-	NavLink,
-	useLocation,
-	useNavigate,
-	useParams,
-	useSearchParams,
-} from 'react-router-dom'
+import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { compose } from 'redux'
 import Paginator from '../../components/common/pagination/Pagination'
 import FiltersCategoryPage from '../../components/store/filters/filtersCategory/FiltersCategoryPage'
@@ -21,43 +15,44 @@ import {
 } from '../../redux/productReducer/productThunk'
 import { AppStateType } from '../../redux/redux-store'
 import { publicUrl } from '../../routes/layout/PublicLayout'
+import { IFiltersProducts } from '../../shared/filters/filtersProducts.interface'
 import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import './categoryPage.scss'
 
 interface ICategoryPage {
-	productsData: Array<IProduct>
 	getProducts: (
 		page: number | string,
 		sortField: string,
 		sortOrder: string,
-		filter: any,
-	) => any
+		filter: IFiltersProducts,
+	) => Promise<string>
 	addToBasket: (id: string) => void
 	getUserInfo: () => void
+	getDataForFilters: () => void
 	page: number
+	productsData: Array<IProduct>
 	totalPages: number
 	sortField: string
 	sortOrder: string
-	getDataForFilters: any
-	filters: any
+
+	filters: IFiltersProducts
 }
 
 export const CategoryPage: React.FC<ICategoryPage> = ({
-	productsData,
 	getProducts,
 	addToBasket,
 	getUserInfo,
+	getDataForFilters,
+	productsData,
 	page,
 	totalPages,
 	sortField,
 	sortOrder,
-	getDataForFilters,
+
 	filters,
-}) => {
+}): JSX.Element => {
 	const { category } = useParams()
 	const navigate = useNavigate()
-	const [searchParams] = useSearchParams()
-	const location = useLocation()
 
 	const pageGender =
 		category === 'woman'
@@ -76,14 +71,17 @@ export const CategoryPage: React.FC<ICategoryPage> = ({
 		getDataForFilters()
 	}, [])
 
-	const onPageChange = async (page: number) => {
+	const onPageChange = async (page: number): Promise<void> => {
 		let url = await getProducts(page, sortField, sortOrder, filters)
 		navigate(
 			window.location.pathname + '?' + new URLSearchParams(url).toString(),
 		)
 	}
 
-	const setSortCatalog = async (sortField: string, sortOrder: string) => {
+	const setSortCatalog = async (
+		sortField: string,
+		sortOrder: string,
+	): Promise<void> => {
 		let url = await getProducts(1, sortField, sortOrder, filters)
 		navigate(
 			window.location.pathname + '?' + new URLSearchParams(url).toString(),
@@ -112,30 +110,32 @@ export const CategoryPage: React.FC<ICategoryPage> = ({
 
 					<div className={'productsStore'}>
 						{productsData.length &&
-							productsData.map((product: any) => (
-								<NavLink
-									to={publicUrl + 'product/' + product._id}
-									key={product._id}
-									className={'product'}
-								>
-									<img src={product.image} />
-									<div className={'info'}>
-										<h1>{product.title}</h1>
-										<p>{product.price}$</p>
-										<div onClick={basket.toggleBasketModal}>
-											<button
-												onClick={e => {
-													e.preventDefault()
-													addToBasket(product._id)
-													getUserInfo()
-												}}
-											>
-												Buy
-											</button>
+							productsData.map(
+								(product: IProduct): React.ReactNode => (
+									<NavLink
+										to={publicUrl + 'product/' + product._id}
+										key={product._id}
+										className={'product'}
+									>
+										<img src={product.image} />
+										<div className={'info'}>
+											<h1>{product.title}</h1>
+											<p>{product.price}$</p>
+											<div onClick={basket.toggleBasketModal}>
+												<button
+													onClick={e => {
+														e.preventDefault()
+														addToBasket(product._id)
+														getUserInfo()
+													}}
+												>
+													Buy
+												</button>
+											</div>
 										</div>
-									</div>
-								</NavLink>
-							))}
+									</NavLink>
+								),
+							)}
 					</div>
 					<Paginator
 						currentPage={page}

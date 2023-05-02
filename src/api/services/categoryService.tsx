@@ -3,8 +3,6 @@ import { $API } from '../api'
 
 export class categoryService {
 	static async getAllCategory(): Promise<Array<ICategory>> {
-		return $API
-			.get<Array<ICategory>>('category')
-			.then(response => response.data)
+		return $API.get('category').then(response => response.data)
 	}
 }

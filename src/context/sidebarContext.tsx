@@ -1,28 +1,30 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from 'react'
 
 interface ISidebarProvider {
-  children: any;
+	children: React.ReactNode
 }
 interface ISidebar {
-  sidebar?: boolean;
-  toggleSidebar?(e: React.MouseEvent<HTMLSpanElement>): void;
+	sidebar?: boolean
+	toggleSidebar?(e: React.MouseEvent<HTMLSpanElement>): void
 }
 
-const sidebarContext = React.createContext<ISidebar>({});
+const sidebarContext = React.createContext<ISidebar>({})
 
 export const useSidebar = () => {
-  return useContext(sidebarContext);
-};
+	return useContext(sidebarContext)
+}
 
-export const SidebarProvider: React.FC<ISidebarProvider> = ({ children }) => {
-  const [sidebar, setSidebar] = useState(false);
+export const SidebarProvider: React.FC<ISidebarProvider> = ({
+	children,
+}): JSX.Element => {
+	const [sidebar, setSidebar] = useState(false)
 
-  const toggleSidebar = (e: React.MouseEvent<HTMLSpanElement>) => {
-    setSidebar((prev) => !prev);
-  };
-  return (
-    <sidebarContext.Provider value={{ sidebar, toggleSidebar }}>
-      {children}
-    </sidebarContext.Provider>
-  );
-};
+	const toggleSidebar = (e: React.MouseEvent<HTMLSpanElement>) => {
+		setSidebar(prev => !prev)
+	}
+	return (
+		<sidebarContext.Provider value={{ sidebar, toggleSidebar }}>
+			{children}
+		</sidebarContext.Provider>
+	)
+}

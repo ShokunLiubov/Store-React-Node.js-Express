@@ -13,7 +13,7 @@ interface IFiltersCustomersProps {
 		sortField: string,
 		sortOrder: string,
 		values: IFiltersCustomers,
-	) => any
+	) => Promise<string>
 }
 
 export const useFiltersCustomers = ({
@@ -48,9 +48,11 @@ export const useFiltersCustomers = ({
             sortOrderOrDefault,
             values,
         )
+        
         navigate(
             window.location.pathname + '?' + new URLSearchParams(url).toString(),
         )
+        
         values.page = ''
     },
 })
@@ -73,5 +75,5 @@ useEffect(() => {
     }, 0)
 }, [searchParams])
 
-  return {formik}
+  return { formik }
 }

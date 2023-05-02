@@ -1,21 +1,23 @@
+import { FormikValues } from 'formik'
 import { connect } from 'react-redux'
-import Select from 'react-select'
+import Select, { MultiValue } from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { compose } from 'redux'
 import { AppStateType } from '../../../../../redux/redux-store'
+import { ISelectedOptions } from '../../../../../shared/interfaces/common/selectedOptions.interface'
 import { handleSelectChange } from '../../../../../utils/debounce/handleSelectChange'
 import '../filtersCategory.scss'
 
 interface IFilterMadeInProps {
-	formik: any
+	formik: FormikValues
 	madeIn: Array<string>
 }
 
 export const FilterMadeIn: React.FC<IFilterMadeInProps> = ({
 	formik,
 	madeIn,
-}) => {
-	const selectMadeIn = madeIn.map((madeIn: any) => {
+}): JSX.Element => {
+	const selectMadeIn = madeIn.map((madeIn: string) => {
 		return { value: madeIn, label: madeIn }
 	})
 	const animatedComponents = makeAnimated()
@@ -28,10 +30,10 @@ export const FilterMadeIn: React.FC<IFilterMadeInProps> = ({
 					isMulti
 					name='colors'
 					options={selectMadeIn}
-					value={selectMadeIn.filter((option: any) =>
+					value={selectMadeIn.filter((option: ISelectedOptions) =>
 						formik.values.made_in.includes(option.value),
 					)}
-					onChange={(e: any) => {
+					onChange={(e: MultiValue<ISelectedOptions>): void => {
 						handleSelectChange(e, 'made_in', formik)
 					}}
 					classNamePrefix='select'

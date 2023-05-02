@@ -1,12 +1,13 @@
 import cn from 'classnames'
 import { useState } from 'react'
 import { connect } from 'react-redux'
-import Select from 'react-select'
+import Select, { MultiValue } from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { compose } from 'redux'
 import { AppStateType } from '../../../../redux/redux-store'
 import { getUsers } from '../../../../redux/userReducer/userThunk'
 import { IFiltersCustomers } from '../../../../shared/filters/filtersCustomers.interface'
+import { ISelectedOptions } from '../../../../shared/interfaces/common/selectedOptions.interface'
 import { handleInputChange } from '../../../../utils/debounce/handleInputChange'
 import { handleSelectChange } from '../../../../utils/debounce/handleSelectChange'
 import { Search } from '../../../ui/form/search/Search'
@@ -21,7 +22,7 @@ interface IFiltersCustomersProps {
 		sortField: string,
 		sortOrder: string,
 		values: IFiltersCustomers,
-	) => any
+	) => Promise<string>
 	city: Array<string>
 }
 
@@ -30,10 +31,11 @@ export const FiltersCustomers: React.FC<IFiltersCustomersProps> = ({
 	sortOrder,
 	getUsers,
 	city,
-}) => {
-	const selectCity = city.map((madeIn: any) => {
+}): JSX.Element => {
+	const selectCity = city.map((madeIn: string): ISelectedOptions => {
 		return { value: madeIn, label: madeIn }
 	})
+
 	const animatedComponents = makeAnimated()
 	const [search, setSearch] = useState('')
 	const { formik } = useFiltersCustomers({ sortField, sortOrder, getUsers })
@@ -46,7 +48,7 @@ export const FiltersCustomers: React.FC<IFiltersCustomersProps> = ({
 			<div className={'search'}>
 				<Search
 					name='search'
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+					onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
 						setSearch(e.target.value)
 						handleInputChange(e, 'search', formik)
 					}}
@@ -61,10 +63,10 @@ export const FiltersCustomers: React.FC<IFiltersCustomersProps> = ({
 						isMulti
 						name='colors'
 						options={selectCity}
-						value={selectCity.filter((option: any) =>
+						value={selectCity.filter((option: ISelectedOptions) =>
 							formik.values.city.includes(option.value),
 						)}
-						onChange={(e: any) => {
+						onChange={(e: MultiValue<ISelectedOptions>): void => {
 							handleSelectChange(e, 'city', formik)
 						}}
 						classNamePrefix='select'

@@ -11,36 +11,35 @@ interface IRouterCombiner {
 	routes: Array<IRoutes>
 	checkAuth: () => void
 	isLoading: boolean
-	user: any
 }
 
 export const RouterCombiner: React.FC<IRouterCombiner> = ({
 	routes,
 	checkAuth,
 	isLoading,
-	user,
-}) => {
+}): JSX.Element => {
 	useEffect(() => {
 		if (localStorage.getItem('token')) {
 			checkAuth()
 		}
 	}, [])
 
-	const RoutesMap = routes.map(({ Layout, Component, path, baseUrl }) => (
-		<Route key={path} element={isLoading ? <Preloader /> : <Layout />}>
-			<Route
-				key={path}
-				path={baseUrl ? `${baseUrl}${path}` : path}
-				element={<Component />}
-			/>
-		</Route>
-	))
+	const RoutesMap = routes.map(
+		({ Layout, Component, path, baseUrl }): React.ReactNode => (
+			<Route key={path} element={isLoading ? <Preloader /> : <Layout />}>
+				<Route
+					key={path}
+					path={baseUrl ? `${baseUrl}${path}` : path}
+					element={<Component />}
+				/>
+			</Route>
+		),
+	)
 	return <Routes>{RoutesMap}</Routes>
 }
 
 const mapStateToProps = (state: AppStateType) => {
 	return {
-		user: state.auth.user,
 		isLoading: state.auth.isLoading,
 	}
 }

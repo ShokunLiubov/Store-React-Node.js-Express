@@ -38,7 +38,7 @@ export const AppRoutes: Array<IRoutes> = [
 	},
 	{
 		path: 'stats',
-		Component: Pages.Stats,
+		Component: Pages.Dashboard,
 		Layout: Layouts.AdminLayout,
 		baseUrl: adminUrl,
 	},

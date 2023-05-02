@@ -9,7 +9,7 @@ export const getUsers = (
 	sortOrder: string,
 	filters: IFiltersCustomers,
 ) => {
-	return async (dispatch: Dispatch) => {
+	return async (dispatch: Dispatch): Promise<string> => {
 		dispatch(AC.setFiltersUsers(filters))
 		const response = await userService.fetchUsers(
 			currentPage,
@@ -26,7 +26,7 @@ export const getUsers = (
 }
 
 export const getCityForUsers = () => {
-	return async (dispatch: Dispatch) => {
+	return async (dispatch: Dispatch): Promise<void> => {
 		let response = await userService.getCity()
 		dispatch(AC.setCityForUsers(response))
 	}

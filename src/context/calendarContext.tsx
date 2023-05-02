@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react'
 
 interface ICalendarProvider {
-	children: any
+	children: React.ReactNode
 }
 interface ICalendar {
 	calendar?: boolean
-	toggleCalendar?(e: React.MouseEvent<HTMLSpanElement>): void
-	toggleOverlay?: any
+	openCalendar?(e: React.MouseEvent<HTMLSpanElement>): void
+	closeCalendar?(e: React.MouseEvent<HTMLSpanElement>): void
+	toggleOverlay?(e: React.MouseEvent<HTMLSpanElement>): void
 }
 
 const calendarContext = React.createContext<any>({})
@@ -15,7 +16,9 @@ export const useCalendar = () => {
 	return useContext(calendarContext)
 }
 
-export const CalendarProvider: React.FC<ICalendarProvider> = ({ children }) => {
+export const CalendarProvider: React.FC<ICalendarProvider> = ({
+	children,
+}): JSX.Element => {
 	const [calendar, setCalendar] = useState(false)
 
 	const toggleOverlay = (e: React.MouseEvent<HTMLSpanElement>) => {

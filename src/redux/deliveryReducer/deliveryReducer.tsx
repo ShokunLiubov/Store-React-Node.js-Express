@@ -1,6 +1,6 @@
-import { AnyAction } from 'redux'
 import { IDeliveryOptions } from '../../shared/interfaces/deliveryInterface/deliveryOptions.interface'
 import * as actionType from './deliveryActionType'
+import * as I from './deliveryInterface'
 
 interface IDeliveryState {
 	deliveryOptions: Array<IDeliveryOptions>
@@ -12,15 +12,20 @@ let initialState: IDeliveryState = {
 
 export const deliveryReducer = (
 	state = initialState,
-	action: AnyAction,
+	action: I.ISetDeliveryOptions,
 ): IDeliveryState => {
 	switch (action.type) {
 		case actionType.SET_DELIVERY_OPTIONS:
-			return {
-				...state,
-				deliveryOptions: action.payload,
+			if ('payload' in action) {
+				return {
+					...state,
+					deliveryOptions: action.payload,
+				}
 			}
+			break
+
 		default:
-			return state
+			break
 	}
+	return state
 }

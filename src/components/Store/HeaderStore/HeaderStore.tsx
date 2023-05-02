@@ -1,4 +1,3 @@
-import { useFormik } from 'formik'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { publicUrl } from '../../../routes/layout/PublicLayout'
@@ -7,15 +6,7 @@ import { Basket } from './Basket'
 import './headerStore.scss'
 import UserAuth from './UserAuth'
 
-export const HeaderStore: React.FC = () => {
-	const formik = useFormik({
-		initialValues: {
-			search: '',
-		},
-		onSubmit: values => {
-			alert(JSON.stringify(values, null, 2))
-		},
-	})
+export const HeaderStore: React.FC = (): JSX.Element => {
 	return (
 		<div className='HeaderShop'>
 			<div className='top'>

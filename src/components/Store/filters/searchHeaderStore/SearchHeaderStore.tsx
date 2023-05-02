@@ -7,7 +7,6 @@ import * as Yup from 'yup'
 import { getProducts } from '../../../../redux/productReducer/productThunk'
 import { AppStateType } from '../../../../redux/redux-store'
 import { publicUrl } from '../../../../routes/layout/PublicLayout'
-import { ICategory } from '../../../../shared/interfaces/productInterface/category.interface'
 import { handleInputChange } from '../../../../utils/debounce/handleInputChange'
 import { Search } from '../../../ui/form/search/Search'
 import './searchHeaderStore.scss'
@@ -19,16 +18,19 @@ interface ISearchHeaderStoreProps {
 		page: number,
 		sortField: string,
 		sortOrder: string,
-		values: any,
-	) => any
-	categories: Array<ICategory>
+		values: IFormik,
+	) => Promise<string>
+}
+
+interface IFormik {
+	search: string
 }
 
 export const SearchHeaderStore: React.FC<ISearchHeaderStoreProps> = ({
 	sortField,
 	sortOrder,
 	getProducts,
-}) => {
+}): JSX.Element => {
 	const navigate = useNavigate()
 	const [searchParams] = useSearchParams()
 	useEffect(() => {
@@ -42,7 +44,7 @@ export const SearchHeaderStore: React.FC<ISearchHeaderStoreProps> = ({
 	})
 	const [search, setSearch] = useState('')
 
-	const formik = useFormik<any>({
+	const formik = useFormik<IFormik>({
 		initialValues: {
 			search: '',
 		},
@@ -51,7 +53,6 @@ export const SearchHeaderStore: React.FC<ISearchHeaderStoreProps> = ({
 			navigate(publicUrl + 'search')
 
 			let url = await getProducts(1, sortField, sortOrder, values)
-			console.log(url)
 
 			navigate(
 				window.location.pathname + '?' + new URLSearchParams(url).toString(),
@@ -63,7 +64,7 @@ export const SearchHeaderStore: React.FC<ISearchHeaderStoreProps> = ({
 		<form className={'search'} onSubmit={formik.handleSubmit}>
 			<Search
 				name='search'
-				onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+				onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
 					setSearch(e.target.value)
 					handleInputChange(e, 'search', formik)
 				}}
@@ -81,7 +82,6 @@ const mapStateToProps = (state: AppStateType) => {
 	return {
 		sortField: state.user.sortField,
 		sortOrder: state.user.sortOrder,
-		categories: state.product.categories,
 	}
 }
 

@@ -27,7 +27,7 @@ interface IMyCatalogsProps {
 		sortField: string,
 		sortOrder: string,
 		filters: IFiltersProducts,
-	) => any
+	) => Promise<string>
 	productsData: Array<IProduct>
 	deleteProduct: (id: string) => void
 	page: number
@@ -48,7 +48,7 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 	sortField,
 	sortOrder,
 	filters,
-}) => {
+}): JSX.Element => {
 	const [searchParams] = useSearchParams()
 	const navigate = useNavigate()
 	const location = useLocation()
@@ -58,16 +58,19 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 		getProducts(pageOrDefault, sortField, sortOrder, filters)
 	}, [location])
 
-	const [sort, setSort] = useState('1')
+	const [sort, setSort] = useState<string>('1')
 
-	const onPageChange = async (page: number) => {
+	const onPageChange = async (page: number): Promise<void> => {
 		let url = await getProducts(page, sortField, sortOrder, filters)
 		navigate(
 			window.location.pathname + '?' + new URLSearchParams(url).toString(),
 		)
 	}
 
-	const setSortCatalog = async (sortField: string, sortOrder: string) => {
+	const setSortCatalog = async (
+		sortField: string,
+		sortOrder: string,
+	): Promise<void> => {
 		if (sortOrder === '1') {
 			setSort('-1')
 		} else {
@@ -130,54 +133,56 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 					</thead>
 					<tbody>
 						{productsData.length > 0 &&
-							productsData.map((product: any) => (
-								<tr key={product._id} className={styles.cardProduct}>
-									<td>
-										<img
-											src={
-												product.image
-													? product.image
-													: './../../image_product/112cd464-94fd-4fbe-9200-5e7e83fe4c69_640x490_fit.jpeg'
-											}
-										/>
-									</td>
-									<td>
-										<div className={styles.titleProduct}>
-											<span>{product.title}</span>
-										</div>
-									</td>
-									<td>
-										<div className={styles.titleCategory}>
-											<span>{product.category.name}</span>
-										</div>
-									</td>
-									<td className={cn('numberDark')}>{product.count}</td>
-									<td className={cn('numberDark')}>{product.price}$</td>
-									<td>
-										<NavLink
-											to={adminUrl + 'edit-product'}
-											className={cn(
-												'material-symbols-outlined',
-												styles.editIcon,
-											)}
-											onClick={() => editProduct(product._id)}
-										>
-											edit_square
-										</NavLink>
-									</td>
-									<td>
-										<span
-											className={cn(
-												'material-symbols-outlined',
-												styles.deleteIcon,
-											)}
-											onClick={() => deleteProduct(product._id)}
-										>
-											delete
-										</span>
-									</td>
-								</tr>
-							))}
+							productsData.map(
+								(product: IProduct): React.ReactNode => (
+									<tr key={product._id} className={styles.cardProduct}>
+										<td>
+											<img
+												src={
+													product.image
+														? product.image
+														: './../../image_product/112cd464-94fd-4fbe-9200-5e7e83fe4c69_640x490_fit.jpeg'
+												}
+											/>
+										</td>
+										<td>
+											<div className={styles.titleProduct}>
+												<span>{product.title}</span>
+											</div>
+										</td>
+										<td>
+											<div className={styles.titleCategory}>
+												<span>{product.category.name}</span>
+											</div>
+										</td>
+										<td className={cn('numberDark')}>{product.count}</td>
+										<td className={cn('numberDark')}>{product.price}$</td>
+										<td>
+											<NavLink
+												to={adminUrl + 'edit-product'}
+												className={cn(
+													'material-symbols-outlined',
+													styles.editIcon,
+												)}
+												onClick={(): void => editProduct(product._id)}
+											>
+												edit_square
+											</NavLink>
+										</td>
+										<td>
+											<span
+												className={cn(
+													'material-symbols-outlined',
+													styles.deleteIcon,
+												)}
+												onClick={(): void => deleteProduct(product._id)}
+											>
+												delete
+											</span>
+										</td>
+									</tr>
+								),
+							)}
 					</tbody>
 				</table>
 			)}

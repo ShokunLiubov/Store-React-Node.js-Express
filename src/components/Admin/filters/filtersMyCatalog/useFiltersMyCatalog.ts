@@ -3,16 +3,17 @@ import { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import * as Yup from 'yup'
 import { useParam } from '../../../../context/paramsContext'
+import { IFiltersProducts } from '../../../../shared/filters/filtersProducts.interface'
 
 interface IFiltersMyCatalogProps {
 	sortField: string
 	sortOrder: string
 	getProducts: (
-		page: number,
+		page: number | string,
 		sortField: string,
 		sortOrder: string,
-		values: any,
-	) => any
+		values: IFiltersProducts,
+	) => Promise<string>
 }
 
 export const useFiltersMyCatalog = ({
@@ -37,7 +38,7 @@ export const useFiltersMyCatalog = ({
     }),
 })
 
-  const formik = useFormik<any>({
+  const formik = useFormik<IFiltersProducts>({
     initialValues: {
         search: '',
         category: [],
@@ -52,7 +53,7 @@ export const useFiltersMyCatalog = ({
         page: '',
     },
     validationSchema,
-    onSubmit: async (values: any) => {
+    onSubmit: async (values: IFiltersProducts) => {
         const pageOrDefault = values.page || searchParams.get('page') || 1
         const sortFieldOrDefault = searchParams.get('sortField') || sortField
         const sortOrderOrDefault = searchParams.get('sortOrder') || sortOrder

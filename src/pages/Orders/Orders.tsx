@@ -20,14 +20,14 @@ interface IOrdersProps {
 		sortField: string,
 		sortOrder: string,
 		filters: IFiltersOrders,
-	) => any
+	) => Promise<string>
 	ordersData: Array<IOrder>
 	page: number
 	totalPages: number
 	sortField: string
 	sortOrder: string
 	filters: IFiltersOrders
-	getCityForOrders: any
+	getCityForOrders: () => void
 }
 
 export const Orders: React.FC<IOrdersProps> = ({
@@ -39,7 +39,7 @@ export const Orders: React.FC<IOrdersProps> = ({
 	sortOrder,
 	filters,
 	getCityForOrders,
-}) => {
+}): JSX.Element => {
 	const [searchParams] = useSearchParams()
 	const navigate = useNavigate()
 	const location = useLocation()
@@ -95,7 +95,9 @@ export const Orders: React.FC<IOrdersProps> = ({
 							<tr>
 								<th
 									scope='col'
-									onClick={() => setSortCatalog('createdAt', sort)}
+									onClick={(): void => {
+										setSortCatalog('createdAt', sort)
+									}}
 								>
 									<span className={'sort'}>
 										Data checkout
@@ -104,7 +106,9 @@ export const Orders: React.FC<IOrdersProps> = ({
 								</th>
 								<th
 									scope='col'
-									onClick={() => setSortCatalog('username', sort)}
+									onClick={(): void => {
+										setSortCatalog('username', sort)
+									}}
 								>
 									<span className={'sort'}>
 										Client Name
@@ -114,7 +118,9 @@ export const Orders: React.FC<IOrdersProps> = ({
 								<th scope='col'>City</th>
 								<th
 									scope='col'
-									onClick={() => setSortCatalog('allPrice', sort)}
+									onClick={(): void => {
+										setSortCatalog('allPrice', sort)
+									}}
 								>
 									<span className={'sort'}>
 										Total Price
@@ -128,37 +134,39 @@ export const Orders: React.FC<IOrdersProps> = ({
 						</thead>
 						<tbody>
 							{ordersData.length > 0 &&
-								ordersData.map((order: any) => (
-									<tr key={order._id}>
-										<td>
-											{order.createdAt.slice(0, -14)}
-											<br />
-											Time: {order.createdAt.slice(11, -5)}
-										</td>
-										<td>{order.fullName}</td>
-										<td>
-											City: {order.address.city} <br />
-											Post Office: {order.address.postOffice}
-										</td>
-										<td>{order.allPrice}$</td>
-										<td>
-											<div
-												className={cn(
-													order.status === 'Availability is check'
-														? 'availabilityIs'
-														: '',
-													order.status === 'Awaiting shipment' ? 'await' : '',
-													order.status === 'Sent' ? 'sent' : '',
-													order.status === 'Refusal' ? 'refusal' : '',
-													order.status === 'Received' ? 'received' : '',
-													'status',
-												)}
-											>
-												{order.status}
-											</div>
-										</td>
-									</tr>
-								))}
+								ordersData.map(
+									(order: IOrder): React.ReactNode => (
+										<tr key={order._id}>
+											<td>
+												{order.createdAt && order.createdAt.slice(0, -14)}
+												<br />
+												Time: {order.createdAt && order.createdAt.slice(11, -5)}
+											</td>
+											<td>{order.fullName}</td>
+											<td>
+												City: {order.address.city} <br />
+												Post Office: {order.address.postOffice}
+											</td>
+											<td>{order.allPrice}$</td>
+											<td>
+												<div
+													className={cn(
+														order.status === 'Availability is check'
+															? 'availabilityIs'
+															: '',
+														order.status === 'Awaiting shipment' ? 'await' : '',
+														order.status === 'Sent' ? 'sent' : '',
+														order.status === 'Refusal' ? 'refusal' : '',
+														order.status === 'Received' ? 'received' : '',
+														'status',
+													)}
+												>
+													{order.status}
+												</div>
+											</td>
+										</tr>
+									),
+								)}
 						</tbody>
 					</table>
 				)}

@@ -18,7 +18,7 @@ export class authService {
 		return $API.post('auth/logout')
 	}
 
-	static async refreshToken(): Promise<any> {
-		return $API.get<any>('auth/refresh')
+	static async refreshToken(): Promise<AxiosResponse<AuthResponse>> {
+		return $API.get('auth/refresh')
 	}
 }

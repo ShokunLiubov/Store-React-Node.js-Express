@@ -14,10 +14,9 @@ import './basketModal.scss'
 
 interface IProductItem {
 	productsBasket: IProductBasket[]
-	// basketSum: number;
-	addToBasket: (productId: string) => Promise<void>
-	removeCountProduct: (productId: string) => Promise<void>
-	deleteProductFromBasket: (productId: string) => Promise<void>
+	addToBasket: (productId: string) => void
+	removeCountProduct: (productId: string) => void
+	deleteProductFromBasket: (productId: string) => void
 }
 
 export const ProductItem: React.FC<IProductItem> = ({
@@ -25,11 +24,11 @@ export const ProductItem: React.FC<IProductItem> = ({
 	addToBasket,
 	removeCountProduct,
 	deleteProductFromBasket,
-}) => {
+}): JSX.Element => {
 	return (
 		<>
 			{productsBasket.length &&
-				productsBasket.map((product: any) => (
+				productsBasket.map((product: IProductBasket) => (
 					<div key={product.id}>
 						<NavLink to={publicUrl + 'product/' + product.id} className='item'>
 							<div className='productImg'>
@@ -45,7 +44,9 @@ export const ProductItem: React.FC<IProductItem> = ({
 									<div className='counter'>
 										<span
 											className='material-symbols-outlined'
-											onClick={e => {
+											onClick={(
+												e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+											): void => {
 												e.preventDefault()
 												removeCountProduct(product.id)
 											}}
@@ -55,7 +56,9 @@ export const ProductItem: React.FC<IProductItem> = ({
 										<p className='count'>{product.count}</p>
 										<span
 											className='material-symbols-outlined'
-											onClick={e => {
+											onClick={(
+												e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+											): void => {
 												e.preventDefault()
 												addToBasket(product.id)
 											}}
@@ -64,7 +67,9 @@ export const ProductItem: React.FC<IProductItem> = ({
 										</span>
 										<span
 											className='material-symbols-outlined'
-											onClick={e => {
+											onClick={(
+												e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+											): void => {
 												e.preventDefault()
 												deleteProductFromBasket(product.id)
 											}}
@@ -86,7 +91,6 @@ export const ProductItem: React.FC<IProductItem> = ({
 const mapStateToProps = (state: AppStateType) => {
 	return {
 		productsBasket: state.basket.productsBasket,
-		basketSum: state.basket.basketSum,
 	}
 }
 

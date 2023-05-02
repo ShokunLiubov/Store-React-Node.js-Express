@@ -1,8 +1,9 @@
-import { AnyAction } from 'redux'
+import { IStoreHomeProducts } from '../../shared/interfaces/storeInterface/storeHomeProducts.interface'
 import * as actionType from './storeActionType'
+import * as I from './storeInterface'
 
 interface IProductState {
-	home: Array<any>
+	home: Array<IStoreHomeProducts>
 }
 
 let initialState: IProductState = {
@@ -11,16 +12,20 @@ let initialState: IProductState = {
 
 export const storeReducer = (
 	state = initialState,
-	action: AnyAction,
+	action: I.ISetStoreHomeProducts,
 ): IProductState => {
 	switch (action.type) {
 		case actionType.SET_STORE_HOME_PRODUCTS:
-			return {
-				...state,
-				home: action.payload,
+			if ('payload' in action) {
+				return {
+					...state,
+					home: action.payload,
+				}
 			}
+			break
 
 		default:
-			return state
+			break
 	}
+	return state
 }

@@ -1,20 +1,21 @@
 import { IUser } from '../../shared/interfaces/userInterface/user.interface'
 import { IUserInfo } from '../../shared/interfaces/userInterface/userInfo.interface'
 import * as actionType from './authActionType'
+import * as I from './authInterface'
 
-export const setAuth = (payload: IUser) => ({
+export const setAuth = (payload: IUser): I.ISetAuth => ({
 	type: actionType.SET_AUTH,
 	payload,
 })
 
-export const outAuth = () => ({ type: actionType.OUT_AUTH })
+export const outAuth = (): I.IOutAuth => ({ type: actionType.OUT_AUTH })
 
-export const setLoading = (boolean: boolean) => ({
+export const setLoading = (isLoading: boolean): I.ISetLoading => ({
 	type: actionType.SET_LOADING,
-	boolean,
+	isLoading,
 })
 
-export const setUserInfo = (userInfo: IUserInfo) => ({
+export const setUserInfo = (userInfo: IUserInfo): I.ISetUserInfo => ({
 	type: actionType.SET_USER_INFO,
 	userInfo,
 })

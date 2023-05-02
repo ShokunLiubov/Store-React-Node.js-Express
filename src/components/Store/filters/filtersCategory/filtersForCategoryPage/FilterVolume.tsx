@@ -1,13 +1,16 @@
+import { FormikValues } from 'formik'
 import { useState } from 'react'
 import { handleInputChange } from '../../../../../utils/debounce/handleInputChange'
 import { Input } from '../../../../ui/form/input/Input'
 import '../filtersCategory.scss'
 
 interface IFilterValueProps {
-	formik: any
+	formik: FormikValues
 }
 
-export const FilterVolume: React.FC<IFilterValueProps> = ({ formik }) => {
+export const FilterVolume: React.FC<IFilterValueProps> = ({
+	formik,
+}): JSX.Element => {
 	const [volumeGte, setVolumeGte] = useState('')
 	const [volumeLte, setVolumeLte] = useState('')
 
@@ -20,7 +23,7 @@ export const FilterVolume: React.FC<IFilterValueProps> = ({ formik }) => {
 					label={'from'}
 					formik={formik}
 					type={'number'}
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+					onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
 						setVolumeGte(e.target.value)
 						handleInputChange(e, 'volume.$gte', formik)
 					}}
@@ -30,7 +33,7 @@ export const FilterVolume: React.FC<IFilterValueProps> = ({ formik }) => {
 					label={'to'}
 					formik={formik}
 					type={'number'}
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+					onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
 						setVolumeLte(e.target.value)
 						handleInputChange(e, 'volume.$lte', formik)
 					}}

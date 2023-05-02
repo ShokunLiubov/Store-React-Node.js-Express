@@ -4,16 +4,20 @@ import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
 import { logout } from '../../../redux/authReducer/authThunk'
 import { AppStateType } from '../../../redux/redux-store'
-import { IUser } from '../../../shared/interfaces/userInterface/user.interface'
+import { IUserOptions } from '../../../shared/interfaces/userInterface/user.interface'
 import './headerStore.scss'
 
 interface IUserAuth {
-	user: IUser
+	user: IUserOptions
 	isAuth: boolean
-	logout: any
+	logout: () => Promise<void>
 }
 
-export const UserAuth: React.FC<IUserAuth> = ({ user, isAuth, logout }) => {
+export const UserAuth: React.FC<IUserAuth> = ({
+	user,
+	isAuth,
+	logout,
+}): JSX.Element => {
 	return (
 		<div className='userAuth'>
 			{!isAuth && (

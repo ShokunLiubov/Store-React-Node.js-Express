@@ -14,24 +14,25 @@ import {
 import { AppStateType } from '../../redux/redux-store'
 import { getStoreHomeProducts } from '../../redux/storeReducer/storeThunk'
 import { publicUrl } from '../../routes/layout/PublicLayout'
+import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
+import { IStoreHomeProducts } from '../../shared/interfaces/storeInterface/storeHomeProducts.interface'
 import './storeHome.scss'
 
-interface IStoreHome {
+interface IStoreHomeProps {
 	addToBasket: (id: string) => void
 	getUserInfo: () => void
-
 	getStoreHomeProducts: () => void
-	homeProducts: any
 	getDataForFilters: () => void
+	homeProducts: IStoreHomeProducts[]
 }
 
-export const StoreHome: React.FC<IStoreHome> = ({
+export const StoreHome: React.FC<IStoreHomeProps> = ({
 	addToBasket,
 	getUserInfo,
 	getStoreHomeProducts,
-	homeProducts,
 	getDataForFilters,
-}) => {
+	homeProducts,
+}): JSX.Element => {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const params = useParam()
@@ -67,7 +68,7 @@ export const StoreHome: React.FC<IStoreHome> = ({
 									</NavLink>
 								</div>
 								<div className='products'>
-									{category?.products.map((product: any) => {
+									{category?.products.map((product: IProduct) => {
 										return (
 											<NavLink
 												to={publicUrl + 'product/' + product._id}
@@ -80,7 +81,9 @@ export const StoreHome: React.FC<IStoreHome> = ({
 													<p>{product.price}$</p>
 													<div onClick={basket.toggleBasketModal}>
 														<button
-															onClick={e => {
+															onClick={(
+																e: React.MouseEvent<HTMLButtonElement>,
+															): void => {
 																e.preventDefault()
 																addToBasket(product._id)
 																getUserInfo()

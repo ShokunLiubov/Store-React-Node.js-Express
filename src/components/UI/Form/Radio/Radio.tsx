@@ -1,10 +1,11 @@
 import cn from 'classnames'
+import { FormikValues } from 'formik'
 import React from 'react'
 import './radio.scss'
 
 interface IRadio {
 	data: Array<IRadioData>
-	formik: any
+	formik: FormikValues
 	label: string
 }
 
@@ -14,7 +15,11 @@ interface IRadioData {
 	value: string
 }
 
-export const Radio: React.FC<IRadio> = ({ formik, data, label }) => {
+export const Radio: React.FC<IRadio> = ({
+	formik,
+	data,
+	label,
+}): JSX.Element => {
 	return (
 		<div
 			className={cn(

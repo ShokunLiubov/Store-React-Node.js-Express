@@ -13,7 +13,7 @@ interface LoginProps {
 	login: (values: IAuth) => void
 }
 
-export const Login: React.FC<LoginProps> = ({ login }) => {
+export const Login: React.FC<LoginProps> = ({ login }): JSX.Element => {
 	const navigate = useNavigate()
 	const [isShownPassword, setIsShownPassword] = useState(false)
 	const formik = useFormik({

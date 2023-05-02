@@ -1,16 +1,17 @@
 import cn from 'classnames'
+import { FormikValues } from 'formik'
 import React from 'react'
 import './input.scss'
 
 interface IInput {
 	label: string
 	name: string
-	formik: any
+	formik: FormikValues
 	placeholder?: string
 	type?: string
-	onBlur?: any
+	onBlur?: React.FocusEventHandler<HTMLInputElement>
 	onChange?: any
-	value?: any
+	value?: string
 }
 
 export const Input: React.FC<IInput> = ({
@@ -22,7 +23,7 @@ export const Input: React.FC<IInput> = ({
 	onBlur,
 	onChange,
 	value,
-}) => {
+}): JSX.Element => {
 	const error = formik.errors[name] && (
 		<div className={'error'}>{formik.errors[name]}</div>
 	)

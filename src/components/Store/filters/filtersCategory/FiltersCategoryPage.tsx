@@ -22,11 +22,11 @@ interface IFiltersCategoryProps {
 	sortField: string
 	sortOrder: string
 	getProducts: (
-		page: number,
+		page: number | string,
 		sortField: string,
 		sortOrder: string,
-		values: any,
-	) => any
+		values: IFiltersProducts,
+	) => Promise<string>
 	classifications: Array<IClassification>
 	filters: IFiltersProducts
 	categories: Array<ICategory>
@@ -38,7 +38,7 @@ export const FiltersCategoryPage: React.FC<IFiltersCategoryProps> = ({
 	getProducts,
 	classifications,
 	categories,
-}) => {
+}): JSX.Element => {
 	const { category } = useParams()
 
 	const genderPage =

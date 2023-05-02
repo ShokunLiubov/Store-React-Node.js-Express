@@ -17,17 +17,18 @@ interface ICustomersProps {
 		sortField: string,
 		sortOrder: string,
 		filters: IFiltersCustomers,
-	) => any
+	) => Promise<string>
+	getCityForUsers: () => void
 	usersData: Array<IUser>
 	page: number
 	totalPages: number
 	sortField: string
 	sortOrder: string
 	filters: IFiltersCustomers
-	getCityForUsers: any
 }
 
 export const Customers: React.FC<ICustomersProps> = ({
+	getCityForUsers,
 	getUsers,
 	usersData,
 	page,
@@ -35,8 +36,7 @@ export const Customers: React.FC<ICustomersProps> = ({
 	sortField,
 	sortOrder,
 	filters,
-	getCityForUsers,
-}) => {
+}): JSX.Element => {
 	const [searchParams] = useSearchParams()
 	const navigate = useNavigate()
 	const location = useLocation()

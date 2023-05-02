@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 
 interface IParamsProvider {
-	children: any
+	children: React.ReactNode
 }
 interface IBasket {
 	params?: boolean
@@ -15,7 +15,9 @@ export const useParam = () => {
 	return useContext(paramsContext)
 }
 
-export const ParamsProvider: React.FC<IParamsProvider> = ({ children }) => {
+export const ParamsProvider: React.FC<IParamsProvider> = ({
+	children,
+}): JSX.Element => {
 	const [params, setParams] = useState(true)
 
 	const clearParams = () => {

@@ -4,7 +4,7 @@ import { IDeliveryPrice } from '../../shared/interfaces/deliveryInterface/delive
 import * as AC from './deliveryActionCreator'
 
 export const getDeliveryOptions = () => {
-	return async (dispatch: Dispatch) => {
+	return async (dispatch: Dispatch): Promise<void> => {
 		const payload = await deliveryService.getDeliveryOptions()
 
 		dispatch(AC.setDeliveryOptions(payload))
@@ -12,7 +12,7 @@ export const getDeliveryOptions = () => {
 }
 
 export const setPriceDelivery = (payload: IDeliveryPrice) => {
-	return async (dispatch: Dispatch) => {
+	return async (dispatch: Dispatch): Promise<void> => {
 		await deliveryService.setDeliveryPrice(payload)
 	}
 }

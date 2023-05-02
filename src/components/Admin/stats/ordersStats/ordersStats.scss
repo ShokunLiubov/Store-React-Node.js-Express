@@ -1,0 +1,9 @@
+.stats_middle {
+    display: flex;
+    justify-content: space-between;
+    .stats_middle__left, .stats_middle__right {
+        width: 37vw;
+        color: #fff;
+    }
+}
+

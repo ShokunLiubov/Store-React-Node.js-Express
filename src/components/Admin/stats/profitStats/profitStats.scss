@@ -1,0 +1,40 @@
+.dashboardSelects {
+    .calendar {
+        margin-right: 4vw;
+        display: flex;
+        font-weight: 300;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        .calendarIcon {
+            color: #2480f7;
+            font-weight: 300;
+            border: 1px solid #2480f7;
+            box-shadow: none;
+            padding: 10px 22px;
+            border-radius: 0.4285rem;
+            cursor: pointer;
+        }
+        label {
+            margin-right: 1vw;
+        }
+        
+    }
+   
+}
+.profitStats {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    span {
+        font-size: 18px;
+        font-weight: 300;
+    }
+    .profit {
+        margin-top: 16vh;
+        font-size: 48px;
+    }
+}
+

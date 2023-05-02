@@ -5,58 +5,33 @@ import { compose } from 'redux'
 import { Header } from '../../components/admin/header/Header'
 import { Sidebar } from '../../components/admin/sidebar/Sidebar'
 import { Preloader } from '../../components/common/Preloader'
+import { HEADER_ADMIN_MENU } from '../../data/admin/headerData'
+import { SIDEBAR_ADMIN_MENU } from '../../data/admin/sidebarData'
 import { getDeliveryOptions } from '../../redux/deliveryReducer/deliveryThunk'
 import { AppStateType } from '../../redux/redux-store'
-import { IHeader } from '../../shared/interfaces/header.interface'
-import { ISidebar } from '../../shared/interfaces/sidebar.interface'
+import { getYearsForStats } from '../../redux/statsReducer/statsThunk'
+import { IUserOptions } from '../../shared/interfaces/userInterface/user.interface'
 
 export const adminUrl = '/make-up-admin/'
 
-const HEADER_ADMIN_MENU: Array<IHeader> = [
-	{ path: '/setting', icon: 'settings' },
-	{ path: '/auth/login', icon: 'logout' },
-]
-
-const SIDEBAR_ADMIN_MENU: Array<ISidebar> = [
-	{
-		path: adminUrl + 'my-catalogs',
-		icon: 'menu_book',
-		title: 'My Catalogs',
-	},
-	{
-		path: adminUrl + 'new-product',
-		icon: 'library_add',
-		title: 'New Product',
-	},
-	{ path: adminUrl + 'orders', icon: 'list_alt', title: 'Orders' },
-	{ path: adminUrl + 'customers', icon: 'group', title: 'Customers' },
-	{
-		path: adminUrl + 'delivery',
-		icon: 'local_shipping',
-		title: 'Delivery',
-	},
-	{
-		path: adminUrl + 'stats',
-		icon: 'signal_cellular_alt',
-		title: 'Stats',
-	},
-]
-
 interface AdminLayoutProps {
-	user: any
-	getDeliveryOptions: any
+	user: IUserOptions
+	getDeliveryOptions: () => void
+	getYearsForStats: () => void
 }
 
 export const AdminLayout: React.FC<AdminLayoutProps> = ({
 	user,
 	getDeliveryOptions,
-}) => {
-	const [isLoading, setIsLoading] = useState(true)
+	getYearsForStats,
+}): JSX.Element => {
+	const [isLoading, setIsLoading] = useState<boolean>(true)
 
 	useEffect(() => {
 		if (user) {
 			getDeliveryOptions()
 			setIsLoading(false)
+			getYearsForStats()
 		}
 	}, [user])
 
@@ -82,10 +57,9 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 const mapStateToProps = (state: AppStateType) => {
 	return {
 		user: state.auth.user,
-		isLoading: state.auth.isLoading,
 	}
 }
 
-export default compose(connect(mapStateToProps, { getDeliveryOptions }))(
-	AdminLayout,
-)
+export default compose(
+	connect(mapStateToProps, { getDeliveryOptions, getYearsForStats }),
+)(AdminLayout)

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { Navigate, useNavigate } from 'react-router-dom'
-import Select from 'react-select'
+import Select, { SingleValue } from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { compose } from 'redux'
 import ProductItem from '../../components/store/basketModal/productItem'
@@ -11,16 +11,23 @@ import { getDeliveryOptions } from '../../redux/deliveryReducer/deliveryThunk'
 import { createOrder } from '../../redux/orderReducer/orderThunk'
 import { AppStateType } from '../../redux/redux-store'
 import { publicUrl } from '../../routes/layout/PublicLayout'
+import { IDeliveryOptions } from '../../shared/interfaces/deliveryInterface/deliveryOptions.interface'
+import { IProductBasket } from '../../shared/interfaces/productInterface/productBasket.interface'
 import './createOrder.scss'
 import FormUserInfo from './formUserInfo'
 
 interface ICreateOrder {
-	basketSum: number
 	getUserInfo: () => void
 	createOrder: (togetherPrice: number) => void
-	products: any
 	getDeliveryOptions: () => void
-	deliveryOptions: any
+	products: IProductBasket[]
+	basketSum: number
+	deliveryOptions: IDeliveryOptions[]
+}
+
+interface ISelectedOptions {
+	value: number
+	label: string
 }
 
 export const CreateOrder: React.FC<ICreateOrder> = ({
@@ -30,17 +37,20 @@ export const CreateOrder: React.FC<ICreateOrder> = ({
 	getDeliveryOptions,
 	deliveryOptions,
 	products,
-}) => {
+}): JSX.Element => {
 	const defaultDeliveryOption = deliveryOptions[0]
 	const [delivery, setDelivery] = useState(defaultDeliveryOption.price)
 
 	const animatedComponents = makeAnimated()
-	const selectDelivery = deliveryOptions.map((opti: any) => {
-		return { value: opti.price, label: 'Delivery ' + opti.name }
-	})
-
 	const editUserInfo = useUserInfo()
 	const navigate = useNavigate()
+
+	const selectDelivery = deliveryOptions.map(
+		(opti: IDeliveryOptions): ISelectedOptions => {
+			return { value: opti.price, label: 'Delivery ' + opti.name }
+		},
+	)
+
 	useEffect(() => {
 		getDeliveryOptions()
 		getUserInfo()
@@ -50,7 +60,6 @@ export const CreateOrder: React.FC<ICreateOrder> = ({
 		return <Navigate to={publicUrl} />
 	}
 
-	// const delivery = 49
 	const togetherPrice = delivery + basketSum
 
 	return (
@@ -74,9 +83,11 @@ export const CreateOrder: React.FC<ICreateOrder> = ({
 									name='colors'
 									options={selectDelivery}
 									value={selectDelivery.find(
-										(option: any) => option.value === delivery,
+										(option: ISelectedOptions) => option.value === delivery,
 									)}
-									onChange={(option: any) => setDelivery(option.value)}
+									onChange={(opti: SingleValue<ISelectedOptions>) =>
+										opti && setDelivery(opti.value)
+									}
 									classNamePrefix='select'
 									components={animatedComponents}
 								/>
@@ -94,7 +105,7 @@ export const CreateOrder: React.FC<ICreateOrder> = ({
 					<div className='checkout'>
 						{!editUserInfo.editUserInfo ? (
 							<button
-								onClick={() => {
+								onClick={(): void => {
 									createOrder(togetherPrice)
 									navigate(publicUrl + 'complete')
 								}}

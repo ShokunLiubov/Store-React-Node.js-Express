@@ -1,4 +1,5 @@
-import { Dispatch } from 'redux'
+import { AnyAction, Dispatch } from 'redux'
+import { ThunkDispatch } from 'redux-thunk'
 import { categoryService } from '../../api/services/categoryService'
 import { classificationService } from '../../api/services/classificationsService'
 import { countryTMService } from '../../api/services/countryTMService'
@@ -6,7 +7,7 @@ import { madeInService } from '../../api/services/madeInService'
 import { productService } from '../../api/services/productService'
 import { productStoreService } from '../../api/services/productStoreService'
 import { typeAromaService } from '../../api/services/typeAromaService'
-import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
+import { IFiltersProducts } from '../../shared/filters/filtersProducts.interface'
 import { AppStateType } from '../redux-store'
 import * as AC from './productActionCreator'
 
@@ -14,7 +15,7 @@ export const getProducts = (
 	currentPage: number | string,
 	sortField: string,
 	sortOrder: string,
-	filters: any,
+	filters: IFiltersProducts | {},
 ) => {
 	return async (dispatch: Dispatch) => {
 		const category = await categoryService.getAllCategory()
@@ -38,7 +39,10 @@ export const getProducts = (
 }
 
 export const deleteProduct = (productId: string) => {
-	return async (dispatch: any, getState: () => AppStateType) => {
+	return async (
+		dispatch: ThunkDispatch<{}, {}, AnyAction>,
+		getState: () => AppStateType,
+	) => {
 		const { product } = getState()
 		const { currentPage, sortField, sortOrder } = product
 		await productService.deleteProduct(productId)
@@ -46,8 +50,11 @@ export const deleteProduct = (productId: string) => {
 	}
 }
 
-export const createNewProduct = (newProduct: IProduct) => {
-	return async (dispatch: any, getState: () => AppStateType) => {
+export const createNewProduct = (newProduct: FormData) => {
+	return async (
+		dispatch: ThunkDispatch<{}, {}, AnyAction>,
+		getState: () => AppStateType,
+	) => {
 		const { product } = getState()
 		const { currentPage, sortField, sortOrder } = product
 		await productService.createProduct(newProduct)
@@ -56,14 +63,17 @@ export const createNewProduct = (newProduct: IProduct) => {
 }
 
 export const editProduct = (productId: string) => {
-	return async (dispatch: any) => {
+	return async (dispatch: Dispatch) => {
 		const response = await productService.getProductForEdit(productId)
 		dispatch(AC.setProductForEdit(response))
 	}
 }
 
-export const updateProduct = (productEdit: IProduct, id: string) => {
-	return async (dispatch: any, getState: () => AppStateType) => {
+export const updateProduct = (productEdit: FormData, id: string) => {
+	return async (
+		dispatch: ThunkDispatch<{}, {}, AnyAction>,
+		getState: () => AppStateType,
+	) => {
 		const { product } = getState()
 		const { currentPage, sortField, sortOrder } = product
 		await productService.updateProductEdit(productEdit, id)
@@ -72,7 +82,7 @@ export const updateProduct = (productEdit: IProduct, id: string) => {
 }
 
 export const getSelectData = () => {
-	return async (dispatch: any) => {
+	return async (dispatch: Dispatch) => {
 		const categories = await categoryService.getAllCategory()
 		dispatch(AC.setCategory(categories))
 		const classifications = await classificationService.getAllClassifications()
@@ -81,14 +91,14 @@ export const getSelectData = () => {
 }
 
 export const getProductsOnPage = (id: string) => {
-	return async (dispatch: any) => {
+	return async (dispatch: Dispatch) => {
 		const payload = await productStoreService.getProductForPage(id)
 		dispatch(AC.setProductOnPage(payload))
 	}
 }
 
 export const getDataForFilters = () => {
-	return async (dispatch: any) => {
+	return async (dispatch: Dispatch) => {
 		const countryTM = await countryTMService.getAllCountryTM()
 		const madeIn = await madeInService.getAllMadeIn()
 		const typeAroma = await typeAromaService.getAllTypeAroma()

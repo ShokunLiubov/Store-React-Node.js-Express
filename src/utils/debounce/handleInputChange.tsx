@@ -1,8 +1,13 @@
+import { FormikValues } from 'formik'
 import { debounce } from 'lodash'
 
-export const delayedSubmit = (fieldName: string, value: any, formik: any) => {
+export const delayedSubmit = (
+	fieldName: string,
+	value: string,
+	formik: FormikValues,
+) => {
 	formik.setFieldValue(fieldName, value)
-	return debounce(() => {
+	return debounce((): void => {
 		formik.submitForm()
 	}, 2000)
 }
@@ -10,7 +15,7 @@ export const delayedSubmit = (fieldName: string, value: any, formik: any) => {
 export const handleInputChange = (
 	e: React.ChangeEvent<HTMLInputElement>,
 	fieldName: string,
-	formik: any,
+	formik: FormikValues,
 	checked?: any,
 ) => {
 	const { value } = e.target

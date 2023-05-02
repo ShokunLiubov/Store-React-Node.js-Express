@@ -1,5 +1,4 @@
 import React from 'react'
-// import './input.scss'
 
 interface ICheckbox {
 	data: any
@@ -7,7 +6,11 @@ interface ICheckbox {
 	onChange: any
 }
 
-export const Checkbox: React.FC<ICheckbox> = ({ data, value, onChange }) => {
+export const Checkbox: React.FC<ICheckbox> = ({
+	data,
+	value,
+	onChange,
+}): JSX.Element => {
 	return (
 		<>
 			{data.map((checkbox: any) => (

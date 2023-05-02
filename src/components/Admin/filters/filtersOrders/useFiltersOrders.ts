@@ -12,7 +12,7 @@ interface IFiltersOrdersProps {
 		sortField: string,
 		sortOrder: string,
 		filters: IFiltersOrders,
-	) => any
+	) => Promise<string>
 }
 
 export const useFiltersOrders = ({

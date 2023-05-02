@@ -12,7 +12,7 @@ export const getOrders = (
 	sortOrder: string,
 	filters: IFiltersOrders,
 ) => {
-	return async (dispatch: Dispatch) => {
+	return async (dispatch: Dispatch): Promise<string> => {
 		dispatch(AC.setFiltersOrders(filters))
 
 		let response = await orderService.getOrders(
@@ -21,32 +21,45 @@ export const getOrders = (
 			sortOrder,
 			filters,
 		)
-
 		const { docs, page, totalPages } = response.data
 
 		dispatch(AC.setOrders(docs, page, totalPages, sortField, sortOrder))
+
 		return response.url
 	}
 }
 
 export const createOrder = (togetherPrice: number) => {
-	return async (dispatch: Dispatch, getState: () => AppStateType) => {
+	return async (
+		dispatch: Dispatch,
+		getState: () => AppStateType,
+	): Promise<void> => {
 		try {
+			let order
 			const { basket, auth } = getState()
-
 			const { address, fullName } = auth.userInfo
 
 			const products = basket.productsBasket.map((product: IProductBasket) => {
 				return { productId: product.id, count: product.count }
 			})
+
 			dispatch(setEmptyBasket())
 
-			const order = {
-				products: products,
-				fullName: fullName,
-				address: address,
-				allPrice: togetherPrice,
+			if (!fullName) {
+				throw new Error('Full name is required for creating an order')
 			}
+
+			if (address) {
+				order = {
+					products: products,
+					fullName,
+					address,
+					allPrice: togetherPrice,
+				}
+			} else {
+				throw new Error('Address name is required for creating an order')
+			}
+
 			await orderService.createOrder(order)
 		} catch (e) {
 			console.log(e)
@@ -54,8 +67,8 @@ export const createOrder = (togetherPrice: number) => {
 	}
 }
 
-export const getCityForOrders = (togetherPrice: number) => {
-	return async (dispatch: Dispatch) => {
+export const getCityForOrders = () => {
+	return async (dispatch: Dispatch): Promise<void> => {
 		let response = await orderService.getCity()
 		dispatch(AC.setCityForOrders(response))
 	}

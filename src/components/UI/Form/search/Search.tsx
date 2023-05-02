@@ -5,8 +5,8 @@ interface ISearch {
 	name: string
 	value: string
 	placeholder?: string
-	onBlur?: any
-	onInput?: any
+	onBlur?: React.FocusEventHandler<HTMLInputElement>
+	onInput?: React.FormEventHandler<HTMLInputElement>
 }
 
 export const Search: React.FC<ISearch> = ({
@@ -16,7 +16,7 @@ export const Search: React.FC<ISearch> = ({
 	placeholder,
 	onBlur,
 	onInput,
-}) => {
+}): JSX.Element => {
 	return (
 		<>
 			<input

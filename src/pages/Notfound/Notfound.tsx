@@ -1,12 +1,14 @@
-import React from "react";
-import cn from "classnames";
+import cn from 'classnames'
+import React from 'react'
 
 interface NotfoundProps {
-  styleAdmin?: string;
+	styleAdmin?: string
 }
 
-export const Notfound: React.FC<NotfoundProps> = ({ styleAdmin }) => {
-  return (
-    <span className={cn("center", "notFound", styleAdmin)}>Not Found 404</span>
-  );
-};
+export const Notfound: React.FC<NotfoundProps> = ({
+	styleAdmin,
+}): JSX.Element => {
+	return (
+		<span className={cn('center', 'notFound', styleAdmin)}>Not Found 404</span>
+	)
+}

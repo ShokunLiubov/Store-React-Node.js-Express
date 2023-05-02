@@ -4,7 +4,7 @@ import { HeaderAuth } from '../../components/auth/headerAuth/HeaderAuth'
 
 export const authUrl = '/auth/'
 
-export const AuthLayout: React.FC = () => {
+export const AuthLayout: React.FC = (): JSX.Element => {
 	return (
 		<div className='AuthLayout'>
 			<HeaderAuth />

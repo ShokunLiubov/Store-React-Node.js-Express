@@ -3,7 +3,7 @@ import { useFormik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import Select from 'react-select'
+import Select, { SingleValue } from 'react-select'
 import { compose } from 'redux'
 import { Input } from '../../components/ui/form/input/Input'
 import { Radio } from '../../components/ui/form/radio/Radio'
@@ -16,36 +16,42 @@ import {
 } from '../../redux/productReducer/productThunk'
 import { AppStateType } from '../../redux/redux-store'
 import { adminUrl } from '../../routes/layout/AdminLayout'
-import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
-import { validateCreateProductForm } from '../../utils/validate/Validate'
+import { ISelectedOptions } from '../../shared/interfaces/common/selectedOptions.interface'
+import { ICategory } from '../../shared/interfaces/productInterface/category.interface'
+import { IClassification } from '../../shared/interfaces/productInterface/classification.interface'
+import { IProductCreate } from '../../shared/interfaces/productInterface/productCreate.interface'
+import { IProductOptions } from '../../shared/interfaces/productInterface/productOptions.interface'
 import './createProduct.scss'
 
 interface CreateProductProps {
-	createNewProduct: (formData: any) => void
-	updateProduct: (formData: any, id: any) => void
-	editProduct: IProduct
-	getSelectData: any
-	categories: any
-	classifications: any
+	createNewProduct: (formData: FormData) => Promise<void>
+	updateProduct: (formData: FormData, id: string) => Promise<void>
+	editProduct: IProductOptions
+	getSelectData: () => void
+	categories: ICategory[]
+	classifications: IClassification[]
 }
 
-export const CreateProduct: React.FC<CreateProductProps> = ({
+const CreateProduct: React.FC<CreateProductProps> = ({
 	createNewProduct,
 	editProduct,
 	updateProduct,
 	getSelectData,
 	categories,
 	classifications,
-}) => {
+}): JSX.Element => {
 	useEffect(() => {
 		getSelectData()
 	}, [])
-	const selectClassification = classifications.map((classification: any) => {
-		return { value: classification._id, label: classification.name }
-	})
-	const selectCategory = categories.map((category: any) => {
+	const selectClassification = classifications.map(
+		(classification: IClassification) => {
+			return { value: classification._id, label: classification.name }
+		},
+	)
+	const selectCategory = categories.map((category: ICategory) => {
 		return { value: category._id, label: category.name }
 	})
+
 	const navigate = useNavigate()
 	let pathnameEditProduct = useLocation().pathname === adminUrl + 'edit-product'
 	const [validateAfterSubmit, setValidateAfterSubmit] = useState(false)
@@ -62,10 +68,10 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 	const made_in = pathnameEditProduct ? editProduct.made_in : ''
 	const description = pathnameEditProduct ? editProduct.description : ''
 
-	const formik = useFormik({
+	const formik = useFormik<IProductCreate>({
 		initialValues: {
 			image: '',
-			title: title,
+			title: `${title}`,
 			category: `${category}`,
 			classification: `${classification}`,
 			price: `${price}`,
@@ -77,30 +83,35 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 			made_in: `${made_in}`,
 			description: `${description}`,
 		},
-		onSubmit: (values: any) => {
+		onSubmit: (values: IProductCreate) => {
 			if (values.image === '') {
 				values.image = editProduct.image
 			}
-			const formData = new FormData()
+			const formData: FormData = new FormData()
+			console.log(formData, 'empty')
 
 			for (let value in values) {
 				formData.append(value, values[value])
 			}
 
 			if (pathnameEditProduct) {
-				updateProduct(formData, editProduct._id)
+				editProduct._id && updateProduct(formData, editProduct._id)
+				console.log(formData, 'update')
 			} else {
 				createNewProduct(formData)
+				console.log(formData, 'create')
 			}
 
 			navigate(adminUrl + 'my-catalogs')
 		},
 		enableReinitialize: true,
 		validateOnChange: validateAfterSubmit,
-		validate: validateCreateProductForm,
 	})
 
-	const handleSelectChange = (selectedOption: any, fieldName: any) => {
+	const handleSelectChange = (
+		selectedOption: ISelectedOptions,
+		fieldName: string,
+	) => {
 		formik.setFieldValue(fieldName, selectedOption.value)
 	}
 
@@ -124,8 +135,8 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 						placeholder={
 							pathnameEditProduct ? 'Edit image product' : 'Add image product'
 						}
-						onChange={(e: any) =>
-							formik.setFieldValue('image', e.currentTarget.files[0])
+						onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+							formik.setFieldValue('image', e.currentTarget.files?.[0])
 						}
 					/>
 				</div>
@@ -139,10 +150,11 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 						name='category'
 						options={selectCategory}
 						value={selectCategory.filter(
-							(option: any) => option.value === formik.values.category,
+							(option: ISelectedOptions) =>
+								option.value === formik.values.category,
 						)}
-						onChange={(e: any) => {
-							handleSelectChange(e, 'category')
+						onChange={(opti: SingleValue<ISelectedOptions>): void => {
+							opti && handleSelectChange(opti, 'category')
 						}}
 					/>
 				</div>
@@ -154,10 +166,11 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 						name='classification'
 						options={selectClassification}
 						value={selectClassification.filter(
-							(option: any) => option.value === formik.values.classification,
+							(option: ISelectedOptions) =>
+								option.value === formik.values.classification,
 						)}
-						onChange={(e: any) => {
-							handleSelectChange(e, 'classification')
+						onChange={(opti: SingleValue<ISelectedOptions>): void => {
+							opti && handleSelectChange(opti, 'classification')
 						}}
 					/>
 				</div>
@@ -171,8 +184,8 @@ export const CreateProduct: React.FC<CreateProductProps> = ({
 						value={selectTypeAroma.filter(
 							option => option.value === formik.values.type_of_aroma,
 						)}
-						onChange={(e: any) => {
-							handleSelectChange(e, 'type_of_aroma')
+						onChange={(opti: SingleValue<ISelectedOptions>): void => {
+							opti && handleSelectChange(opti, 'type_of_aroma')
 						}}
 					/>
 				</div>

@@ -1,7 +1,7 @@
 import { $API } from '../api'
 
 export class typeAromaService {
-	static async getAllTypeAroma(): Promise<Array<any>> {
-		return $API.get<Array<any>>('type-aroma').then(response => response.data)
+	static async getAllTypeAroma(): Promise<Array<string>> {
+		return $API.get('type-aroma').then(response => response.data)
 	}
 }

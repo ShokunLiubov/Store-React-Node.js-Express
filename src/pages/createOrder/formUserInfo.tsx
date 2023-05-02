@@ -10,22 +10,25 @@ import {
 	updateUserInfo,
 } from '../../redux/authReducer/authThunk'
 import { AppStateType } from '../../redux/redux-store'
-import { IUserInfo } from '../../shared/interfaces/userInterface/userInfo.interface'
+import {
+	IUserInfo,
+	IUserInfoOptions,
+} from '../../shared/interfaces/userInterface/userInfo.interface'
 import './createOrder.scss'
 
 interface IFormUserInfo {
 	getUserInfo: () => void
 	createUserInfo: (value: IUserInfo) => void
 	updateUserInfo: (value: IUserInfo) => void
-	userInfo: IUserInfo
+	userInfo: IUserInfoOptions
 }
 
 export const FormUserInfo: React.FC<IFormUserInfo> = ({
 	getUserInfo,
-	userInfo,
 	createUserInfo,
 	updateUserInfo,
-}) => {
+	userInfo,
+}): JSX.Element => {
 	const editUserInfo = useUserInfo()
 	useEffect(() => {
 		getUserInfo()
@@ -75,7 +78,7 @@ export const FormUserInfo: React.FC<IFormUserInfo> = ({
 							<span className='labelForInfo'>Phone</span>
 							<span>{userInfo.phone}</span>
 							<span
-								onClick={() => editUserInfo.visibleEditUserInfo()}
+								onClick={(): void => editUserInfo.visibleEditUserInfo()}
 								className='editFormInfo'
 							>
 								Change information

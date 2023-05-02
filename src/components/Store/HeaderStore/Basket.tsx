@@ -8,7 +8,7 @@ import './headerStore.scss'
 
 interface IBasket {}
 
-export const Basket: React.FC<IBasket> = ({}) => {
+export const Basket: React.FC<IBasket> = ({}): JSX.Element => {
 	const basket = useBasketModal()
 
 	return (

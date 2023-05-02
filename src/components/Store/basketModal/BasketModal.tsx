@@ -20,7 +20,7 @@ export const BasketModal: React.FC<IBasketModal> = ({
 	productsBasket,
 	basketSum,
 	getDeliveryOptions,
-}) => {
+}): JSX.Element => {
 	useEffect(() => {
 		getDeliveryOptions()
 	}, [])

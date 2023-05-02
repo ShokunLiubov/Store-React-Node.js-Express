@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios, { AxiosResponse } from "axios"
 
 const API_URL = "http://localhost:5001/";
 
@@ -13,7 +13,7 @@ $API.interceptors.request.use((config: any) => {
 });
 
 $API.interceptors.response.use(
-  (config: any) => {
+  (config: AxiosResponse<any>) => {
     return config;
   },
   async (error) => {

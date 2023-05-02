@@ -19,16 +19,25 @@ interface IDeliveryProps {
 	setPriceDelivery: (values: IDeliveryPrice) => void
 }
 
+interface IDeliveryInfo {
+	[key: string]: {
+		id: string
+		name: string
+		price: number
+	}
+}
+
 const Delivery: React.FC<IDeliveryProps> = ({
 	deliveryOptions,
 	getDeliveryOptions,
 	setPriceDelivery,
-}) => {
+}): JSX.Element => {
 	useEffect(() => {
 		getDeliveryOptions()
 	}, [])
+
 	const deliveryInfo = deliveryOptions.reduce(
-		(acc: any, option: IDeliveryOptions) => {
+		(acc: IDeliveryInfo, option: IDeliveryOptions): IDeliveryInfo => {
 			acc[option.deliveryType] = {
 				id: option._id,
 				name: option.name,
@@ -46,18 +55,18 @@ const Delivery: React.FC<IDeliveryProps> = ({
 			_id: deliveryInfo.postal.id,
 			price: deliveryInfo.postal.price,
 		},
-		onSubmit: (values: IDeliveryPrice) => {
+		onSubmit: (values: IDeliveryPrice): void => {
 			setPriceDelivery(values)
 			getDeliveryOptions()
 		},
 	})
 
-	const formikCourier = useFormik({
+	const formikCourier = useFormik<IDeliveryPrice>({
 		initialValues: {
-			id: deliveryInfo.courier.id,
+			_id: deliveryInfo.courier.id,
 			price: deliveryInfo.courier.price,
 		},
-		onSubmit: (values: any) => {
+		onSubmit: (values: IDeliveryPrice): void => {
 			setPriceDelivery(values)
 			getDeliveryOptions()
 		},
@@ -74,7 +83,7 @@ const Delivery: React.FC<IDeliveryProps> = ({
 								<span>{deliveryInfo.postal.price}$</span>
 								<span
 									className='material-symbols-outlined'
-									onClick={() => {
+									onClick={(): void => {
 										setEditPostal(true)
 									}}
 								>
@@ -92,7 +101,7 @@ const Delivery: React.FC<IDeliveryProps> = ({
 							/>
 							<span
 								className='material-symbols-outlined'
-								onClick={() => {
+								onClick={(): void => {
 									setEditPostal(false)
 									formikPostal.submitForm()
 								}}
@@ -110,7 +119,7 @@ const Delivery: React.FC<IDeliveryProps> = ({
 								<span>{deliveryInfo.courier.price}$</span>
 								<span
 									className='material-symbols-outlined'
-									onClick={() => setEditCourier(true)}
+									onClick={(): void => setEditCourier(true)}
 								>
 									edit
 								</span>
@@ -126,7 +135,7 @@ const Delivery: React.FC<IDeliveryProps> = ({
 							/>
 							<span
 								className='material-symbols-outlined'
-								onClick={() => {
+								onClick={(): void => {
 									setEditCourier(false)
 									formikCourier.submitForm()
 								}}

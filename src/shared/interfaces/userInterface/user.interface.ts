@@ -6,3 +6,5 @@ export interface IUser {
   roles: any;
   userInfo?: IUserInfo;
 }
+
+export interface IUserOptions extends Partial<IUser>{}

@@ -6,10 +6,10 @@ import { AppStateType } from '../../../redux/redux-store'
 import './sort.scss'
 
 interface ISortProps {
-	setSortCatalog: any
+	setSortCatalog: (sortField: string, sortOrder: string) => void
 }
 
-export const Sort: React.FC<ISortProps> = ({ setSortCatalog }) => {
+export const Sort: React.FC<ISortProps> = ({ setSortCatalog }): JSX.Element => {
 	const [sortField, setSortField] = useState('_id')
 	const [sortOrder, setSortOrder] = useState('asc')
 
@@ -24,19 +24,19 @@ export const Sort: React.FC<ISortProps> = ({ setSortCatalog }) => {
 				<label>Sort by:</label>
 				<span
 					className={sortField === 'title' ? 'active' : ''}
-					onClick={() => setSort('title', sortOrder)}
+					onClick={(): void => setSort('title', sortOrder)}
 				>
 					Title
 				</span>
 				<span
 					className={sortField === '_id' ? 'active' : ''}
-					onClick={() => setSort('_id', sortOrder)}
+					onClick={(): void => setSort('_id', sortOrder)}
 				>
 					Date
 				</span>
 				<span
 					className={sortField === 'price' ? 'active' : ''}
-					onClick={() => setSort('price', sortOrder)}
+					onClick={(): void => setSort('price', sortOrder)}
 				>
 					Price
 				</span>
@@ -45,7 +45,7 @@ export const Sort: React.FC<ISortProps> = ({ setSortCatalog }) => {
 						'material-symbols-outlined',
 						sortOrder === 'asc' ? 'active' : '',
 					)}
-					onClick={() => setSort(sortField, 'asc')}
+					onClick={(): void => setSort(sortField, 'asc')}
 				>
 					arrow_upward
 				</span>
@@ -54,7 +54,7 @@ export const Sort: React.FC<ISortProps> = ({ setSortCatalog }) => {
 						'material-symbols-outlined',
 						sortOrder === 'desc' ? 'active' : '',
 					)}
-					onClick={() => setSort(sortField, 'desc')}
+					onClick={(): void => setSort(sortField, 'desc')}
 				>
 					arrow_downward
 				</span>

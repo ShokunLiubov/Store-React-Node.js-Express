@@ -1,7 +1,7 @@
-import { AnyAction } from 'redux'
 import { IFiltersOrders } from '../../shared/filters/filtersOrders.interface'
 import { IOrder } from '../../shared/interfaces/order.interface'
 import * as actionType from './orderActionType'
+import * as I from './orderInterface'
 
 interface IOrderState {
 	ordersData: IOrder[]
@@ -28,29 +28,42 @@ let initialState: IOrderState = {
 
 export const orderReducer = (
 	state = initialState,
-	action: AnyAction,
+	action: I.ISetCityForOrders | I.ISetFiltersOrders | I.ISetOrders,
 ): IOrderState => {
 	switch (action.type) {
 		case actionType.SET_ORDERS:
-			return {
-				...state,
-				ordersData: action.ordersData,
-				currentPage: action.page,
-				totalPages: action.totalPages,
-				sortField: action.sortField,
-				sortOrder: action.sortOrder,
+			if ('ordersData' in action) {
+				return {
+					...state,
+					ordersData: action.ordersData,
+					currentPage: action.page,
+					totalPages: action.totalPages,
+					sortField: action.sortField,
+					sortOrder: action.sortOrder,
+				}
 			}
+			break
+
 		case actionType.SET_FILTERS_FOR_ORDERS:
-			return {
-				...state,
-				filters: action.filters,
+			if ('filters' in action) {
+				return {
+					...state,
+					filters: action.filters,
+				}
 			}
+			break
+
 		case actionType.SET_CITY_FOR_ORDERS:
-			return {
-				...state,
-				city: action.city,
+			if ('city' in action) {
+				return {
+					...state,
+					city: action.city,
+				}
 			}
+			break
+
 		default:
-			return state
+			break
 	}
+	return state
 }

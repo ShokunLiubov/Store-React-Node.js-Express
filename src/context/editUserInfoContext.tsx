@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 
 interface IEditUserInfoProvider {
-	children: any
+	children: React.ReactNode
 }
 interface IEditUserInfo {
 	editUserInfo?: boolean
@@ -17,7 +17,7 @@ export const useUserInfo = () => {
 
 export const EditUserInfoProvider: React.FC<IEditUserInfoProvider> = ({
 	children,
-}) => {
+}): JSX.Element => {
 	const [editUserInfo, setEditUserInfo] = useState(false)
 
 	const visibleEditUserInfo = () => {

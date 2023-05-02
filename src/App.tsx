@@ -11,7 +11,7 @@ import store from './redux/redux-store'
 import { AppRoutes } from './routes/AppRoutes'
 import RouterCombiner from './routes/RouterCombiner'
 
-const App: React.FC = () => {
+const App: React.FC = (): JSX.Element => {
 	return (
 		<div>
 			<Provider store={store}>

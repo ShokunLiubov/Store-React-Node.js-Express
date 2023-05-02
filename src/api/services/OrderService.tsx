@@ -1,5 +1,7 @@
 import { AxiosResponse } from 'axios'
+import { IFiltersOrders } from '../../shared/filters/filtersOrders.interface'
 import { IOrder } from '../../shared/interfaces/order.interface'
+import { IOrdersResponse } from '../../shared/response/orderResponse.interface'
 import { $API } from '../api'
 
 export class orderService {
@@ -7,8 +9,8 @@ export class orderService {
 		page: number | string,
 		sortField: string,
 		sortOrder: string,
-		filters: any,
-	): Promise<any> {
+		filters: IFiltersOrders,
+	): Promise<{ data: IOrdersResponse; url: string }> {
 		const { search, dataRange, status, price, city } = filters
 
 		let url = `?page=${page}&limit=15&sortField=${sortField}&sortOrder=${sortOrder}`
@@ -37,7 +39,7 @@ export class orderService {
 			}
 		}
 
-		const response = await $API.get<any>('orders' + url)
+		const response = await $API.get('orders' + url)
 		return { data: response.data, url }
 	}
 
@@ -45,7 +47,7 @@ export class orderService {
 		return $API.post<IOrder[]>('orders', order)
 	}
 
-	static async getCity(): Promise<Array<any>> {
-		return $API.get<Array<any>>('orders/city').then(response => response.data)
+	static async getCity(): Promise<Array<string>> {
+		return $API.get('orders/city').then(response => response.data)
 	}
 }

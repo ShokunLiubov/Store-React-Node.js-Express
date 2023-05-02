@@ -1,13 +1,16 @@
+import { FormikValues } from 'formik'
 import { useState } from 'react'
 import { handleInputChange } from '../../../../../utils/debounce/handleInputChange'
 import { Input } from '../../../../ui/form/input/Input'
 import '../filtersCategory.scss'
 
 interface IFilterCountProps {
-	formik: any
+	formik: FormikValues
 }
 
-export const FilterCount: React.FC<IFilterCountProps> = ({ formik }) => {
+export const FilterCount: React.FC<IFilterCountProps> = ({
+	formik,
+}): JSX.Element => {
 	const [countGte, setCountGte] = useState('')
 	const [countLte, setCountLte] = useState('')
 

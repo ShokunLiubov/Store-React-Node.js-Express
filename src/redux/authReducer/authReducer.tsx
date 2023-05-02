@@ -1,11 +1,13 @@
-import { AnyAction } from 'redux'
+import { IUserOptions } from '../../shared/interfaces/userInterface/user.interface'
+import { IUserInfoOptions } from '../../shared/interfaces/userInterface/userInfo.interface'
 import * as actionType from './authActionType'
+import * as I from './authInterface'
 
 interface IAuthState {
-	user: any
+	user: IUserOptions
 	isAuth: boolean
 	isLoading: boolean
-	userInfo: any
+	userInfo: IUserInfoOptions
 }
 
 let initialState: IAuthState = {
@@ -17,15 +19,19 @@ let initialState: IAuthState = {
 
 export const authReducer = (
 	state = initialState,
-	action: AnyAction,
+	action: I.IOutAuth | I.ISetAuth | I.ISetLoading | I.ISetUserInfo,
 ): IAuthState => {
 	switch (action.type) {
 		case actionType.SET_AUTH:
-			return {
-				...state,
-				user: action.payload,
-				isAuth: true,
+			if ('payload' in action) {
+				return {
+					...state,
+					user: action.payload,
+					isAuth: true,
+				}
 			}
+			break
+
 		case actionType.OUT_AUTH:
 			return {
 				...state,
@@ -33,14 +39,24 @@ export const authReducer = (
 				userInfo: {},
 				isAuth: false,
 			}
+
 		case actionType.SET_LOADING:
-			return {
-				...state,
-				isLoading: action.boolean,
+			if ('isLoading' in action) {
+				return {
+					...state,
+					isLoading: action.isLoading,
+				}
 			}
+			break
+
 		case actionType.SET_USER_INFO:
-			return { ...state, userInfo: action.userInfo }
+			if ('userInfo' in action) {
+				return { ...state, userInfo: action.userInfo }
+			}
+			break
+
 		default:
-			return state
+			break
 	}
+	return state
 }

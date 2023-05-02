@@ -1,0 +1,62 @@
+.dashboard {
+  .dashboardSelects {
+    display: flex;
+    // width: 100%;
+    justify-content: space-between;
+    margin: auto 10vw;
+  }
+    .select {
+        display: flex;
+        flex-direction: column;
+        width: 17vw;
+        margin-bottom: 20px;
+        .css-1nmdiq5-menu {
+            width: 17vw;
+            background-color: #f4f3f5;
+            cursor: pointer;
+            color: #333;
+        }
+        .css-13cymwt-control {
+          cursor: pointer;
+          margin: 0px;
+          border-radius: 0px;
+          background-color: #f4f3f5;
+          border: 1px solid #ccc;
+          width: 17vw;
+        }
+        .select__control--is-focused {
+          border-radius: 0px;
+          background-color: #f4f3f5;
+          border: 1px solid #ccc;
+          width: 17vw;
+         
+        }
+        .select__control {
+          width: 17vw;
+        }
+        .select__menu {
+            width: 17vw;
+            background-color: #f4f3f5;
+          .select__option {
+            cursor: pointer;
+            color: #333;
+          }
+        }
+        label {
+          margin: 3px 0px;
+        }
+        input {
+          padding: 2px 5px;
+          font-size: 15px;
+        }
+      }
+      .stats_top {
+        margin: 3vh 6vw;
+        display: flex;
+        justify-content: space-between;
+        .stats_top__left, .stats_top__right {
+            width: 25vw;
+            color: #fff;
+        }
+      }
+}

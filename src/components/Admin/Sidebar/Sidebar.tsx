@@ -10,7 +10,7 @@ interface ISidebarProps {
 	items: Array<ISidebar>
 }
 
-export const Sidebar: React.FC<ISidebarProps> = ({ items }) => {
+export const Sidebar: React.FC<ISidebarProps> = ({ items }): JSX.Element => {
 	const sidebar = useSidebar()
 	const location = useLocation()
 	const navigate = useNavigate()
@@ -21,7 +21,7 @@ export const Sidebar: React.FC<ISidebarProps> = ({ items }) => {
 		params.clearParams()
 	}
 
-	const sidebarItem = items.map(item => (
+	const sidebarItem = items.map((item: ISidebar) => (
 		<li key={item.path}>
 			<NavLink
 				to={item.path}

@@ -1,7 +1,8 @@
 import { ICategory } from './category.interface'
 import { IClassification } from './classification.interface'
+
 export interface IProduct {
-  _id?: string;
+  _id: string;
   image?: string;
   title: string;
   category: ICategory;

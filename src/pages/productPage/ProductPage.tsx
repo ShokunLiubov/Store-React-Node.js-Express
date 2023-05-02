@@ -8,31 +8,31 @@ import { getUserInfo } from '../../redux/authReducer/authThunk'
 import { addToBasket } from '../../redux/basketReducer/basketThunk'
 import { getProductsOnPage } from '../../redux/productReducer/productThunk'
 import { AppStateType } from '../../redux/redux-store'
-import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
+import { IProductOptions } from '../../shared/interfaces/productInterface/productOptions.interface'
 import './productPage.scss'
 
 interface IProductPageProps {
-	addToBasket: (productId: any) => Promise<void>
-	getProductsOnPage: (id: any) => Promise<void>
+	addToBasket: (productId: string) => void
+	getProductsOnPage: (id: string) => void
 	getUserInfo: () => Promise<void>
-	product: IProduct
+	product: IProductOptions
 }
 
 export const ProductPage: React.FC<IProductPageProps> = ({
 	getProductsOnPage,
-	product,
 	addToBasket,
 	getUserInfo,
-}) => {
+	product,
+}): JSX.Element => {
 	const basket = useBasketModal()
 	const { id } = useParams()
 	useEffect(() => {
-		getProductsOnPage(id)
+		id && getProductsOnPage(id)
 	}, [])
 
 	return (
 		<>
-			{product._id && (
+			{product.count && (
 				<>
 					<MenuStore />
 					<div className='productPage'>
@@ -96,8 +96,8 @@ export const ProductPage: React.FC<IProductPageProps> = ({
 										<div onClick={basket.toggleBasketModal}>
 											<button
 												className='buttonProduct'
-												onClick={() => {
-													addToBasket(product._id)
+												onClick={(): void => {
+													product._id && addToBasket(product._id)
 													getUserInfo()
 												}}
 											>

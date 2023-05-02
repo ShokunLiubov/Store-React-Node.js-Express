@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { connect } from 'react-redux'
-import Select from 'react-select'
+import Select, { MultiValue } from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { compose } from 'redux'
 import { getProducts } from '../../../../redux/productReducer/productThunk'
 import { AppStateType } from '../../../../redux/redux-store'
+import { IFiltersProducts } from '../../../../shared/filters/filtersProducts.interface'
+import { ISelectedOptions } from '../../../../shared/interfaces/common/selectedOptions.interface'
 import { ICategory } from '../../../../shared/interfaces/productInterface/category.interface'
 import { handleInputChange } from '../../../../utils/debounce/handleInputChange'
 import { handleSelectChange } from '../../../../utils/debounce/handleSelectChange'
@@ -17,11 +19,11 @@ interface IFiltersMyCatalogProps {
 	sortField: string
 	sortOrder: string
 	getProducts: (
-		page: number,
+		page: number | string,
 		sortField: string,
 		sortOrder: string,
-		values: any,
-	) => any
+		values: IFiltersProducts,
+	) => Promise<string>
 	categories: Array<ICategory>
 }
 
@@ -31,9 +33,11 @@ export const FiltersMyCatalog: React.FC<IFiltersMyCatalogProps> = ({
 	getProducts,
 	categories,
 }) => {
-	const selectCategory = categories.map((category: any) => {
-		return { value: category._id, label: category.name }
-	})
+	const selectCategory = categories.map(
+		(category: ICategory): ISelectedOptions => {
+			return { value: category._id, label: category.name }
+		},
+	)
 
 	const animatedComponents = makeAnimated()
 	const [search, setSearch] = useState('')
@@ -54,7 +58,7 @@ export const FiltersMyCatalog: React.FC<IFiltersMyCatalogProps> = ({
 						label={'from'}
 						formik={formik}
 						type={'number'}
-						onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+						onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
 							setCountGte(e.target.value)
 							handleInputChange(e, 'count.$gte', formik)
 						}}
@@ -64,7 +68,7 @@ export const FiltersMyCatalog: React.FC<IFiltersMyCatalogProps> = ({
 						label={'to'}
 						formik={formik}
 						type={'number'}
-						onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+						onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
 							setCountLte(e.target.value)
 							handleInputChange(e, 'count.$lte', formik)
 						}}
@@ -80,7 +84,7 @@ export const FiltersMyCatalog: React.FC<IFiltersMyCatalogProps> = ({
 						label={'from'}
 						formik={formik}
 						type={'number'}
-						onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+						onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
 							setPriceGte(e.target.value)
 							handleInputChange(e, 'price.$gte', formik)
 						}}
@@ -90,7 +94,7 @@ export const FiltersMyCatalog: React.FC<IFiltersMyCatalogProps> = ({
 						label={'to'}
 						formik={formik}
 						type={'number'}
-						onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+						onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
 							setPriceLte(e.target.value)
 							handleInputChange(e, 'price.$lte', formik)
 						}}
@@ -104,10 +108,12 @@ export const FiltersMyCatalog: React.FC<IFiltersMyCatalogProps> = ({
 						isMulti
 						name='colors'
 						options={selectCategory}
-						value={selectCategory.filter((option: any) =>
-							formik.values.category.includes(option.value),
+						value={selectCategory.filter(
+							(option: ISelectedOptions) =>
+								formik.values.category &&
+								formik.values.category.includes(option.value),
 						)}
-						onChange={(e: any) => {
+						onChange={(e: MultiValue<ISelectedOptions>): void => {
 							handleSelectChange(e, 'category', formik)
 						}}
 						classNamePrefix='select'
@@ -119,7 +125,7 @@ export const FiltersMyCatalog: React.FC<IFiltersMyCatalogProps> = ({
 			<div className={'search'}>
 				<Search
 					name='search'
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+					onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
 						setSearch(e.target.value)
 						handleInputChange(e, 'search', formik)
 					}}

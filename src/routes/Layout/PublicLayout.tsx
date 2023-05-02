@@ -6,7 +6,7 @@ export const publicUrl = '/make-up/'
 
 interface PublicLayoutProps {}
 
-export const PublicLayout: React.FC<PublicLayoutProps> = () => {
+export const PublicLayout: React.FC<PublicLayoutProps> = (): JSX.Element => {
 	return (
 		<div className='PublicLayout'>
 			<HeaderStore />

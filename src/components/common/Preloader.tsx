@@ -1,10 +1,10 @@
-import React from "react";
-import cn from "classnames";
+import cn from 'classnames'
+import React from 'react'
 
-export const Preloader: React.FC = () => {
-  return (
-    <div className={cn("center")}>
-      <img src='./../../preloader.gif' />
-    </div>
-  );
-};
+export const Preloader: React.FC = (): JSX.Element => {
+	return (
+		<div className={cn('center')}>
+			<img src='./../../preloader.gif' />
+		</div>
+	)
+}

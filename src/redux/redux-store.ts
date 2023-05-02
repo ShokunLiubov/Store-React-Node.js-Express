@@ -10,6 +10,7 @@ import { basketReducer } from "./basketReducer/basketReducer"
 import { deliveryReducer } from './deliveryReducer/deliveryReducer'
 import { orderReducer } from "./orderReducer/orderReducer"
 import { productReducer } from "./productReducer/productReducer"
+import { statsReducer } from './statsReducer/statsReducer'
 import { storeReducer } from './storeReducer/storeReducer'
 import { userReducer } from "./userReducer/userReducer"
 
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   auth: authReducer,
   basket: basketReducer,
   store: storeReducer,
-  delivery: deliveryReducer
+  delivery: deliveryReducer,
+  stats: statsReducer
 });
 
 type RootReducerType = typeof rootReducer;

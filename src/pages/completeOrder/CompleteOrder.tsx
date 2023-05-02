@@ -9,7 +9,7 @@ import './completeOrder.scss'
 
 interface ICreateOrder {}
 
-export const CompleteOrder: React.FC<ICreateOrder> = ({}) => {
+export const CompleteOrder: React.FC<ICreateOrder> = ({}): JSX.Element => {
 	return (
 		<>
 			<MenuStore />

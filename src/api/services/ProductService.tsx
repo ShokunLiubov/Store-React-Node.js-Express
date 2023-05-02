@@ -2,6 +2,7 @@ import { AxiosResponse } from 'axios'
 import { IFiltersProducts } from '../../shared/filters/filtersProducts.interface'
 import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import { IProductBasket } from '../../shared/interfaces/productInterface/productBasket.interface'
+import { IProductResponse } from '../../shared/response/productResponse.interface'
 import { $API } from '../api'
 
 export class productService {
@@ -10,7 +11,7 @@ export class productService {
 		sortField: string,
 		sortOrder: string,
 		filters: IFiltersProducts,
-	): Promise<any> {
+	): Promise<{ data: IProductResponse; url: string }> {
 		const {
 			search,
 			category,
@@ -75,7 +76,7 @@ export class productService {
 			}
 		}
 
-		const response = await $API.get<any>('products' + url)
+		const response = await $API.get('products' + url)
 		return { data: response.data, url }
 	}
 
@@ -83,8 +84,8 @@ export class productService {
 		return $API.delete(`products/${productId}`)
 	}
 
-	static async createProduct(newProduct: IProduct): Promise<AxiosResponse> {
-		return $API.post('products', newProduct)
+	static async createProduct(newProduct: FormData): Promise<AxiosResponse> {
+		return $API.post<IProduct>('products', newProduct)
 	}
 
 	static async getProduct(productId: string): Promise<IProductBasket> {
@@ -97,7 +98,10 @@ export class productService {
 			.then(response => response.data.product)
 	}
 
-	static async updateProductEdit(product: IProduct, productId: string) {
+	static async updateProductEdit(
+		product: FormData,
+		productId: string,
+	): Promise<AxiosResponse> {
 		return $API.put(`products/edit/${productId}`, product)
 	}
 }

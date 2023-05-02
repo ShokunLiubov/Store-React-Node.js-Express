@@ -11,16 +11,16 @@ interface IFiltersCategoryProps {
 	sortField: string
 	sortOrder: string
 	getProducts: (
-		page: number,
+		page: number | string,
 		sortField: string,
 		sortOrder: string,
 		values: IFiltersProducts,
-	) => any
+	) => Promise<string>
 	classifications: Array<IClassification>
 	categories: Array<ICategory>
-    genderPage: any
-    classificationPage: any
-    categoriesPage: any
+    genderPage: boolean
+    classificationPage: boolean
+    categoriesPage: boolean
 }
 
 export const useFiltersCategory = ({

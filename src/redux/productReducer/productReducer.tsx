@@ -1,21 +1,22 @@
-import { AnyAction } from 'redux'
 import { IFiltersProducts } from '../../shared/filters/filtersProducts.interface'
 import { ICategory } from '../../shared/interfaces/productInterface/category.interface'
 import { IClassification } from '../../shared/interfaces/productInterface/classification.interface'
 import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
+import { IProductOptions } from '../../shared/interfaces/productInterface/productOptions.interface'
 import * as actionType from './productActionType'
+import * as I from './productInterface'
 
 interface IProductState {
 	productsData: IProduct[]
 	currentPage: number
 	totalPages: number
-	editProduct: any
+	editProduct: IProduct | {}
 	sortField: string
 	sortOrder: string
-	filters: IFiltersProducts
+	filters: IFiltersProducts | {}
 	categories: Array<ICategory>
 	classifications: Array<IClassification>
-	productForPage: any
+	productForPage: IProductOptions
 	countryTM: Array<string>
 	madeIn: Array<string>
 	typeAroma: Array<string>
@@ -28,14 +29,7 @@ let initialState: IProductState = {
 	editProduct: {},
 	sortField: '_id',
 	sortOrder: 'asc',
-	filters: {
-		category: [],
-		classification: [],
-		type_of_aroma: [],
-		made_in: [],
-		country_of_TM: [],
-		gender: [],
-	},
+	filters: {},
 	categories: [],
 	classifications: [],
 	typeAroma: [],
@@ -46,68 +40,117 @@ let initialState: IProductState = {
 
 export const productReducer = (
 	state = initialState,
-	action: AnyAction,
+	action:
+		| I.ISetCategory
+		| I.ISetClassifications
+		| I.ISetCountryTM
+		| I.ISetDeleteProduct
+		| I.ISetFilters
+		| I.ISetMadeIn
+		| I.ISetProductForEdit
+		| I.ISetProductOnPage
+		| I.ISetProducts
+		| I.ISetTypeAroma,
 ): IProductState => {
 	switch (action.type) {
 		case actionType.SET_PRODUCTS:
-			return {
-				...state,
-				productsData: action.docs,
-				currentPage: action.page,
-				totalPages: action.totalPages,
-				sortField: action.sortField,
-				sortOrder: action.sortOrder,
+			if ('docs' in action) {
+				return {
+					...state,
+					productsData: action.docs,
+					currentPage: action.page,
+					totalPages: action.totalPages,
+					sortField: action.sortField,
+					sortOrder: action.sortOrder,
+				}
 			}
+			break
+
 		case actionType.SET_FILTERS_FOR_PRODUCTS:
-			return {
-				...state,
-				filters: action.filters,
+			if ('filters' in action) {
+				return {
+					...state,
+					filters: action.filters,
+				}
 			}
+			break
+
 		case actionType.SET_CATEGORIES_FOR_PRODUCTS:
-			return {
-				...state,
-				categories: action.categories,
+			if ('categories' in action) {
+				return {
+					...state,
+					categories: action.categories,
+				}
 			}
+			break
+
 		case actionType.SET_CLASSIFICATIONS_FOR_PRODUCTS:
-			return {
-				...state,
-				classifications: action.classifications,
+			if ('classifications' in action) {
+				return {
+					...state,
+					classifications: action.classifications,
+				}
 			}
+			break
+
 		case actionType.DELETE_PRODUCT:
-			return {
-				...state,
-				productsData: state.productsData.filter(
-					(product: IProduct) => product._id != action.productId,
-				),
+			if ('productId' in action) {
+				return {
+					...state,
+					productsData: state.productsData.filter(
+						(product: IProduct) => product._id != action.productId,
+					),
+				}
 			}
+			break
+
 		case actionType.SET_PRODUCT_FOR_EDIT:
-			return {
-				...state,
-				editProduct: action.product,
+			if ('product' in action) {
+				return {
+					...state,
+					editProduct: action.product,
+				}
 			}
+			break
+
 		case actionType.SET_PRODUCT_ON_PAGE:
-			return {
-				...state,
-				productForPage: action.payload,
+			if ('payload' in action) {
+				return {
+					...state,
+					productForPage: action.payload,
+				}
 			}
+			break
 
 		case actionType.SET_COUNTRY_TM_PRODUCTS:
-			return {
-				...state,
-				countryTM: action.countryTM,
+			if ('countryTM' in action) {
+				return {
+					...state,
+					countryTM: action.countryTM,
+				}
 			}
+			break
+
 		case actionType.SET_MADE_IN_PRODUCTS:
-			return {
-				...state,
-				madeIn: action.madeIn,
+			if ('madeIn' in action) {
+				return {
+					...state,
+					madeIn: action.madeIn,
+				}
 			}
+			break
+
 		case actionType.SET_TYPE_AROMA_PRODUCTS:
-			return {
-				...state,
-				typeAroma: action.typeAroma,
+			if ('typeAroma' in action) {
+				return {
+					...state,
+					typeAroma: action.typeAroma,
+				}
 			}
+			break
 
 		default:
-			return state
+			break
 	}
+	return state
 }

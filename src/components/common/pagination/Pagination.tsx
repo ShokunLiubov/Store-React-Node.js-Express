@@ -11,17 +11,19 @@ const Paginator: React.FC<IPaginator> = ({
 	currentPage,
 	onPageChange,
 	totalPages,
-}) => {
+}): JSX.Element => {
 	let prevPage = currentPage - 1
 	let nextPage = currentPage + 1
 	let threePage = currentPage + 2
 	let lastPage = totalPages
 	let firstPage = 1
 
-	let changeCurrentHandler = (page: number) => {
+	let changeCurrentHandler = (page: number): void => {
 		onPageChange(page)
 	}
+
 	let HTMLLast
+
 	if (
 		lastPage != currentPage &&
 		lastPage != currentPage + 1 &&
@@ -31,7 +33,7 @@ const Paginator: React.FC<IPaginator> = ({
 			<span
 				className={`${'selectedPage'} 
         ${currentPage === lastPage ? 'selectedPageActive' : ''}`}
-				onClick={e => {
+				onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>): void => {
 					changeCurrentHandler(lastPage)
 				}}
 			>
@@ -47,7 +49,7 @@ const Paginator: React.FC<IPaginator> = ({
 				className={`${'selectedPage'} ${
 					currentPage === firstPage ? 'selectedPageActive' : ''
 				}`}
-				onClick={e => {
+				onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>): void => {
 					changeCurrentHandler(firstPage)
 				}}
 			>
@@ -63,7 +65,7 @@ const Paginator: React.FC<IPaginator> = ({
 				className={`${'selectedPage'} 
         ${currentPage === lastPage ? 'prevNone' : ''}
         `}
-				onClick={e => {
+				onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>): void => {
 					changeCurrentHandler(threePage)
 				}}
 			>
@@ -102,7 +104,9 @@ const Paginator: React.FC<IPaginator> = ({
 								className={`${'selectedPage'} 
                 ${currentPage === 1 ? 'prevNone' : ''}
                 `}
-								onClick={e => {
+								onClick={(
+									e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+								): void => {
 									changeCurrentHandler(prevPage)
 								}}
 							>
@@ -111,7 +115,9 @@ const Paginator: React.FC<IPaginator> = ({
 
 							<span
 								className={`${'selectedPage'} ${'selectedPageActive'} `}
-								onClick={e => {
+								onClick={(
+									e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+								): void => {
 									changeCurrentHandler(currentPage)
 								}}
 							>
@@ -122,7 +128,9 @@ const Paginator: React.FC<IPaginator> = ({
 								className={`${'selectedPage'} 
                 ${currentPage === lastPage ? 'prevNone' : ''}
                 `}
-								onClick={e => {
+								onClick={(
+									e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+								): void => {
 									changeCurrentHandler(nextPage)
 								}}
 							>
@@ -145,7 +153,9 @@ const Paginator: React.FC<IPaginator> = ({
 								className={`${'navigationButton'} ${
 									currentPage === lastPage ? 'navigationPreventNone' : ''
 								}`}
-								onClick={e => {
+								onClick={(
+									e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+								): void => {
 									changeCurrentHandler(nextPage)
 								}}
 							>

@@ -1,21 +1,23 @@
+import { FormikValues } from 'formik'
 import { connect } from 'react-redux'
-import Select from 'react-select'
+import Select, { MultiValue } from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { compose } from 'redux'
 import { AppStateType } from '../../../../../redux/redux-store'
+import { ISelectedOptions } from '../../../../../shared/interfaces/common/selectedOptions.interface'
 import { handleSelectChange } from '../../../../../utils/debounce/handleSelectChange'
 import '../filtersCategory.scss'
 
 interface IFilterCountryTMProps {
-	formik: any
+	formik: FormikValues
 	countryTM: Array<string>
 }
 
 export const FilterCountryTM: React.FC<IFilterCountryTMProps> = ({
 	formik,
 	countryTM,
-}) => {
-	const selectCountryTM = countryTM.map((country: any) => {
+}): JSX.Element => {
+	const selectCountryTM = countryTM.map((country: string) => {
 		return { value: country, label: country }
 	})
 	const animatedComponents = makeAnimated()
@@ -28,10 +30,10 @@ export const FilterCountryTM: React.FC<IFilterCountryTMProps> = ({
 					isMulti
 					name='colors'
 					options={selectCountryTM}
-					value={selectCountryTM.filter((option: any) =>
+					value={selectCountryTM.filter((option: ISelectedOptions) =>
 						formik.values.country_of_TM.includes(option.value),
 					)}
-					onChange={(e: any) => {
+					onChange={(e: MultiValue<ISelectedOptions>): void => {
 						handleSelectChange(e, 'country_of_TM', formik)
 					}}
 					classNamePrefix='select'
