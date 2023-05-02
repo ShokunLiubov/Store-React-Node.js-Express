@@ -1,39 +1,65 @@
 import { useFormik } from 'formik'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { compose } from 'redux'
+import { Preloader } from '../../components/common/Preloader'
 import { Input } from '../../components/ui/form/input/Input'
 import { registrationUser } from '../../redux/authReducer/authThunk'
 import { AppStateType } from '../../redux/redux-store'
+import { publicUrl } from '../../routes/layout/PublicLayout'
 import { IAuth } from '../../shared/interfaces/userInterface/auth.interface'
+import { IUserOptions } from '../../shared/interfaces/userInterface/user.interface'
 import './register.scss'
 
 interface RegisterProps {
-	registrationUser: any
+	registrationUser: (values: IAuth) => Promise<string | undefined>
+	user: IUserOptions
 }
 
 export const Register: React.FC<RegisterProps> = ({
 	registrationUser,
+	user,
 }): JSX.Element => {
 	const navigate = useNavigate()
+	const [isLoading, setIsLoading] = useState<boolean>(true)
 	const [isShownPassword, setIsShownPassword] = useState<boolean>(false)
+	const [error, setError] = useState<string>('')
+
+	useEffect(() => {
+		if (user) {
+			setIsLoading(false)
+		}
+	}, [user])
 
 	const formik = useFormik<IAuth>({
 		initialValues: {
 			username: '',
 			password: '',
 		},
-		onSubmit: (values: IAuth): void => {
-			registrationUser(values)
-			navigate('/make-up')
+		onSubmit: async (values: IAuth): Promise<void> => {
+			const message = await registrationUser(values)
+			if (!message) {
+				navigate(publicUrl)
+			} else {
+				setError(message)
+			}
 		},
 	})
+
+	if (isLoading) {
+		return <Preloader />
+	}
+
+	if (user?.roles?.[0]) {
+		navigate(publicUrl)
+	}
+
 	return (
 		<div className={'containerLogin'}>
 			<form className={'form'} onSubmit={formik.handleSubmit}>
 				<img src='./../../imageAuth/bcgAuth.png' />
-				<span>register</span>
+				<span className='authTitle'>register</span>
 				<div className='blockInput'>
 					<span className='material-symbols-outlined'>mail</span>
 					<Input
@@ -60,6 +86,7 @@ export const Register: React.FC<RegisterProps> = ({
 						{isShownPassword ? 'visibility' : 'visibility_off'}
 					</span>
 				</div>
+				<div className='errorAuth'>{error}</div>
 
 				<button type='submit'>Get Started</button>
 			</form>

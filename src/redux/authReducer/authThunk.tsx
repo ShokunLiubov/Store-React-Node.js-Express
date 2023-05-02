@@ -7,25 +7,25 @@ import { IUserInfo } from '../../shared/interfaces/userInterface/userInfo.interf
 import * as AC from './authActionCreator'
 
 export const registrationUser = (value: IAuth) => {
-	return async (dispatch: Dispatch): Promise<void> => {
+	return async (dispatch: Dispatch): Promise<string | undefined> => {
 		try {
 			const response = await authService.registration(value)
 			localStorage.setItem('token', response.data.accessToken)
 			dispatch(AC.setAuth(response.data.user))
 		} catch (e: any) {
-			console.log(e.response?.data?.message)
+			return e.response?.data?.message
 		}
 	}
 }
 
 export const login = (value: IAuth) => {
-	return async (dispatch: Dispatch): Promise<void> => {
+	return async (dispatch: Dispatch): Promise<string | undefined> => {
 		try {
 			const response = await authService.login(value)
 			localStorage.setItem('token', response.data.accessToken)
 			dispatch(AC.setAuth(response.data.user))
 		} catch (e: any) {
-			console.log(e.response?.data?.message)
+			return e.response?.data?.message
 		}
 	}
 }

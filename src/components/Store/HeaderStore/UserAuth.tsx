@@ -4,6 +4,8 @@ import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
 import { logout } from '../../../redux/authReducer/authThunk'
 import { AppStateType } from '../../../redux/redux-store'
+import { authUrl } from '../../../routes/layout/AuthLayout'
+import { publicUrl } from '../../../routes/layout/PublicLayout'
 import { IUserOptions } from '../../../shared/interfaces/userInterface/user.interface'
 import './headerStore.scss'
 
@@ -21,7 +23,7 @@ export const UserAuth: React.FC<IUserAuth> = ({
 	return (
 		<div className='userAuth'>
 			{!isAuth && (
-				<NavLink to='auth/login'>
+				<NavLink to={publicUrl + authUrl + 'login'}>
 					<span className='material-symbols-outlined'>person</span>
 				</NavLink>
 			)}

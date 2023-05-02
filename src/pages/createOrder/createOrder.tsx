@@ -4,15 +4,18 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import Select, { SingleValue } from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { compose } from 'redux'
+import { Preloader } from '../../components/common/Preloader'
 import ProductItem from '../../components/store/basketModal/productItem'
 import { useUserInfo } from '../../context/editUserInfoContext'
 import { getUserInfo } from '../../redux/authReducer/authThunk'
 import { getDeliveryOptions } from '../../redux/deliveryReducer/deliveryThunk'
 import { createOrder } from '../../redux/orderReducer/orderThunk'
 import { AppStateType } from '../../redux/redux-store'
+import { authUrl } from '../../routes/layout/AuthLayout'
 import { publicUrl } from '../../routes/layout/PublicLayout'
 import { IDeliveryOptions } from '../../shared/interfaces/deliveryInterface/deliveryOptions.interface'
 import { IProductBasket } from '../../shared/interfaces/productInterface/productBasket.interface'
+import { IUserOptions } from '../../shared/interfaces/userInterface/user.interface'
 import './createOrder.scss'
 import FormUserInfo from './formUserInfo'
 
@@ -23,6 +26,7 @@ interface ICreateOrder {
 	products: IProductBasket[]
 	basketSum: number
 	deliveryOptions: IDeliveryOptions[]
+	user: IUserOptions
 }
 
 interface ISelectedOptions {
@@ -31,30 +35,44 @@ interface ISelectedOptions {
 }
 
 export const CreateOrder: React.FC<ICreateOrder> = ({
-	basketSum,
 	getUserInfo,
 	createOrder,
 	getDeliveryOptions,
+	basketSum,
 	deliveryOptions,
+	user,
 	products,
 }): JSX.Element => {
 	const defaultDeliveryOption = deliveryOptions[0]
-	const [delivery, setDelivery] = useState(defaultDeliveryOption.price)
+
+	const [isLoading, setIsLoading] = useState<boolean>(true)
+	const [delivery, setDelivery] = useState<number>(defaultDeliveryOption?.price)
 
 	const animatedComponents = makeAnimated()
 	const editUserInfo = useUserInfo()
 	const navigate = useNavigate()
+
+	useEffect(() => {
+		getDeliveryOptions()
+		getUserInfo()
+		if (user) {
+			setIsLoading(false)
+		}
+	}, [user])
+
+	if (isLoading) {
+		return <Preloader />
+	}
+
+	if (!user?.roles?.[0]) {
+		navigate(publicUrl + authUrl + 'login')
+	}
 
 	const selectDelivery = deliveryOptions.map(
 		(opti: IDeliveryOptions): ISelectedOptions => {
 			return { value: opti.price, label: 'Delivery ' + opti.name }
 		},
 	)
-
-	useEffect(() => {
-		getDeliveryOptions()
-		getUserInfo()
-	}, [])
 
 	if (!products.length) {
 		return <Navigate to={publicUrl} />
@@ -127,6 +145,7 @@ const mapStateToProps = (state: AppStateType) => {
 		basketSum: state.basket.basketSum,
 		products: state.basket.productsBasket,
 		deliveryOptions: state.delivery.deliveryOptions,
+		user: state.auth.user,
 	}
 }
 

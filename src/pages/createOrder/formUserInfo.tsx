@@ -2,6 +2,7 @@ import { useFormik } from 'formik'
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import * as Yup from 'yup'
 import { Input } from '../../components/ui/form/input/Input'
 import { useUserInfo } from '../../context/editUserInfoContext'
 import {
@@ -39,6 +40,19 @@ export const FormUserInfo: React.FC<IFormUserInfo> = ({
 
 	const address = userInfo.address
 
+	const validationSchema = Yup.object({
+		fullName: Yup.string()
+			.max(50, 'Must be 50 characters or less')
+			.required('Required'),
+		email: Yup.string().email('Invalid email address').required('Required'),
+		phone: Yup.string()
+			.matches(/^\+?[1-9]\d{1,14}$/, 'Invalid phone number')
+			.required('Required'),
+		city: Yup.string().required('Required'),
+		postOffice: Yup.string().required('Required'),
+		street: Yup.string().required('Required'),
+	})
+
 	const formik = useFormik({
 		initialValues: {
 			fullName: `${userInfo.fullName || ''}`,
@@ -48,6 +62,7 @@ export const FormUserInfo: React.FC<IFormUserInfo> = ({
 			city: `${address ? address.city : ''}`,
 			postOffice: `${address ? address.postOffice : ''}`,
 		},
+		validationSchema: validationSchema,
 		onSubmit: ({ email, fullName, phone, city, postOffice, street }) => {
 			const userAndDeliveryInfo = {
 				email,
