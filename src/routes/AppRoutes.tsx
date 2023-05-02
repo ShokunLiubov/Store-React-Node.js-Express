@@ -52,13 +52,13 @@ export const AppRoutes: Array<IRoutes> = [
 		path: 'login',
 		Component: Pages.Login,
 		Layout: Layouts.AuthLayout,
-		baseUrl: authUrl,
+		baseUrl: publicUrl + authUrl,
 	},
 	{
 		path: 'register',
 		Component: Pages.Register,
 		Layout: Layouts.AuthLayout,
-		baseUrl: authUrl,
+		baseUrl: publicUrl + authUrl,
 	},
 	{
 		path: '',

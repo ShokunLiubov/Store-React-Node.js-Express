@@ -13,7 +13,7 @@ class UserService {
     const candidate = await User.findOne({ username })
 
     if (candidate) {
-      throw AuthError.BadRequest("A user with the same name already exists")
+      throw AuthError.BadRequest("User with the same name already exists")
     }
 
     // Create user and tokens

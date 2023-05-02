@@ -1,36 +1,63 @@
 import { useFormik } from 'formik'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { compose } from 'redux'
+import { Preloader } from '../../components/common/Preloader'
 import { Input } from '../../components/ui/form/input/Input'
 import { login } from '../../redux/authReducer/authThunk'
 import { AppStateType } from '../../redux/redux-store'
+import { publicUrl } from '../../routes/layout/PublicLayout'
 import { IAuth } from '../../shared/interfaces/userInterface/auth.interface'
+import { IUserOptions } from '../../shared/interfaces/userInterface/user.interface'
 import './login.scss'
 
 interface LoginProps {
-	login: (values: IAuth) => void
+	login: (values: IAuth) => Promise<string | undefined>
+	user: IUserOptions
 }
 
-export const Login: React.FC<LoginProps> = ({ login }): JSX.Element => {
+export const Login: React.FC<LoginProps> = ({ login, user }): JSX.Element => {
 	const navigate = useNavigate()
-	const [isShownPassword, setIsShownPassword] = useState(false)
-	const formik = useFormik({
+	const [isLoading, setIsLoading] = useState<boolean>(true)
+	const [isShownPassword, setIsShownPassword] = useState<boolean>(false)
+	const [error, setError] = useState<string>('')
+
+	useEffect(() => {
+		if (user) {
+			setIsLoading(false)
+		}
+	}, [user])
+
+	const formik = useFormik<IAuth>({
 		initialValues: {
 			username: '',
 			password: '',
 		},
-		onSubmit: (values: IAuth) => {
-			login(values)
-			navigate('/make-up')
+		onSubmit: async (values: IAuth): Promise<void> => {
+			const message = await login(values)
+
+			if (!message) {
+				navigate(publicUrl)
+			} else {
+				setError(message)
+			}
 		},
 	})
+
+	if (isLoading) {
+		return <Preloader />
+	}
+
+	if (user?.roles?.[0]) {
+		navigate(publicUrl)
+	}
+
 	return (
 		<div className={'containerLogin'}>
 			<form className={'form'} onSubmit={formik.handleSubmit}>
 				<img src='./../../imageAuth/bcgAuth.png' />
-				<span>log in</span>
+				<span className='authTitle'>log in</span>
 				<div className='blockInput'>
 					<span className='material-symbols-outlined'>mail</span>
 					<Input
@@ -57,6 +84,8 @@ export const Login: React.FC<LoginProps> = ({ login }): JSX.Element => {
 						{isShownPassword ? 'visibility' : 'visibility_off'}
 					</span>
 				</div>
+
+				<div className='errorAuth'>{error}</div>
 
 				<button type='submit'>Get Started</button>
 			</form>

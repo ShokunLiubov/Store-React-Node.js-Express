@@ -5,7 +5,9 @@
   padding: 0px 20px;
   margin-bottom: 30px;
   position: relative;
-  
+  .error {
+    color: #b71c1c;
+  }
   h5 {
     font-weight: 500 !important;
     margin: 15px 0px 5px;

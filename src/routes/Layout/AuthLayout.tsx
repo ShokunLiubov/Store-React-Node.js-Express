@@ -1,8 +1,8 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { HeaderAuth } from '../../components/auth/headerAuth/HeaderAuth'
+import HeaderAuth from '../../components/auth/headerAuth/HeaderAuth'
 
-export const authUrl = '/auth/'
+export const authUrl = 'auth/'
 
 export const AuthLayout: React.FC = (): JSX.Element => {
 	return (
