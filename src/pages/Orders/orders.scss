@@ -26,11 +26,6 @@
   .selectedPageActive {
     color: #792c9b !important;
   }
-  .line {
-    width: 100%;
-    border-bottom: 1px solid #3e3e50;
-    margin: 20px 0px 15px;
-  }
 }
 
 .notFoundByFilters {
@@ -45,38 +40,6 @@
   }
 }
 
-.sort {
-  margin: 0px;
-  display: flex;
-  cursor: pointer;
-  span {
-
-    color: #bfbfc6;
-  }
-}
-
-.table {
-  width: 100%;
-  th {
-    width: 21.25%;
-    height: 50px;
-    font-weight: 600;
-    color: #bfbfc6;
-    text-align: left;
-  }
-  td {
-    font-weight: 300;
-    align-items: center;
-    text-align: left;
-    color: #bfbfc6;
-    border-top: 1px solid hsla(0, 0%, 100%, 0.1);
-    padding: 10px 10px;
-  }
-  hr {
-    width: 90vw;
-  }
-}
-
 .statusTh {
   width: 15%;
 }
@@ -88,16 +51,6 @@ body .status {
   padding: 6px 6px;
   font-size: 13px;
   position: relative;
-}
-
-table,
-th {
-  padding: 0px 10px 10px;
-  border-collapse: collapse;
-}
-
-td {
-  margin: 20px 0px;
 }
 
 .availabilityIs {

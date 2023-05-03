@@ -1,10 +1,11 @@
 import cn from 'classnames'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { compose } from 'redux'
 import FiltersOrders from '../../components/admin/filters/filtersOrders/FiltersOrders'
 import Paginator from '../../components/common/pagination/Pagination'
+import { TableComponent } from '../../components/common/table/Table'
 import {
 	getCityForOrders,
 	getOrders,
@@ -50,8 +51,6 @@ export const Orders: React.FC<IOrdersProps> = ({
 		getOrders(pageOrDefault, sortField, sortOrder, filters)
 	}, [location])
 
-	const [sort, setSort] = useState('1')
-
 	const onPageChange = async (page: number) => {
 		let url = await getOrders(page, sortField, sortOrder, filters)
 		navigate(
@@ -59,116 +58,71 @@ export const Orders: React.FC<IOrdersProps> = ({
 		)
 	}
 
-	const setSortCatalog = async (sortField: string, sortOrder: string) => {
-		if (sortOrder === '1') {
-			setSort('-1')
-		} else {
-			setSort('1')
-			sortOrder = '-1'
-		}
-
+	const setSort = async (sortField: string, sortOrder: string) => {
 		let url = await getOrders(1, sortField, sortOrder, filters)
 		navigate(
 			window.location.pathname + '?' + new URLSearchParams(url).toString(),
 		)
 	}
 
-	const sortOrderSpan = (
-		<span className='material-symbols-outlined'>
-			{sort === '1' ? 'expand_less' : 'expand_more'}
-		</span>
-	)
-
 	return (
 		<div className={cn('containerAdminDark')}>
 			<span className='title'>Orders</span>
 			<FiltersOrders />
-			<div className={'line'}></div>
 			<div>
 				{!ordersData.length ? (
 					<div className={'notFoundByFilters'}>
 						<span>Orders Not Found </span>
 					</div>
 				) : (
-					<table className={'table'}>
-						<thead>
-							<tr>
-								<th
-									scope='col'
-									onClick={(): void => {
-										setSortCatalog('createdAt', sort)
-									}}
-								>
-									<span className={'sort'}>
-										Data checkout
-										{sortOrderSpan}
-									</span>
-								</th>
-								<th
-									scope='col'
-									onClick={(): void => {
-										setSortCatalog('username', sort)
-									}}
-								>
-									<span className={'sort'}>
-										Client Name
-										{sortOrderSpan}
-									</span>
-								</th>
-								<th scope='col'>City</th>
-								<th
-									scope='col'
-									onClick={(): void => {
-										setSortCatalog('allPrice', sort)
-									}}
-								>
-									<span className={'sort'}>
-										Total Price
-										{sortOrderSpan}
-									</span>
-								</th>
-								<th scope='col' className={'statusTh'}>
-									Status Order
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							{ordersData.length > 0 &&
-								ordersData.map(
-									(order: IOrder): React.ReactNode => (
-										<tr key={order._id}>
-											<td>
-												{order.createdAt && order.createdAt.slice(0, -14)}
-												<br />
-												Time: {order.createdAt && order.createdAt.slice(11, -5)}
-											</td>
-											<td>{order.fullName}</td>
-											<td>
-												City: {order.address.city} <br />
-												Post Office: {order.address.postOffice}
-											</td>
-											<td>{order.allPrice}$</td>
-											<td>
-												<div
-													className={cn(
-														order.status === 'Availability is check'
-															? 'availabilityIs'
-															: '',
-														order.status === 'Awaiting shipment' ? 'await' : '',
-														order.status === 'Sent' ? 'sent' : '',
-														order.status === 'Refusal' ? 'refusal' : '',
-														order.status === 'Received' ? 'received' : '',
-														'status',
-													)}
-												>
-													{order.status}
-												</div>
-											</td>
-										</tr>
-									),
-								)}
-						</tbody>
-					</table>
+					<TableComponent
+						data={ordersData.map(
+							(order: IOrder): React.ReactNode => (
+								<tr key={order._id}>
+									<td>
+										{order.createdAt && order.createdAt.slice(0, -14)}
+										<br />
+										Time: {order.createdAt && order.createdAt.slice(11, -5)}
+									</td>
+									<td>{order.fullName}</td>
+									<td>
+										City: {order.address.city} <br />
+										Post Office: {order.address.postOffice}
+									</td>
+									<td>{order.allPrice}$</td>
+									<td>
+										<div
+											className={cn(
+												order.status === 'Availability is check'
+													? 'availabilityIs'
+													: '',
+												order.status === 'Awaiting shipment' ? 'await' : '',
+												order.status === 'Sent' ? 'sent' : '',
+												order.status === 'Refusal' ? 'refusal' : '',
+												order.status === 'Received' ? 'received' : '',
+												'status',
+											)}
+										>
+											{order.status}
+										</div>
+									</td>
+								</tr>
+							),
+						)}
+						headers={[
+							{ label: 'Data checkout', field: 'createdAt', order: true },
+							{ label: 'Client Name', field: 'fullName', order: true },
+							{ label: 'City', field: 'allPrice', order: false },
+							{ label: 'Total Price', field: 'allPrice', order: true },
+							{
+								label: 'Status Order',
+								field: 'userInfo.address.city',
+								order: false,
+							},
+						]}
+						onSort={setSort}
+						classTable={'darkTable'}
+					/>
 				)}
 				<Paginator
 					currentPage={page}
