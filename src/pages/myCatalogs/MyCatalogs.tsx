@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import {
 	NavLink,
@@ -10,6 +10,7 @@ import {
 import { compose } from 'redux'
 import FiltersMyCatalog from '../../components/admin/filters/filtersMyCatalog/FiltersMyCatalog'
 import Paginator from '../../components/common/pagination/Pagination'
+import { TableComponent } from '../../components/common/table/Table'
 import {
 	deleteProduct,
 	editProduct,
@@ -58,8 +59,6 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 		getProducts(pageOrDefault, sortField, sortOrder, filters)
 	}, [location])
 
-	const [sort, setSort] = useState<string>('1')
-
 	const onPageChange = async (page: number): Promise<void> => {
 		let url = await getProducts(page, sortField, sortOrder, filters)
 		navigate(
@@ -67,124 +66,103 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 		)
 	}
 
-	const setSortCatalog = async (
+	const setSort = async (
 		sortField: string,
 		sortOrder: string,
 	): Promise<void> => {
-		if (sortOrder === '1') {
-			setSort('-1')
-		} else {
-			setSort('1')
-			sortOrder = '-1'
-		}
-
 		let url = await getProducts(1, sortField, sortOrder, filters)
 		navigate(
 			window.location.pathname + '?' + new URLSearchParams(url).toString(),
 		)
 	}
 
-	const sortOrderSpan = (
-		<span className='material-symbols-outlined'>
-			{sort === '1' ? 'expand_less' : 'expand_more'}
-		</span>
-	)
-
 	return (
 		<div className={cn('containerAdminWhite', styles.catalogs)}>
 			<span className={'titleAdminPage'}>My Catalog</span>
 			<FiltersMyCatalog />
-			<div className={styles.line}></div>
 
 			{!productsData.length ? (
 				<div className={styles.notFound}>
 					<span>Products Not Found </span>
 				</div>
 			) : (
-				<table className={styles.catalogTable}>
-					<thead>
-						<tr>
-							<th>Image</th>
-							<th
-								onClick={() => setSortCatalog('title', sort)}
-								className={cn(styles.sort)}
-							>
-								Title
-								{sortOrderSpan}
-							</th>
-							<th className={styles.thSmall}>Category</th>
-							<th
-								onClick={() => setSortCatalog('count', sort)}
-								className={cn(styles.sort, styles.thSmall)}
-							>
-								Count
-								{sortOrderSpan}
-							</th>
-							<th
-								className={cn(styles.thSmall, styles.sort)}
-								onClick={() => setSortCatalog('price', sort)}
-							>
-								Price
-								{sortOrderSpan}
-							</th>
-							<th className={styles.thSmall}>Edit</th>
-							<th className={styles.thSmall}>Delete</th>
-						</tr>
-					</thead>
-					<tbody>
-						{productsData.length > 0 &&
-							productsData.map(
-								(product: IProduct): React.ReactNode => (
-									<tr key={product._id} className={styles.cardProduct}>
-										<td>
-											<img
-												src={
-													product.image
-														? product.image
-														: './../../image_product/112cd464-94fd-4fbe-9200-5e7e83fe4c69_640x490_fit.jpeg'
-												}
-											/>
-										</td>
-										<td>
-											<div className={styles.titleProduct}>
-												<span>{product.title}</span>
-											</div>
-										</td>
-										<td>
-											<div className={styles.titleCategory}>
-												<span>{product.category.name}</span>
-											</div>
-										</td>
-										<td className={cn('numberDark')}>{product.count}</td>
-										<td className={cn('numberDark')}>{product.price}$</td>
-										<td>
-											<NavLink
-												to={adminUrl + 'edit-product'}
-												className={cn(
-													'material-symbols-outlined',
-													styles.editIcon,
-												)}
-												onClick={(): void => editProduct(product._id)}
-											>
-												edit_square
-											</NavLink>
-										</td>
-										<td>
-											<span
-												className={cn(
-													'material-symbols-outlined',
-													styles.deleteIcon,
-												)}
-												onClick={(): void => deleteProduct(product._id)}
-											>
-												delete
-											</span>
-										</td>
-									</tr>
-								),
-							)}
-					</tbody>
-				</table>
+				<TableComponent
+					data={productsData.map(
+						(product: IProduct): React.ReactNode => (
+							<tr key={product._id} className={'cardProduct'}>
+								<td>
+									<img
+										src={
+											product.image
+												? product.image
+												: './../../image_product/112cd464-94fd-4fbe-9200-5e7e83fe4c69_640x490_fit.jpeg'
+										}
+									/>
+								</td>
+								<td>
+									<div className={'titleProduct'}>
+										<span>{product.title}</span>
+									</div>
+								</td>
+								<td>
+									<div className={'titleCategory'}>
+										<span>{product.category.name}</span>
+									</div>
+								</td>
+								<td className={cn('numberDark')}>{product.count}</td>
+								<td className={cn('numberDark')}>{product.price}$</td>
+								<td>
+									<NavLink
+										to={adminUrl + 'edit-product'}
+										className={cn('material-symbols-outlined', 'editIcon')}
+										onClick={(): void => editProduct(product._id)}
+									>
+										edit_square
+									</NavLink>
+								</td>
+								<td>
+									<span
+										className={cn('material-symbols-outlined', 'deleteIcon')}
+										onClick={(): void => deleteProduct(product._id)}
+									>
+										delete
+									</span>
+								</td>
+							</tr>
+						),
+					)}
+					headers={[
+						{ label: 'Image', field: 'username', order: false },
+						{ label: 'Title', field: 'title', order: true },
+						{
+							label: 'Category',
+							field: 'userInfo.phone',
+							order: false,
+							classTh: 'thSmall',
+						},
+						{
+							label: 'Count',
+							field: 'count',
+							order: true,
+							classTh: 'thSmall',
+						},
+						{
+							label: 'Price',
+							field: 'price',
+							order: true,
+							classTh: 'thSmall',
+						},
+						{ label: 'Edit', field: 'edit', order: false, classTh: 'thSmall' },
+						{
+							label: 'Delete',
+							field: 'delete',
+							order: false,
+							classTh: 'thSmall',
+						},
+					]}
+					onSort={setSort}
+					classTable={'whiteTable'}
+				/>
 			)}
 			<Paginator
 				currentPage={page}

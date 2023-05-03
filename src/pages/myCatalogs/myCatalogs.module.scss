@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   width: 85.5vw;
- 
 }
 
 .notFound {
@@ -22,108 +21,7 @@
   margin: 22px 0px 10px;
 }
 
-.sort {
-  cursor: pointer;
-  position: relative;
-  span {
-    position: absolute;
-    top: 14px
-  }
-}
-
-.cardProduct {
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  width: 100%;
-  padding: 15px;
-  margin-bottom: 30px;
-  img {
-    padding: 20px;
-    width: 100%;
-    height: 140px;
-    object-fit: contain;
-  }
-  a {
-    cursor: pointer;
-    text-decoration: none;
-  }
-
-  .titleProduct,
-  .titleCategory {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-
-  .titleCategory {
-    text-transform: uppercase;
-  }
-
-  span {
-    width: 60%;
-    font-weight: 400;
-  }
-}
-
 .catalogs {
   display: flex;
   flex-wrap: wrap;
-}
-
-.catalogTable {
-  padding: 30px;
-  border-radius: 6px;
-  width: 100%;
-  height: 100%;
-  width: 100%;
-}
-
-table {
-  width: 100%;
-  th {
-    width: 20%;
-    height: 50px;
-    font-weight: 600;
-    text-align: center;
-    span {
-      margin-left: 10px;
-    }
-  }
-  td {
-    font-weight: 300;
-    align-items: center;
-    text-align: center;
-    padding: 10px 10px;
-    border-top: 1px solid hsla(3, 0%, 33%, 0.1);
-  }
-  hr {
-    width: 90vw;
-  }
-}
-
-table,
-th {
-  padding: 10px 10px 10px;
-  border-collapse: collapse;
-}
-
-body .thSmall {
-  width: 12%;
-}
-
-.editIcon {
-  font-weight: 300;
-}
-
-.deleteIcon {
-  cursor: pointer;
-  color: #2480f7;
-  font-weight: 300;
-}
-
-.text {
-  color: #000;
 }

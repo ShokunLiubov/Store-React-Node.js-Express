@@ -1,0 +1,145 @@
+.table {
+    width: 100%;
+    height: 100%;
+    .sortTable {
+        cursor: pointer;
+        position: relative;
+        span {
+          position: absolute;
+          top: 13px;
+          margin-left: 10px;
+        }
+    }
+    
+    th {
+        width: 20% !important;
+        height: 50px;
+        font-weight: 600;
+        text-align: left;
+        vertical-align: middle;
+        padding: 0px 10px 10px;
+        border-collapse: collapse;
+      }
+
+    td {
+        font-weight: 300;
+        align-items: center;
+        text-align: left;
+        padding: 10px 10px;
+    }
+
+    hr {
+        width: 90vw;
+    }
+}
+
+.darkTable {
+    border-top: 1px solid hsla(0, 0%, 100%, 0.1);
+    .sortTable {
+        span {
+          color: #fff;
+        }
+    }
+
+    td {
+        font-weight: 300;
+        align-items: center;
+        text-align: left;
+        color: #bfbfc6;
+        border-top: 1px solid hsla(0, 0%, 100%, 0.1);
+        padding: 10px 10px;
+    }
+
+}
+
+.whiteTable {
+    border-top: 1px solid hsla(3, 0%, 33%, 0.1) ;
+    .titleProduct,
+    .titleCategory {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .sortTable {
+        span {
+          color: #333;
+        }
+    }
+
+    .cardProduct {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 30px;
+        img {
+          padding: 20px;
+          width: 100%;
+          height: 140px;
+          object-fit: contain;
+        }
+        a {
+          cursor: pointer;
+          text-decoration: none;
+        }
+      
+        .titleCategory {
+          text-transform: uppercase;
+        }
+      
+        span {
+          width: 60%;
+          font-weight: 400;
+        }
+      }
+      
+      .catalogs {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      
+      .catalogTable {
+        padding: 30px;
+        border-radius: 6px;
+        width: 100%;
+        height: 100%;
+    }
+    th {
+      width: 20% !important;
+      text-align: center !important;
+      color: #333 !important;
+      span {
+        margin-left: 10px;
+      }
+    }
+    td {
+      font-weight: 300;
+      align-items: center !important;
+      text-align: center !important;
+      border-top: 1px solid hsla(3, 0%, 33%, 0.1) !important;
+    }
+
+    .editIcon {
+        font-weight: 300;
+    }
+
+    .numberDark {
+        color: #333;
+    }
+
+    .deleteIcon {
+        cursor: pointer;
+        color: #2480f7;
+        font-weight: 300;
+    }
+
+}
+
+body .thSmall {
+    width: 12% !important;
+}
+
