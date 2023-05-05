@@ -34,10 +34,6 @@ const HeaderAuth: React.FC<IHeaderAuthProps> = ({ user }): JSX.Element => {
 		return <Preloader />
 	}
 
-	// if (user?.roles?.[0]) {
-	// 	navigate(publicUrl)
-	// }
-
 	return (
 		<div className={styles.menuAuth}>
 			<span className={styles.title}>
@@ -46,7 +42,7 @@ const HeaderAuth: React.FC<IHeaderAuthProps> = ({ user }): JSX.Element => {
 					'Register Page'}
 			</span>
 			<nav>
-				<NavLink to='/make-up' className={cn(styles.backShop)}>
+				<NavLink to={publicUrl} className={cn(styles.backShop)}>
 					<span className={cn('material-symbols-outlined', styles.icon)}>
 						arrow_back_ios
 					</span>

@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { compose } from 'redux'
+import { Preloader } from '../../components/common/Preloader'
 import { MenuStore } from '../../components/store/menuStore/MenuStore'
 import { useBasketModal } from '../../context/basketModalContext'
 import { getUserInfo } from '../../redux/authReducer/authThunk'
@@ -24,11 +25,28 @@ export const ProductPage: React.FC<IProductPageProps> = ({
 	getUserInfo,
 	product,
 }): JSX.Element => {
+	const navigate = useNavigate()
 	const basket = useBasketModal()
 	const { id } = useParams()
+	const [isLoading, setIsLoading] = useState<boolean>(true)
+
 	useEffect(() => {
 		id && getProductsOnPage(id)
+
+		setTimeout(() => {
+			if (id) {
+				setIsLoading(false)
+			}
+		}, 50)
 	}, [])
+
+	if (isLoading) {
+		return <Preloader />
+	}
+
+	if (!isLoading && !product._id) {
+		return <Navigate to='/not-found' replace />
+	}
 
 	return (
 		<>
