@@ -40,7 +40,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 	}
 
 	if (user?.roles?.[0]?.value !== 'ADMIN') {
-		return <Navigate to='make-up' />
+		return <Navigate to='not-found' />
 	}
 
 	return (
