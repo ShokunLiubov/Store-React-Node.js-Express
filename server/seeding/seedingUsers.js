@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker'
 import bcrypt from "bcryptjs"
-import Role from '../models/Role'
-import User from '../models/User'
-import UserInfo from '../models/UserInfo'
+import Role from '../models/Role.model'
+import User from '../models/User.model'
+import UserInfo from '../models/UserInfo.model'
 
 class seedingUsers {
 

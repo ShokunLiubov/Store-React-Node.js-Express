@@ -1,5 +1,5 @@
 import fs from 'fs'
-import Products from "../models/Products"
+import Products from "../models/Products.model"
 
 class productService {
 

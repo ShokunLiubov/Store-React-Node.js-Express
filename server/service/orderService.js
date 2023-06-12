@@ -1,6 +1,6 @@
-import Order from "../models/Order"
-import Products from "../models/Products"
-import User from "../models/User"
+import Order from "../models/Order.model"
+import Products from "../models/Products.model"
+import User from "../models/User.model"
 
 class orderService {
 
@@ -17,7 +17,6 @@ class orderService {
       },
       allPrice,
       products,
-      status: "Availability is check",
     })
 
     products.map(async (product) => {

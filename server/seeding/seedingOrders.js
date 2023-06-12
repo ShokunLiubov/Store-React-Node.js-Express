@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker'
 import { ORDER_STATUS } from '../enums/orderStatus'
-import Order from '../models/Order'
-import Products from '../models/Products'
-import User from '../models/User'
+import Order from '../models/Order.model'
+import Products from '../models/Products.model'
+import User from '../models/User.model'
 
 class seedingOrders {
 

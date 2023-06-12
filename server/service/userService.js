@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs"
-import UserDto from "../dto/userDto"
+import UserDto from "../dto/user.dto"
 import AuthError from "../exception/authError"
-import Role from "../models/Role"
-import User from "../models/User"
-import UserInfo from "../models/UserInfo"
+import Role from "../models/Role.model"
+import User from "../models/User.model"
+import UserInfo from "../models/UserInfo.model"
 import tokenService from "./tokenService"
 
 class UserService {
