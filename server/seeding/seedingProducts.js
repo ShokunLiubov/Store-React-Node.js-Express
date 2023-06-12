@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker'
 import { GENDER } from '../enums/gender'
-import Category from '../models/Category'
-import Classification from '../models/Classification'
-import Products from '../models/Products'
+import Category from '../models/Category.model'
+import Classification from '../models/Classification.model'
+import Products from '../models/Products.model'
 
 class seedingProducts {
 

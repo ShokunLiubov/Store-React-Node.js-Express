@@ -1,24 +1,24 @@
-import multer from "multer";
-import path from "path";
-import { fileURLToPath } from "url";
+import multer from "multer"
+import path from "path"
+import { fileURLToPath } from "url"
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const dirPath = path.join(__dirname, "../../public/image_product");
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+const dirPath = path.join(__dirname, "../../public/image_product")
 
 const storage = multer.diskStorage({
 
     destination: (req, file, cb) => {
-        cb(null, dirPath);
+        cb(null, dirPath)
     },
 
     filename: (req, file, cb) => {
         cb(
             null,
             new Date().toISOString().replace(/:/g, "-") + "-" + file.originalname,
-        );
+        )
     },
-});
+})
 
 const filefilter = (req, file, cb) => {
 
@@ -27,18 +27,10 @@ const filefilter = (req, file, cb) => {
         file.mimetype === "image/jpg" ||
         file.mimetype === "image/jpeg"
     ) {
-        cb(null, true);
+        cb(null, true)
     } else {
-        cb(null, false);
+        cb(null, false)
     }
-};
-export default multer({ storage: storage, filefilter: filefilter });
-
-
-
-
-
-
-
-
+}
+export default multer({ storage: storage, fileFilter: filefilter });
 
