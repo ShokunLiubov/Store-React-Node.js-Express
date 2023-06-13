@@ -1,6 +1,6 @@
 import Router from "express"
 import controller from "../controllers/product.controller"
-import upload from "../middleware/multerImageMiddleware"
+import upload from "../middleware/multerImage.middleware"
 
 const router = Router()
 

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
-import orderFilters from '../filters/orderFilters'
+import orderFilters from '../filters/order.filters'
 import Order from '../models/Order.model'
-import orderService from "../service/orderService"
+import orderService from "../service/order.service"
 import { IReqIsAuth } from '../types/auth.interface'
 
 class orderController {

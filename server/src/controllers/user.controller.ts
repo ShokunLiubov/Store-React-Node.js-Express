@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import User from "../models/User.model"
 import UserInfo from '../models/UserInfo.model'
-import userService from "../service/userService"
+import userService from "../service/user.service"
 import { IReqIsAuth } from '../types/auth.interface'
 import aggregatePaginate from '../utils/aggregatePaginate/aggregatePaginate'
 
@@ -26,15 +26,16 @@ class userController {
 
     try {
       let { page = 1, limit = 10, sortField, sortOrder, search, city } = req.query
-
+      console.log();
+      
       const filters = {}
 
-      const regex = new RegExp(search, 'i')
+      // const regex = new RegExp(search, 'i')
       
-      if (city && city.trim()) {
-        const citySelect = city.split(',')
-        filters["userInfo.address.city"] = { $in: citySelect }
-      }
+      // if (city && city.trim()) {
+      //   const citySelect = city.split(',')
+      //   filters["userInfo.address.city"] = { $in: citySelect }
+      // }
 
       const aggregateBody = [{
         $lookup: {
@@ -49,18 +50,20 @@ class userController {
       },
       {
         $match: {
-          $or: [
-            { "userInfo.email": regex },
-            { "userInfo.phone": regex },
-            { "username": regex }
-          ],
+          // $or: [
+          //   { "userInfo.email": regex },
+          //   { "userInfo.phone": regex },
+          //   { "username": regex }
+          // ],
           ...filters
         }
       }]
 
-      const sort = { [sortField]: sortOrder }
+      // const sort = { [sortField]: sortOrder }
 
-      const { docs, totalPages } = await aggregatePaginate.aggregatePaginate(page, limit, User, aggregateBody, sort)
+      const { docs, totalPages }: any = await aggregatePaginate.aggregatePaginate(page, limit, User, aggregateBody, 
+        // sort
+        )
 
       return res.json({
         docs,

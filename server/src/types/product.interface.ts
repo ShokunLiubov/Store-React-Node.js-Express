@@ -1,9 +1,9 @@
 import { Request } from 'express'
-import { Express } from 'multer'
 
 import { Document, PaginateModel, Schema } from 'mongoose'
 
 export interface IProductsDocument extends Document {
+    id: string
     image: string;
     title: string;
     category:  Schema.Types.ObjectId;
@@ -29,5 +29,5 @@ export interface IAuth {
 
 
 export interface IReqWithImg extends Request {
-    file: Express.Multer.File;
+    file?: any;
 }
