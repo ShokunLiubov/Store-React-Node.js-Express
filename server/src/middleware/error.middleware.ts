@@ -1,6 +1,7 @@
-import AuthError from "../exception/authError";
+import { ErrorRequestHandler, NextFunction, Request, Response } from 'express'
+import AuthError from "../exception/authError"
 
-export default function (err, req, res, next) {
+export default function (err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) {
   console.log(err);
 
   if (err instanceof AuthError) {

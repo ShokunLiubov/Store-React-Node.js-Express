@@ -2,7 +2,8 @@ import { NextFunction, Request, Response } from 'express'
 import { validationResult } from "express-validator"
 import { EnumTokens } from '../enums/tokens.enum'
 import AuthError from "../exception/authError"
-import userService from "../service/userService"
+import userService from "../service/user.service"
+import { IAuth } from '../types/product.interface'
 
 class authController {
 

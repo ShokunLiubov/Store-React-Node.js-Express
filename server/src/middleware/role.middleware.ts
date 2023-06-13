@@ -1,10 +1,12 @@
+import { NextFunction, Response } from 'express'
 import jwt from "jsonwebtoken"
 import AuthError from "../exception/authError"
-import tokenService from "../service/tokenService"
+import tokenService from "../service/token.service"
+import { IReqAuthMiddleware } from '../types/auth.interface'
 
-export default function (roles) {
+export default function (roles: any) {
 
-  return function (req, res, next) {
+  return function (req: IReqAuthMiddleware, res: Response, next: NextFunction) {
 
     if (req.method === "OPTIONS") {
       next()
@@ -24,14 +26,14 @@ export default function (roles) {
       }
       req.user = userData
 
-      const { roles: userRoles } = jwt.verify(
+      const { roles: userRoles }: any = jwt.verify(
         token,
-        process.env.JWT_ACCESS_SECRET,
+        process.env.JWT_ACCESS_SECRET || '',
       )
 
       let hasRole = false
 
-      userRoles.forEach((role) => {
+      userRoles.forEach((role: any) => {
         if (roles.includes(role.value)) {
           hasRole = true
 

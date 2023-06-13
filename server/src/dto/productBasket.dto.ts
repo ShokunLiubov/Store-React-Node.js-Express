@@ -10,7 +10,7 @@ export default class ProductBasketDto {
   available;
   count = 1;
   constructor(model: IProductsDocument) {
-    this.id = model._id;
+    this.id = model.id;
     this.image = model.image;
     this.title = model.title;
     this.category = model.category;

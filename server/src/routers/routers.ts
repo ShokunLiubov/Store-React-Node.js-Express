@@ -1,5 +1,5 @@
 import express from "express"
-import errorMiddleware from "../middleware/errorMiddleware"
+import errorMiddleware from "../middleware/error.middleware"
 import { authRouter } from "./auth.router"
 import { categoryRouter } from './category.router'
 import { classificationRouter } from './classification.router'

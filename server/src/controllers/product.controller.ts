@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
 import ProductBasketDto from "../dto/productBasket.dto"
-import productFilters from '../filters/productFilters'
+import productFilters from '../filters/product.filters'
 import Products from "../models/Products.model"
-import productService from "../service/productService"
+import productService from "../service/product.service"
 import { IReqWithImg } from '../types/product.interface'
 
 
@@ -112,6 +112,9 @@ class productsController {
   async createProduct(req: IReqWithImg, res: Response, next: NextFunction) {
 
     try {
+      if(!req.file.filename) {
+        return res.status(400).json({ message: "Image is not found" })
+      }
 
       const product = await productService.createProduct(req.body, req.file.filename)
 

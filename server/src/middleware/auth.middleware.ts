@@ -1,7 +1,9 @@
+import { NextFunction } from 'express'
 import jwt from "jsonwebtoken"
 import AuthError from "../exception/authError"
+import { IReqAuthMiddleware, IResIsAuth } from '../types/auth.interface'
 
-export default function (req, res, next) {
+export default function (req: IReqAuthMiddleware, res: IResIsAuth, next: NextFunction) {
   if (req.method === "OPTIONS") {
     next()
   }
@@ -12,8 +14,8 @@ export default function (req, res, next) {
     if (!token) {
       return AuthError.UnauthorizedError()
     }
-    const decodedData = jwt.verify(token, process.env.JWT_ACCESS_SECRET)
-    const { id } = jwt.verify(token, process.env.JWT_ACCESS_SECRET)
+    const decodedData = jwt.verify(token, process.env.JWT_ACCESS_SECRET || '')
+    const { id }: any = jwt.verify(token, process.env.JWT_ACCESS_SECRET || '')
 
     req.user = decodedData
     req.id = id

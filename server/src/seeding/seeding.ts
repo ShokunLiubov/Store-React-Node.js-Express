@@ -5,11 +5,11 @@ import Products from '../models/Products.model'
 import Token from '../models/Token.model'
 import User from '../models/User.model'
 import UserInfo from '../models/UserInfo.model'
-import seedingCategory from './seedingCategory'
-import seedingClassification from './seedingClassification'
-import seedingOrders from './seedingOrders'
-import seedingProducts from './seedingProducts'
-import seedingUsers from './seedingUsers'
+import seedingCategory from './category.seeding'
+import seedingClassification from './classification.seeding'
+import seedingOrders from './orders.seeding'
+import seedingProducts from './products.seeding'
+import seedingUsers from './users.seeding'
 
 class seeding {
 
