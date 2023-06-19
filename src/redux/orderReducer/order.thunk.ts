@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { orderService } from '../../api/services/orderService'
+import { orderService } from '../../api/services/order.service'
 import { IFiltersOrders } from '../../shared/filters/filtersOrders.interface'
 import { IProductBasket } from '../../shared/interfaces/productInterface/productBasket.interface'
 import { setEmptyBasket } from '../basketReducer/basket.action-creator'

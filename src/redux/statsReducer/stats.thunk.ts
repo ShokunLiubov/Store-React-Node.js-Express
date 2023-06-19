@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { statsService } from '../../api/services/statsService'
+import { statsService } from '../../api/services/stats.service'
 import { ICalendarRange } from '../../shared/interfaces/common/calendarRange.interface'
 import * as AC from './stats.action-creator'
 

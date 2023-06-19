@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
-import { deliveryService } from '../../api/services/deliveryService'
+import { deliveryService } from '../../api/services/delivery.service'
 import { IDeliveryPrice } from '../../shared/interfaces/deliveryInterface/deliveryPrice.interface'
-import * as AC from './deliveryActionCreator'
+import * as AC from './delivery.action-creator'
 
 export const getDeliveryOptions = () => {
 	return async (dispatch: Dispatch): Promise<void> => {
