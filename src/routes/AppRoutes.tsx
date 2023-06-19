@@ -50,13 +50,13 @@ export const AppRoutes: Array<IRoutes> = [
 	},
 	{
 		path: 'login',
-		Component: Pages.Login,
+		Component: Pages.Auth,
 		Layout: Layouts.AuthLayout,
 		baseUrl: publicUrl + authUrl,
 	},
 	{
 		path: 'register',
-		Component: Pages.Register,
+		Component: Pages.Auth,
 		Layout: Layouts.AuthLayout,
 		baseUrl: publicUrl + authUrl,
 	},

@@ -96,7 +96,7 @@ export const CategoryPage: React.FC<ICategoryPage> = ({
 				<span>{classificationPage ? category + ' perfumery' : ''}</span>
 				<span>{!classificationPage && !pageGender ? category : ''}</span>
 			</div>
-			<div className='containerCategoryPage'>
+			<main className='containerCategoryPage'>
 				<div className='filtersProducts'>
 					<FiltersCategoryPage />
 				</div>
@@ -143,7 +143,7 @@ export const CategoryPage: React.FC<ICategoryPage> = ({
 						onPageChange={onPageChange}
 					/>
 				</div>
-			</div>
+			</main>
 		</>
 	)
 }

@@ -77,7 +77,7 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 	}
 
 	return (
-		<div className={cn('containerAdminWhite', styles.catalogs)}>
+		<main className={cn('containerAdminWhite', styles.catalogs)}>
 			<span className={'titleAdminPage'}>My Catalog</span>
 			<FiltersMyCatalog />
 
@@ -169,7 +169,7 @@ export const MyCatalogs: React.FC<IMyCatalogsProps> = ({
 				totalPages={totalPages}
 				onPageChange={onPageChange}
 			/>
-		</div>
+		</main>
 	)
 }
 

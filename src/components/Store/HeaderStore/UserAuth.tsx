@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
+import { TypeAuth, useAuthType } from '../../../context/typeAuth.context'
 import { logout } from '../../../redux/authReducer/auth.thunk'
 import { AppStateType } from '../../../redux/redux-store'
 import { authUrl } from '../../../routes/layout/AuthLayout'
@@ -20,10 +21,15 @@ export const UserAuth: React.FC<IUserAuth> = ({
 	isAuth,
 	logout,
 }): JSX.Element => {
+	const type = useAuthType()
+
 	return (
 		<div className='userAuth'>
 			{!isAuth && (
-				<NavLink to={publicUrl + authUrl + 'login'}>
+				<NavLink
+					to={publicUrl + authUrl + TypeAuth.LOGIN}
+					onClick={() => type.setAuthType(TypeAuth.LOGIN)}
+				>
 					<span className='material-symbols-outlined'>person</span>
 				</NavLink>
 			)}

@@ -72,7 +72,7 @@ const Delivery: React.FC<IDeliveryProps> = ({
 		},
 	})
 	return (
-		<div className={cn('containerAdminWhite')}>
+		<main className={cn('containerAdminWhite')}>
 			<span className={'titleAdminPage'}>Delivery</span>
 			<div className='deliveryContainer'>
 				<div className='deliveryBlock'>
@@ -146,7 +146,7 @@ const Delivery: React.FC<IDeliveryProps> = ({
 					)}
 				</div>
 			</div>
-		</div>
+		</main>
 	)
 }
 

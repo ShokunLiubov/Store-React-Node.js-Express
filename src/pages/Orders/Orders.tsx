@@ -67,7 +67,7 @@ export const Orders: React.FC<IOrdersProps> = ({
 	}
 
 	return (
-		<div className={cn('containerAdminDark')}>
+		<main className={cn('containerAdminDark')}>
 			<span className='title'>Orders</span>
 			<FiltersOrders />
 			<div>
@@ -115,7 +115,7 @@ export const Orders: React.FC<IOrdersProps> = ({
 						headers={[
 							{ label: 'Data checkout', field: 'createdAt', order: true },
 							{ label: 'Client Name', field: 'fullName', order: true },
-							{ label: 'City', field: 'allPrice', order: false },
+							{ label: 'City', field: 'city', order: false },
 							{ label: 'Total Price', field: 'allPrice', order: true },
 							{
 								label: 'Status Order',
@@ -133,7 +133,7 @@ export const Orders: React.FC<IOrdersProps> = ({
 					onPageChange={onPageChange}
 				/>
 			</div>
-		</div>
+		</main>
 	)
 }
 

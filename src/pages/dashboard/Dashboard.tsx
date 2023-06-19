@@ -86,7 +86,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({
 	})
 
 	return (
-		<div className={cn('containerAdminDark', 'dashboard')}>
+		<main className={cn('containerAdminDark', 'dashboard')}>
 			<div className='dashboardSelects'>
 				<div className={'select'}>
 					<Select
@@ -112,7 +112,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({
 				</div>
 			</div>
 			<OrdersByMonthChart ordersByMonth={ordersByMonth} />
-		</div>
+		</main>
 	)
 }
 
