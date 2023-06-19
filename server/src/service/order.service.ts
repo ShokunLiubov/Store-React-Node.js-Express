@@ -1,40 +1,41 @@
+import { ObjectId } from 'mongoose'
 import Order from "../models/Order.model"
 import Products from "../models/Products.model"
 import User from "../models/User.model"
+import { IOrderDocument } from '../types/order.interface'
 
 class orderService {
 
-  async createOrder(payload, userId) {
+  async createOrder(payload: IOrderDocument, userId: string) {
 
     const { fullName, address, allPrice, products } = payload
 
     const order = await Order.create({
       fullName,
       address: {
-        city: address.city,
-        street: address.street,
-        postOffice: address.postOffice,
+        city: address?.city,
+        street: address?.street,
+        postOffice: address?.postOffice,
       },
       allPrice,
       products,
     })
 
-    products.map(async (product) => {
+    products.map(async (product: { count?: number, productId?: ObjectId }) => {
+      const count = product.count ?? 1;
 
       return await Products.findByIdAndUpdate(
         { _id: product.productId },
         {
           $inc: {
-            count: -product.count
+            count: -count
           }
         }
       )
     })
 
-
-
     const userUpdate = await User.findByIdAndUpdate(
-      userId,
+      { id:  userId},
       {
         $addToSet: { orders: order._id },
       },

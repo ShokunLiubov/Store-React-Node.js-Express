@@ -34,3 +34,4 @@ app.use(errorMiddleware)
 
 
 export { app as appRouters }
+// module.exports = { appConfig: app };

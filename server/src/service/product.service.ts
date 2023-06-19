@@ -1,9 +1,11 @@
+import { Response } from 'express'
 import fs from 'fs'
 import Products from "../models/Products.model"
+import { IProductsDocument } from '../types/product.interface'
 
 class productService {
 
-    async createProduct(payload, filename) {
+    async createProduct(payload: IProductsDocument, filename: string) {
 
         const { title, category, classification, price, count, gender, volume, type_of_aroma, country_of_TM, made_in, description } = payload
         await Products.createIndexes()
@@ -25,7 +27,7 @@ class productService {
         return { product }
     }
 
-    async updateProduct(payload, id, filename) {
+    async updateProduct(payload: IProductsDocument, id: string, filename: string) {
 
         const { title, category, classification, price, count, gender, volume, type_of_aroma, country_of_TM, made_in, description, image } = payload
 
@@ -48,9 +50,9 @@ class productService {
         return { product }
     }
 
-    async deleteProduct(id) {
+    async deleteProduct(id: string, res: Response) {
         const productImg = await Products.findById(id)
-        const img = productImg.image.slice(7)
+        const img = productImg?.image.slice(7)
 
         fs.unlink('./public' + img, err => {
             if (err) throw err

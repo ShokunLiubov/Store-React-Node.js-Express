@@ -1,21 +1,22 @@
 import { faker } from '@faker-js/faker'
 import bcrypt from "bcryptjs"
+import { EnumRoles } from '../enums/roles.enum'
 import Role from '../models/Role.model'
 import User from '../models/User.model'
 import UserInfo from '../models/UserInfo.model'
 
 class seedingUsers {
 
-    async createUserWithUserInfo(countUsers) {
+    async createUserWithUserInfo(countUsers: any) {
         try {
             const hashPassword = bcrypt.hashSync(faker.internet.password(20), 7)
-            const userRole = await Role.findOne({ value: "USER" })
+            const userRole = await Role.findOne({ value: EnumRoles.USER })
             for (let i = 1; i <= countUsers; i++) {
 
                 const user = await User.create({
                     username: faker.internet.userName(),
                     password: hashPassword,
-                    roles: [userRole._id],
+                    roles: [userRole?._id],
                 })
                 const userInfo = await UserInfo.create({
                     fullName: faker.name.fullName(),

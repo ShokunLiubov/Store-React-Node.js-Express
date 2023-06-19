@@ -62,6 +62,8 @@ export const Customers: React.FC<ICustomersProps> = ({
 		)
 	}
 
+	console.log(usersData)
+
 	return (
 		<div className={cn('containerAdminDark')}>
 			<span className='title'>Customers</span>
@@ -89,7 +91,7 @@ export const Customers: React.FC<ICustomersProps> = ({
 							<td>
 								{customer.userInfo === undefined
 									? 'unknown'
-									: customer.userInfo.address.city}
+									: customer.userInfo?.address?.city}
 							</td>
 						</tr>
 					))}

@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from 'express'
 import orderFilters from '../filters/order.filters'
 import Order from '../models/Order.model'
 import orderService from "../service/order.service"
-import { IReqIsAuth } from '../types/auth.interface'
 
 class orderController {
 
@@ -22,11 +21,10 @@ class orderController {
     }
   }
 
-  async createOrders(req: IReqIsAuth, res: Response, next: NextFunction) {
+  async createOrders(req: any, res: Response, next: NextFunction) {
 
     try {
-      const userId = { id: req.id }
-      const order = await orderService.createOrder(req.body, userId)
+      const order = await orderService.createOrder(req.body, req.id)
 
       return res.status(201).json(order)
     } catch (e) {

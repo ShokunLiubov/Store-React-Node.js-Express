@@ -3,7 +3,7 @@ import ProductBasketDto from "../dto/productBasket.dto"
 import productFilters from '../filters/product.filters'
 import Products from "../models/Products.model"
 import productService from "../service/product.service"
-import { IReqWithImg } from '../types/product.interface'
+import { IProductQueryFilters, IReqWithImg } from '../types/product.interface'
 
 
 class productsController {
@@ -11,7 +11,7 @@ class productsController {
   async getProducts(req: Request, res: Response, next: NextFunction) {
 
     try {
-      const { page = 1, limit = 10, sortField, sortOrder } = req.query
+      const { page = 1, limit = 10, sortField, sortOrder }: IProductQueryFilters = req.query
 
       const filters = await productFilters.productFilters(req.query)
 
@@ -99,7 +99,7 @@ class productsController {
     
     try {
 
-      const product = await productService.deleteProduct(req.params.id)
+      const product = await productService.deleteProduct(req.params.id, res)
 
       return res.send(product)
 
@@ -112,7 +112,7 @@ class productsController {
   async createProduct(req: IReqWithImg, res: Response, next: NextFunction) {
 
     try {
-      if(!req.file.filename) {
+      if (!req.file.filename) {
         return res.status(400).json({ message: "Image is not found" })
       }
 

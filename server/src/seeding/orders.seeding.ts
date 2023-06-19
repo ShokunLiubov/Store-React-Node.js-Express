@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker'
 import { ORDER_STATUS } from '../enums/orderStatus'
+import { EnumRoles } from '../enums/roles.enum'
 import Order from '../models/Order.model'
 import Products from '../models/Products.model'
 import User from '../models/User.model'
@@ -18,7 +19,7 @@ class seedingOrders {
                 })
                 .populate({
                     path: "roles",
-                    match: { value: "USER" }
+                    match: { value: EnumRoles.USER  }
                 })
 
             users.map(async (user) => {
@@ -41,14 +42,14 @@ class seedingOrders {
 
                     const keysStatus = Object.keys(ORDER_STATUS)
                     const randomStatus = keysStatus[Math.floor(Math.random() * keysStatus.length)]
-                    let info = user.userInfo
+                    let info: any = user.userInfo
                     let allPrice = 0
                     for (let i = 0; i < productsBasket.length; i++) {
                         const product = productsBasket[i]
-                        const productPrice = await Products.findById({ _id: product.productId })
+                        const productPrice: any = await Products.findById({ _id: product.productId })
                         allPrice += productPrice.price * product.count
                     }
-
+                    // const status: any = ORDER_STATUS[randomStatus]
                     const order = await Order.create({
                         fullName: info.fullName,
                         address: {
@@ -58,7 +59,7 @@ class seedingOrders {
                         },
                         products: productsBasket,
                         allPrice: allPrice,
-                        status: ORDER_STATUS[randomStatus],
+                        status: 'Availability is check',
                         createdAt: faker.date.between('2022-10-01T00:00:00.000Z', '2023-03-01T00:00:00.000Z')
                     })
 
