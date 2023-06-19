@@ -1,8 +1,8 @@
 import cn from 'classnames'
 import React from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { useParam } from '../../../context/paramsContext'
-import { useSidebar } from '../../../context/sidebarContext'
+import { useParam } from '../../../context/params.context'
+import { useSidebar } from '../../../context/sidebar.context'
 import { ISidebar } from '../../../shared/interfaces/sidebar.interface'
 import styles from './sidebar.module.scss'
 

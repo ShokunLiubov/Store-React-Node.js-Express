@@ -12,32 +12,30 @@ import seedingProducts from './products.seeding'
 import seedingUsers from './users.seeding'
 
 class seeding {
+	async refresh() {
+		try {
+			await UserInfo.deleteMany({})
+			await User.deleteMany({})
+			await Order.deleteMany({})
+			await Products.deleteMany({})
+			await Token.deleteMany({})
+			await Category.deleteMany({})
+			await Classification.deleteMany({})
+		} catch (e) {
+			console.log(e)
+		}
+	}
 
-    async refresh() {
-        try {
-            await UserInfo.deleteMany({})
-            await User.deleteMany({})
-            await Order.deleteMany({})
-            await Products.deleteMany({})
-            await Token.deleteMany({})
-            await Category.deleteMany({})
-            await Classification.deleteMany({})
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    async sendingData() {
-        try {
-            await seedingUsers.createUserWithUserInfo(20)
-            await seedingCategory.createCategory()
-            await seedingClassification.createClassification()
-            await seedingProducts.createProducts(40)
-            await seedingOrders.createOrders()
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
+	async sendingData() {
+		try {
+			await seedingUsers.createUserWithUserInfo(20)
+			await seedingCategory.createCategory()
+			await seedingClassification.createClassification()
+			await seedingProducts.createProducts(40)
+			await seedingOrders.createOrders()
+		} catch (e) {
+			console.log(e)
+		}
+	}
 }
 export default new seeding()

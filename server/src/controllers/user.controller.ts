@@ -1,138 +1,147 @@
 import { NextFunction, Request, Response } from 'express'
-import User from "../models/User.model"
+import User from '../models/User.model'
 import UserInfo from '../models/UserInfo.model'
-import userService from "../service/user.service"
+import userService from '../service/user.service'
 import { IUserQueryFilters } from '../types/user.interface'
 import aggregatePaginate from '../utils/aggregatePaginate/aggregatePaginate'
 
 class userController {
+	async getUserInfo(req: any, res: Response, next: NextFunction) {
+		try {
+			const id = req.id
+			const user = await User.findById({ _id: id }).populate({
+				path: 'userInfo',
+				model: 'UserInfo',
+			})
 
-  async getUserInfo(req: any, res: Response, next: NextFunction)  {
+			return res.json(user?.userInfo)
+		} catch (e) {
+			console.log(e)
+		}
+	}
 
-    try {
-      const id = req.id
-      const user = await User.findById({ _id: id }).populate({
-        path: "userInfo",
-        model: "UserInfo",
-      })
+	async getUsers(req: Request, res: Response, next: NextFunction) {
+		try {
+			let {
+				page = 1,
+				limit = 10,
+				sortField = 'id',
+				sortOrder = '1',
+				search,
+				city,
+			}: IUserQueryFilters = req.query
 
-      return res.json(user?.userInfo)
-    } catch (e) {
-      console.log(e)
-    }
-  }
+			const filters: any = {}
 
-  async getUsers(req: Request, res: Response, next: NextFunction)  {
+			let or = {}
 
-    try {
-      let { page = 1, limit = 10, sortField, sortOrder, search, city }: IUserQueryFilters = req.query
-      
-      page = +page
-      limit= +limit
-      const filters: any = {};
+			if (search) {
+				let regex = new RegExp(search, 'i')
+				or = {
+					$or: [
+						{ 'userInfo.email': regex },
+						{ 'userInfo.phone': regex },
+						{ username: regex },
+					],
+				}
+			}
 
-      let or = {}
+			if (city && city.trim()) {
+				const citySelect = city.split(',')
+				filters['userInfo.address.city'] = { $in: citySelect }
+			}
 
-      if (search) {
-          let regex = new RegExp(search, 'i');
-          or =  {
-            $or: [
-            { "userInfo.email": regex },
-            { "userInfo.phone": regex },
-            { "username": regex }
-          ]
-        }
-      }
-      
-      if (city && city.trim()) {
-        const citySelect = city.split(',')
-        filters["userInfo.address.city"] = { $in: citySelect }
-      }
+			const aggregateBody = [
+				{
+					$lookup: {
+						from: 'userinfos',
+						localField: 'userInfo',
+						foreignField: '_id',
+						as: 'userInfo',
+					},
+				},
+				{
+					$unwind: '$userInfo',
+				},
 
-      const aggregateBody = [{
-        $lookup: {
-          from: "userinfos",
-          localField: "userInfo",
-          foreignField: "_id",
-          as: "userInfo"
-        }
-      },
-      {
-        $unwind: "$userInfo"
-      },
-      {
-        $match: {
-          $and: [
-            {...or},
-            {...filters}
-          ]
-        }
-      }
-    ]
+				{
+					$match: {
+						$and: [{ ...or }, { ...filters }],
+					},
+				},
+				{
+					$project: {
+						password: 0,
+						orders: 0,
+						__v: 0,
+						roles: 0,
+					},
+				},
+			]
 
-      let sort = {};
+			const { docs, totalPages, currentPage }: any =
+				await aggregatePaginate.aggregatePaginate({
+					page,
+					limit,
+					Collection: User,
+					aggregateBody,
+					sortField,
+					sortOrder,
+				})
 
-      if (sortField && sortOrder) {
-        sort = { [sortField]: +sortOrder };
-      }
+			return res.json({
+				docs,
+				totalPages,
+				page: currentPage,
+			})
+		} catch (e) {
+			console.log(e)
+		}
+	}
 
-      const { docs, totalPages }: any = await aggregatePaginate.aggregatePaginate({ page, limit, Collection:User, aggregateBody, sort })
+	async updateUserInfo(req: any, res: Response, next: NextFunction) {
+		try {
+			const id = req.id
+			const payload = req.body
 
-      return res.json({
-        docs,
-        totalPages, page
-      })
+			const user: any = await User.findById({ _id: id }).populate({
+				path: 'userInfo',
+				model: 'UserInfo',
+			})
 
-    } catch (e) {
-      console.log(e)
-    }
-  }
+			const updateUserInfo = await userService.updateUserInfo(payload, user)
 
-  async updateUserInfo(req: any, res: Response, next: NextFunction) {
-    try {
-      const id = req.id
-      const payload = req.body
+			return res.json(updateUserInfo)
+		} catch (e) {
+			console.log(e)
+		}
+	}
 
-      const user: any = await User.findById({ _id: id }).populate({
-        path: "userInfo",
-        model: "UserInfo",
-      })
+	async postUserInfo(req: any, res: Response, next: NextFunction) {
+		try {
+			const payload = req.body
+			const id = req.id
+			const userInfo = await userService.postUserInfo(payload, id)
 
-      const updateUserInfo = await userService.updateUserInfo(payload, user)
+			return res.json(userInfo)
+		} catch (e) {
+			console.log(e)
+		}
+	}
 
-      return res.json(updateUserInfo)
-    } catch (e) {
-      console.log(e)
-    }
-  }
+	async getCity(req: Request, res: Response, next: NextFunction) {
+		try {
+			const city = await UserInfo.aggregate([
+				{ $group: { _id: '$address.city' } },
+				{ $group: { _id: null, uniqueCity: { $push: '$_id' } } },
+				{ $project: { _id: 0, uniqueCity: 1 } },
+			])
 
-  async postUserInfo(req: any, res: Response, next: NextFunction)  {
-    try {
-      const payload = req.body
-      const id = req.id
-      const userInfo = await userService.postUserInfo(
-        payload, id
-      )
-
-      return res.json(userInfo)
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  async getCity(req: Request, res: Response, next: NextFunction)  {
-    try {
-      const city = await UserInfo.aggregate([
-        { $group: { _id: '$address.city' } },
-        { $group: { _id: null, uniqueCity: { $push: '$_id' } } },
-        { $project: { _id: 0, uniqueCity: 1 } }
-      ])
-
-      return res.status(200).json(city[0].uniqueCity)
-    } catch (e) {
-      console.log(e)
-    }
-  }
+			return res.status(200).json(city[0].uniqueCity)
+		} catch (e) {
+			console.log(e)
+		}
+	}
 }
 
 export default new userController()

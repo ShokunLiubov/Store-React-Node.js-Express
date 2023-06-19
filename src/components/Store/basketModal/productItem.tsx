@@ -6,7 +6,7 @@ import {
 	addToBasket,
 	deleteProductFromBasket,
 	removeCountProduct,
-} from '../../../redux/basketReducer/basketThunk'
+} from '../../../redux/basketReducer/basket.thunk'
 import { AppStateType } from '../../../redux/redux-store'
 import { publicUrl } from '../../../routes/layout/PublicLayout'
 import { IProductBasket } from '../../../shared/interfaces/productInterface/productBasket.interface'

@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 import { statsService } from '../../api/services/statsService'
 import { ICalendarRange } from '../../shared/interfaces/common/calendarRange.interface'
-import * as AC from './statsActionCreator'
+import * as AC from './stats.action-creator'
 
 export const getStatsForOrders = (year: number) => {
 	return async (dispatch: Dispatch): Promise<string> => {

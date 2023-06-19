@@ -1,72 +1,70 @@
-import jwt from "jsonwebtoken"
-import Token from "../models/Token.model"
+import jwt from 'jsonwebtoken'
+import Token from '../models/Token.model'
 
 class TokenService {
+	generateTokens(payload: any) {
+		const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET || '', {
+			expiresIn: '30m',
+		})
 
-  generateTokens(payload: any) {
-    const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET || '', {
-      expiresIn: "30m",
-    })
+		const refreshToken = jwt.sign(
+			payload,
+			process.env.JWT_REFRESH_SECRET || '',
+			{
+				expiresIn: '30d',
+			},
+		)
 
-    const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET || '', {
-      expiresIn: "30d",
-    })
+		return {
+			accessToken,
+			refreshToken,
+		}
+	}
 
-    return {
-      accessToken,
-      refreshToken,
-    }
-  }
+	validateAccessToken(token: string) {
+		try {
+			const userData = jwt.verify(token, process.env.JWT_ACCESS_SECRET || '')
 
-  validateAccessToken(token: string) {
+			return userData
+		} catch (e) {
+			return null
+		}
+	}
 
-    try {
-      const userData = jwt.verify(token, process.env.JWT_ACCESS_SECRET || '')
+	validateRefreshToken(token: string) {
+		try {
+			const userData = jwt.verify(token, process.env.JWT_REFRESH_SECRET || '')
 
-      return userData
-    } catch (e) {
-      return null
-    }
-  }
+			return userData
+		} catch (e) {
+			return null
+		}
+	}
 
-  validateRefreshToken(token: string) {
+	async saveToken(userId: string, refreshToken: string) {
+		const tokenData = await Token.findOne({ user: userId })
 
-    try {
-      const userData = jwt.verify(token, process.env.JWT_REFRESH_SECRET || '')
+		if (tokenData) {
+			tokenData.refreshToken = refreshToken
+			return tokenData.save()
+		}
 
-      return userData
-    } catch (e) {
-      return null
-    }
-  }
+		const token = await Token.create({ user: userId, refreshToken })
 
-  async saveToken(userId: string, refreshToken: string) {
+		return token
+	}
 
-    const tokenData = await Token.findOne({ user: userId })
+	async removeToken(refreshToken: string) {
+		const tokenData = await Token.deleteOne({ refreshToken })
 
-    if (tokenData) {
-      tokenData.refreshToken = refreshToken
-      return tokenData.save()
-    }
+		return tokenData
+	}
 
-    const token = await Token.create({ user: userId, refreshToken })
+	async findToken(refreshToken: string) {
+		const tokenData = await Token.findOne({ refreshToken })
 
-    return token
-  }
-
-  async removeToken(refreshToken: string) {
-
-    const tokenData = await Token.deleteOne({ refreshToken })
-
-    return tokenData
-  }
-
-  async findToken(refreshToken: string) {
-
-    const tokenData = await Token.findOne({ refreshToken })
-
-    return tokenData
-  }
+		return tokenData
+	}
 }
 
 export default new TokenService()

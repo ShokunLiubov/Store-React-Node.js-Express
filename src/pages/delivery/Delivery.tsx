@@ -7,7 +7,7 @@ import { Input } from '../../components/ui/form/input/Input'
 import {
 	getDeliveryOptions,
 	setPriceDelivery,
-} from '../../redux/deliveryReducer/deliveryThunk'
+} from '../../redux/deliveryReducer/delivery.thunk'
 import { AppStateType } from '../../redux/redux-store'
 import { IDeliveryOptions } from '../../shared/interfaces/deliveryInterface/deliveryOptions.interface'
 import { IDeliveryPrice } from '../../shared/interfaces/deliveryInterface/deliveryPrice.interface'

@@ -6,10 +6,11 @@ import { compose } from 'redux'
 import FiltersOrders from '../../components/admin/filters/filtersOrders/FiltersOrders'
 import Paginator from '../../components/common/pagination/Pagination'
 import { TableComponent } from '../../components/common/table/Table'
+import { orderStatus } from '../../enums/orderStatus'
 import {
 	getCityForOrders,
 	getOrders,
-} from '../../redux/orderReducer/orderThunk'
+} from '../../redux/orderReducer/order.thunk'
 import { AppStateType } from '../../redux/redux-store'
 import { IFiltersOrders } from '../../shared/filters/filtersOrders.interface'
 import { IOrder } from '../../shared/interfaces/order.interface'
@@ -93,13 +94,15 @@ export const Orders: React.FC<IOrdersProps> = ({
 									<td>
 										<div
 											className={cn(
-												order.status === 'Availability is check'
+												order.status === orderStatus.AVAILABILITY_IS_CHECK
 													? 'availabilityIs'
 													: '',
-												order.status === 'Awaiting shipment' ? 'await' : '',
-												order.status === 'Sent' ? 'sent' : '',
-												order.status === 'Refusal' ? 'refusal' : '',
-												order.status === 'Received' ? 'received' : '',
+												order.status === orderStatus.AWAITING_SHIPMENT
+													? 'await'
+													: '',
+												order.status === orderStatus.SENT ? 'sent' : '',
+												order.status === orderStatus.REFUSAL ? 'refusal' : '',
+												order.status === orderStatus.RECEIVED ? 'received' : '',
 												'status',
 											)}
 										>

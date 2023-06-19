@@ -15,7 +15,7 @@ import {
 	deleteProduct,
 	editProduct,
 	getProducts,
-} from '../../redux/productReducer/productThunk'
+} from '../../redux/productReducer/product.thunk'
 import { AppStateType } from '../../redux/redux-store'
 import { adminUrl } from '../../routes/layout/AdminLayout'
 import { IFiltersProducts } from '../../shared/filters/filtersProducts.interface'

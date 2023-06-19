@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { useParam } from '../../../context/paramsContext'
+import { useParam } from '../../../context/params.context'
 import { MENU_STORE_DATA } from '../../../data/store/menuStoreData'
 import './menuStore.scss'
 

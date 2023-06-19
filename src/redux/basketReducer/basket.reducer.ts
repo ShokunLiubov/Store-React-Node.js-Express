@@ -1,6 +1,6 @@
 import { IProductBasket } from '../../shared/interfaces/productInterface/productBasket.interface'
-import * as actionType from './basketActionType'
-import * as I from './basketInterface'
+import * as actionType from './basket.action-type'
+import * as I from './basket.interface'
 
 interface IBasketState {
 	productsBasket: IProductBasket[]

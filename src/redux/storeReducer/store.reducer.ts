@@ -1,6 +1,6 @@
 import { IStoreHomeProducts } from '../../shared/interfaces/storeInterface/storeHomeProducts.interface'
-import * as actionType from './storeActionType'
-import * as I from './storeInterface'
+import * as actionType from './store.action-type'
+import * as I from './store.interface'
 
 interface IProductState {
 	home: Array<IStoreHomeProducts>

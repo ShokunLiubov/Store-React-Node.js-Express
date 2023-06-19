@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { useBasketModal } from '../../../context/basketModalContext'
+import { useBasketModal } from '../../../context/basketModal.context'
 import { AppStateType } from '../../../redux/redux-store'
 import BasketModal from '../basketModal/BasketModal'
 import './headerStore.scss'

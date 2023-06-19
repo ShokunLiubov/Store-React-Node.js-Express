@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 import { storeService } from '../../api/services/storeService'
-import * as AC from './storeActionCreator'
+import * as AC from './store.action-creator'
 
 export const getStoreHomeProducts = () => {
 	return async (dispatch: Dispatch): Promise<void> => {

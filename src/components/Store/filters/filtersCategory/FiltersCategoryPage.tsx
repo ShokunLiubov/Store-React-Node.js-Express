@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { compose } from 'redux'
-import { getProducts } from '../../../../redux/productReducer/productThunk'
+import { getProducts } from '../../../../redux/productReducer/product.thunk'
 import { AppStateType } from '../../../../redux/redux-store'
 import { IFiltersProducts } from '../../../../shared/filters/filtersProducts.interface'
 import { ICategory } from '../../../../shared/interfaces/productInterface/category.interface'

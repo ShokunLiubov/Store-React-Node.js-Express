@@ -1,15 +1,15 @@
 import { AnyAction, Dispatch } from 'redux'
 import { ThunkDispatch } from 'redux-thunk'
-import { categoryService } from '../../api/services/categoryService'
-import { classificationService } from '../../api/services/classificationsService'
-import { countryTMService } from '../../api/services/countryTMService'
-import { madeInService } from '../../api/services/madeInService'
-import { productService } from '../../api/services/productService'
+import { categoryService } from '../../api/services/category.service'
+import { classificationService } from '../../api/services/classifications.service'
+import { countryTMService } from '../../api/services/countryTM.service'
+import { madeInService } from '../../api/services/madeIn.service'
+import { productService } from '../../api/services/product.service'
 import { productStoreService } from '../../api/services/productStoreService'
 import { typeAromaService } from '../../api/services/typeAromaService'
 import { IFiltersProducts } from '../../shared/filters/filtersProducts.interface'
 import { AppStateType } from '../redux-store'
-import * as AC from './productActionCreator'
+import * as AC from './product.action-creator'
 
 export const getProducts = (
 	currentPage: number | string,

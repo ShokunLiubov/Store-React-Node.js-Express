@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import * as Yup from 'yup'
 import { Input } from '../../components/ui/form/input/Input'
-import { useUserInfo } from '../../context/editUserInfoContext'
+import { useUserInfo } from '../../context/editUserInfo.context'
 import {
 	createUserInfo,
 	getUserInfo,
 	updateUserInfo,
-} from '../../redux/authReducer/authThunk'
+} from '../../redux/authReducer/auth.thunk'
 import { AppStateType } from '../../redux/redux-store'
 import {
 	IUserInfo,

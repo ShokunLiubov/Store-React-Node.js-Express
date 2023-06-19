@@ -1,8 +1,8 @@
 import { IOrdersByCity } from '../../shared/stats/ordersByCity.interface'
 import { IOrdersByMonth } from '../../shared/stats/ordersByMonth.interface'
 import { IRangeDate } from '../../shared/stats/rangeDate.interface'
-import * as actionType from './statsActionType'
-import * as I from './statsInterface'
+import * as actionType from './stats.action-type'
+import * as I from './stats.interface'
 
 export const setOrdersByMonth = (
 	ordersByMonth: Array<IOrdersByMonth>,

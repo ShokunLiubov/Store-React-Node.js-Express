@@ -1,9 +1,8 @@
-import Router from "express"
-import controller from "../controllers/classification.controller"
+import Router from 'express'
+import controller from '../controllers/classification.controller'
 
 const router = Router()
 
-router.get("/", controller.getAllClassification)
+router.get('/', controller.getAllClassification)
 
 export { router as classificationRouter }
-

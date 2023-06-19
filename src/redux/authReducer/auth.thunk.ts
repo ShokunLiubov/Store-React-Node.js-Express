@@ -1,10 +1,10 @@
 import { AnyAction, Dispatch } from 'redux'
 import { ThunkDispatch } from 'redux-thunk'
-import { authService } from '../../api/services/authService'
-import { userService } from '../../api/services/userService'
+import { authService } from '../../api/services/auth.service'
+import { userService } from '../../api/services/user.service'
 import { IAuth } from '../../shared/interfaces/userInterface/auth.interface'
 import { IUserInfo } from '../../shared/interfaces/userInterface/userInfo.interface'
-import * as AC from './authActionCreator'
+import * as AC from './auth.action-creator'
 
 export const registrationUser = (value: IAuth) => {
 	return async (dispatch: Dispatch): Promise<string | undefined> => {

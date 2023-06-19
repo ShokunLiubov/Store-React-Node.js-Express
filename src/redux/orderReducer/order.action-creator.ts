@@ -1,7 +1,7 @@
 import { IFiltersOrders } from '../../shared/filters/filtersOrders.interface'
 import { IOrder } from '../../shared/interfaces/order.interface'
-import * as actionType from './orderActionType'
-import * as I from './orderInterface'
+import * as actionType from './order.action-type'
+import * as I from './order.interface'
 
 export const setOrders = (
 	ordersData: Array<IOrder>,

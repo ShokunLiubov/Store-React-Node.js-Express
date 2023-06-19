@@ -30,9 +30,7 @@ class userController {
     getUsers(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let { page = 1, limit = 10, sortField, sortOrder, search, city } = req.query;
-                page = +page;
-                limit = +limit;
+                let { page = 1, limit = 10, sortField = 'id', sortOrder = '1', search, city } = req.query;
                 const filters = {};
                 let or = {};
                 if (search) {
@@ -67,16 +65,20 @@ class userController {
                                 Object.assign({}, filters)
                             ]
                         }
-                    }
-                ];
-                let sort = {};
-                if (sortField && sortOrder) {
-                    sort = { [sortField]: +sortOrder };
-                }
-                const { docs, totalPages } = yield aggregatePaginate.aggregatePaginate({ page, limit, Collection: User, aggregateBody, sort });
+                    },
+                    {
+                        $project: {
+                            password: 0,
+                            orders: 0,
+                            __v: 0,
+                            roles: 0
+                        }
+                    }];
+                const { docs, totalPages, currentPage } = yield aggregatePaginate.aggregatePaginate({ page, limit, Collection: User, aggregateBody, sortField, sortOrder });
+                console.log(docs);
                 return res.json({
                     docs,
-                    totalPages, page
+                    totalPages, page: currentPage
                 });
             }
             catch (e) {

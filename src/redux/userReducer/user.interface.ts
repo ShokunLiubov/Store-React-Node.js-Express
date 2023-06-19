@@ -1,9 +1,9 @@
 import { IFiltersCustomers } from '../../shared/filters/filtersCustomers.interface'
-import { IUser } from './../../shared/interfaces/userInterface/user.interface'
+import { IUser } from '../../shared/interfaces/userInterface/user.interface'
 
 export interface ISetUsers {
-    type: string
-    docs: Array<IUser>
+	type: string
+	docs: Array<IUser>
 	page: number
 	totalPages: number
 	sortField: string
@@ -11,11 +11,11 @@ export interface ISetUsers {
 }
 
 export interface ISetFiltersUsers {
-    type: string
-    filters: IFiltersCustomers
+	type: string
+	filters: IFiltersCustomers
 }
 
 export interface ISetCityForUsers {
-    type: string
-    city: Array<string>
+	type: string
+	city: Array<string>
 }
