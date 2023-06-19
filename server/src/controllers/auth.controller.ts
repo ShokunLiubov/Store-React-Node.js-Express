@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
 import { validationResult } from "express-validator"
 import { EnumTokens } from '../enums/tokens.enum'
-import AuthError from "../exception/authError"
 import userService from "../service/user.service"
-import { IAuth } from '../types/product.interface'
+import { IAuth } from '../types/auth.interface'
 
 class authController {
 
@@ -13,7 +12,7 @@ class authController {
       // Validation
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
-        return next(AuthError.BadRequest("Validation error", errors.array()))
+        // return next(AuthError.BadRequest("Validation error", errors.array()))
       }
 
       const { username, password }: IAuth = req.body

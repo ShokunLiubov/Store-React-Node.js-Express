@@ -2,12 +2,12 @@ import { NextFunction, Request, Response } from 'express'
 import User from "../models/User.model"
 import UserInfo from '../models/UserInfo.model'
 import userService from "../service/user.service"
-import { IReqIsAuth } from '../types/auth.interface'
+import { IUserQueryFilters } from '../types/user.interface'
 import aggregatePaginate from '../utils/aggregatePaginate/aggregatePaginate'
 
 class userController {
 
-  async getUserInfo(req: IReqIsAuth, res: Response, next: NextFunction)  {
+  async getUserInfo(req: any, res: Response, next: NextFunction)  {
 
     try {
       const id = req.id
@@ -25,17 +25,29 @@ class userController {
   async getUsers(req: Request, res: Response, next: NextFunction)  {
 
     try {
-      let { page = 1, limit = 10, sortField, sortOrder, search, city } = req.query
-      console.log();
+      let { page = 1, limit = 10, sortField, sortOrder, search, city }: IUserQueryFilters = req.query
       
-      const filters = {}
+      page = +page
+      limit= +limit
+      const filters: any = {};
 
-      // const regex = new RegExp(search, 'i')
+      let or = {}
+
+      if (search) {
+          let regex = new RegExp(search, 'i');
+          or =  {
+            $or: [
+            { "userInfo.email": regex },
+            { "userInfo.phone": regex },
+            { "username": regex }
+          ]
+        }
+      }
       
-      // if (city && city.trim()) {
-      //   const citySelect = city.split(',')
-      //   filters["userInfo.address.city"] = { $in: citySelect }
-      // }
+      if (city && city.trim()) {
+        const citySelect = city.split(',')
+        filters["userInfo.address.city"] = { $in: citySelect }
+      }
 
       const aggregateBody = [{
         $lookup: {
@@ -50,20 +62,21 @@ class userController {
       },
       {
         $match: {
-          // $or: [
-          //   { "userInfo.email": regex },
-          //   { "userInfo.phone": regex },
-          //   { "username": regex }
-          // ],
-          ...filters
+          $and: [
+            {...or},
+            {...filters}
+          ]
         }
-      }]
+      }
+    ]
 
-      // const sort = { [sortField]: sortOrder }
+      let sort = {};
 
-      const { docs, totalPages }: any = await aggregatePaginate.aggregatePaginate(page, limit, User, aggregateBody, 
-        // sort
-        )
+      if (sortField && sortOrder) {
+        sort = { [sortField]: +sortOrder };
+      }
+
+      const { docs, totalPages }: any = await aggregatePaginate.aggregatePaginate({ page, limit, Collection:User, aggregateBody, sort })
 
       return res.json({
         docs,
@@ -75,12 +88,12 @@ class userController {
     }
   }
 
-  async updateUserInfo(req: IReqIsAuth, res: Response, next: NextFunction) {
+  async updateUserInfo(req: any, res: Response, next: NextFunction) {
     try {
       const id = req.id
       const payload = req.body
 
-      const user = await User.findById({ _id: id }).populate({
+      const user: any = await User.findById({ _id: id }).populate({
         path: "userInfo",
         model: "UserInfo",
       })
@@ -93,7 +106,7 @@ class userController {
     }
   }
 
-  async postUserInfo(req: IReqIsAuth, res: Response, next: NextFunction)  {
+  async postUserInfo(req: any, res: Response, next: NextFunction)  {
     try {
       const payload = req.body
       const id = req.id

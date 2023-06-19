@@ -1,7 +1,7 @@
 import * as dotenv from "dotenv"
 import express from "express"
 import mongoose from "mongoose"
-import { appConfig } from './config/app'
+import { appConfig } from './config/app-config'
 import { appRouters } from './routers/routers'
 
 dotenv.config()

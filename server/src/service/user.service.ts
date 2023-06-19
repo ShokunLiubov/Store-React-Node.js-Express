@@ -4,11 +4,12 @@ import AuthError from "../exception/authError"
 import Role from "../models/Role.model"
 import User from "../models/User.model"
 import UserInfo from "../models/UserInfo.model"
-import tokenService from "./tokenService"
+import { IUserDocument, IUserInfoDocument } from '../types/user.interface'
+import tokenService from "./token.service"
 
 class UserService {
 
-  async registration(username, password) {
+  async registration(username: string, password: string) {
 
     const candidate = await User.findOne({ username })
 
@@ -22,7 +23,7 @@ class UserService {
     const user = await User.create({
       username,
       password: hashPassword,
-      roles: [userRole._id],
+      roles: [userRole?.id],
     })
 
     const userDto = new UserDto(user) // id, username
@@ -36,7 +37,7 @@ class UserService {
     }
   }
 
-  async login(username, password) {
+  async login(username: string, password: string) {
 
     const user = await User
       .findOne({ username })
@@ -66,19 +67,19 @@ class UserService {
     }
   }
 
-  async logout(refreshToken) {
+  async logout(refreshToken: string) {
 
     const token = await tokenService.removeToken(refreshToken)
 
     return token
   }
 
-  async refresh(refreshToken) {
+  async refresh(refreshToken: string) {
 
     if (!refreshToken) {
       throw AuthError.UnauthorizedError()
     }
-    const userData = tokenService.validateRefreshToken(refreshToken)
+    const userData: any = tokenService.validateRefreshToken(refreshToken)
     const tokenFromDb = await tokenService.findToken(refreshToken)
 
     if (!userData || !tokenFromDb) {
@@ -96,7 +97,7 @@ class UserService {
     }
   }
 
-  async postUserInfo(payload, id) {
+  async postUserInfo(payload: IUserInfoDocument, id: string) {
 
     const { fullName, email, phone, address } = payload
 
@@ -118,12 +119,12 @@ class UserService {
     return { userInfo, userUpdate }
   }
 
-  async updateUserInfo(payload, user) {
+  async updateUserInfo(payload: IUserInfoDocument, user: IUserDocument) {
 
     const { fullName, email, phone, address } = payload
 
     const updateUserInfo = await UserInfo.findByIdAndUpdate(
-      user.userInfo._id,
+      user.userInfo?.id,
       {
         fullName,
         email,

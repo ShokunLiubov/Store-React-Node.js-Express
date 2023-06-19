@@ -1,12 +1,13 @@
+import { IOrderFilter, IOrderQueryFilters } from '../types/order.interface'
 import dateRange from './dateRange'
 
 class orderFilters {
 
-    async orderFilters(query) {
+    async orderFilters(query: IOrderQueryFilters) {
 
         try {
             const { search, dataRange, status, price, city } = query
-            const filters = {}
+            const filters: IOrderFilter = {}
 
             if (search) {
                 filters.fullName = new RegExp(`${search}`, "i")
@@ -17,17 +18,26 @@ class orderFilters {
                 filters.status = { $in: statusSelect }
             }
 
+            // if (city) {
+            //     const citySelect = city.split(',')
+            //     filters["address.city"] = { $in: citySelect }
+            // }
+
             if (city) {
                 const citySelect = city.split(',')
-                filters["address.city"] = { $in: citySelect }
+                if (!filters.address) {
+                    filters.address = { city: { $in: citySelect } };
+                } else {
+                    filters.address.city = { $in: citySelect };
+                }
             }
 
-            if (dataRange) {
+            if (dataRange && dataRange.from && dataRange.to) {
                 let { from, to } = dataRange
                 filters.createdAt = await dateRange.dataRangePicker(from, to)
             }
 
-            if (price) {
+            if (price && price.$gte && price.$lte) {
                 const { $gte, $lte } = price
                 filters.allPrice = { $gte, $lte }
             }

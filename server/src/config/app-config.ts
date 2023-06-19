@@ -3,7 +3,6 @@ import cors from "cors"
 import * as dotenv from "dotenv"
 import express from "express"
 import helmet from "helmet"
-import seedingDevData from '../seeding/seeding'
 dotenv.config()
 const app = express()
 
@@ -31,8 +30,9 @@ app.use(
 
 
 // sending BD
-seedingDevData.refresh
-seedingDevData.sendingData
+// seedingDevData.refresh
+// seedingDevData.sendingData
 
 export { app as appConfig }
+// module.exports = { appConfig: app };
 

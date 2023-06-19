@@ -1,11 +1,12 @@
+import { IProductFilter, IProductQueryFilters } from '../types/product.interface'
 
 class productFilters {
 
-    async productFilters(query) {
+    async productFilters(query: IProductQueryFilters) {
 
         try {
             const { search, category, count, price, classification, type_of_aroma, made_in, country_of_TM, volume, gender } = query
-            const filters = {}
+            const filters: IProductFilter = {}
 
             if (search) {
                 filters.title = new RegExp(`${search}`, "i")
@@ -42,7 +43,7 @@ class productFilters {
                 filters.country_of_TM = { $in: countryTM }
             }
 
-            if (count) {
+            if (count && count.$gte && count.$lte) {
                 const { $gte, $lte } = count
                 filters.count = { $gte, $lte }
             }
@@ -52,7 +53,7 @@ class productFilters {
                 filters.price = { $gte, $lte }
             }
 
-            if (volume) {
+            if (volume && volume.$gte && volume.$lte) {
                 const { $gte, $lte } = volume
                 filters.volume = { $gte, $lte }
             }

@@ -1,6 +1,6 @@
 class dateRange {
 
-  async dataRangePicker(from, to) {
+  async dataRangePicker(from: Date, to: Date) {
     try {
       const dateTo = new Date(to)
       dateTo.setHours(23, 59, 59, 999)
