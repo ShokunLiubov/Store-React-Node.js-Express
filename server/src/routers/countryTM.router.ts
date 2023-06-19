@@ -1,8 +1,8 @@
-import Router from "express"
-import controller from "../controllers/countryTM.controller"
+import Router from 'express'
+import controller from '../controllers/countryTM.controller'
 
 const router = Router()
 
-router.get("/", controller.getAllCountryTM)
+router.get('/', controller.getAllCountryTM)
 
 export { router as countryTMRouter }

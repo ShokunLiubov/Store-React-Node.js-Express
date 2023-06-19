@@ -2,20 +2,20 @@ import { IUser } from '../../shared/interfaces/userInterface/user.interface'
 import { IUserInfo } from '../../shared/interfaces/userInterface/userInfo.interface'
 
 export interface ISetAuth {
-    type: string
+	type: string
 	payload: IUser
 }
 
 export interface IOutAuth {
-    type: string
+	type: string
 }
 
 export interface ISetLoading {
-    type: string
-    isLoading: boolean
+	type: string
+	isLoading: boolean
 }
 
 export interface ISetUserInfo {
-    type: string
-    userInfo: IUserInfo
+	type: string
+	userInfo: IUserInfo
 }

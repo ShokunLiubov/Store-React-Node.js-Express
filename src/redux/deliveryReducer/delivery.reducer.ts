@@ -1,6 +1,6 @@
 import { IDeliveryOptions } from '../../shared/interfaces/deliveryInterface/deliveryOptions.interface'
-import * as actionType from './deliveryActionType'
-import * as I from './deliveryInterface'
+import * as actionType from './delivery.action-type'
+import * as I from './delivery.interface'
 
 interface IDeliveryState {
 	deliveryOptions: Array<IDeliveryOptions>

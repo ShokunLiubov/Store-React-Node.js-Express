@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
-import { userService } from '../../api/services/userService'
+import { userService } from '../../api/services/user.service'
 import { IFiltersCustomers } from '../../shared/filters/filtersCustomers.interface'
-import * as AC from './userActionCreator'
+import * as AC from './user.action-creator'
 
 export const getUsers = (
 	currentPage: number | string,

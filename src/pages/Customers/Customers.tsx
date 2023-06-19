@@ -7,7 +7,7 @@ import FiltersCustomers from '../../components/admin/filters/filtersCustomers/Fi
 import Paginator from '../../components/common/pagination/Pagination'
 import { TableComponent } from '../../components/common/table/Table'
 import { AppStateType } from '../../redux/redux-store'
-import { getCityForUsers, getUsers } from '../../redux/userReducer/userThunk'
+import { getCityForUsers, getUsers } from '../../redux/userReducer/user.thunk'
 import { IFiltersCustomers } from '../../shared/filters/filtersCustomers.interface'
 import { IUser } from '../../shared/interfaces/userInterface/user.interface'
 import './customers.scss'
@@ -61,8 +61,6 @@ export const Customers: React.FC<ICustomersProps> = ({
 			window.location.pathname + '?' + new URLSearchParams(url).toString(),
 		)
 	}
-
-	console.log(usersData)
 
 	return (
 		<div className={cn('containerAdminDark')}>

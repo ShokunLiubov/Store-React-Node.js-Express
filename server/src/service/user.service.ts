@@ -1,144 +1,132 @@
-import bcrypt from "bcryptjs"
-import UserDto from "../dto/user.dto"
-import AuthError from "../exception/authError"
-import Role from "../models/Role.model"
-import User from "../models/User.model"
-import UserInfo from "../models/UserInfo.model"
+import bcrypt from 'bcryptjs'
+import UserDto from '../dto/user.dto'
+import AuthError from '../exception/authError'
+import Role from '../models/Role.model'
+import User from '../models/User.model'
+import UserInfo from '../models/UserInfo.model'
 import { IUserDocument, IUserInfoDocument } from '../types/user.interface'
-import tokenService from "./token.service"
+import tokenService from './token.service'
 
 class UserService {
+	async registration(username: string, password: string) {
+		const candidate = await User.findOne({ username })
 
-  async registration(username: string, password: string) {
+		if (candidate) {
+			throw AuthError.BadRequest('User with the same name already exists')
+		}
 
-    const candidate = await User.findOne({ username })
+		// Create user and tokens
+		const hashPassword = bcrypt.hashSync(password, 7)
+		const userRole = await Role.findOne({ value: 'USER' })
+		const user = await User.create({
+			username,
+			password: hashPassword,
+			roles: [userRole?.id],
+		})
 
-    if (candidate) {
-      throw AuthError.BadRequest("User with the same name already exists")
-    }
+		const userDto = new UserDto(user) // id, username
+		const tokens = tokenService.generateTokens({ ...userDto })
+		await tokenService.saveToken(userDto.id, tokens.refreshToken)
+		// Create user and tokens
 
-    // Create user and tokens
-    const hashPassword = bcrypt.hashSync(password, 7)
-    const userRole = await Role.findOne({ value: "USER" })
-    const user = await User.create({
-      username,
-      password: hashPassword,
-      roles: [userRole?.id],
-    })
+		return {
+			...tokens,
+			user: userDto,
+		}
+	}
 
-    const userDto = new UserDto(user) // id, username
-    const tokens = tokenService.generateTokens({ ...userDto })
-    await tokenService.saveToken(userDto.id, tokens.refreshToken)
-    // Create user and tokens
+	async login(username: string, password: string) {
+		const user = await User.findOne({ username }).populate({
+			path: 'roles',
+		})
 
-    return {
-      ...tokens,
-      user: userDto,
-    }
-  }
+		// Check User presence
+		if (!user) {
+			throw AuthError.BadRequest('User not registration')
+		}
+		// Check User presence
 
-  async login(username: string, password: string) {
+		// Check password
+		const validPassword = bcrypt.compareSync(password, user.password)
+		if (!validPassword) {
+			throw AuthError.BadRequest('Wrong password entered')
+		}
 
-    const user = await User
-      .findOne({ username })
-      .populate({
-        path: "roles",
-      })
+		const userDto = new UserDto(user) // id, username
+		const tokens = tokenService.generateTokens({ ...userDto })
+		await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
-    // Check User presence
-    if (!user) {
-      throw AuthError.BadRequest("User not registration")
-    }
-    // Check User presence
+		return {
+			...tokens,
+			user: userDto,
+		}
+	}
 
-    // Check password
-    const validPassword = bcrypt.compareSync(password, user.password)
-    if (!validPassword) {
-      throw AuthError.BadRequest("Wrong password entered")
-    }
+	async logout(refreshToken: string) {
+		const token = await tokenService.removeToken(refreshToken)
 
-    const userDto = new UserDto(user) // id, username
-    const tokens = tokenService.generateTokens({ ...userDto })
-    await tokenService.saveToken(userDto.id, tokens.refreshToken)
+		return token
+	}
 
-    return {
-      ...tokens,
-      user: userDto,
-    }
-  }
+	async refresh(refreshToken: string) {
+		if (!refreshToken) {
+			throw AuthError.UnauthorizedError()
+		}
+		const userData: any = tokenService.validateRefreshToken(refreshToken)
+		const tokenFromDb = await tokenService.findToken(refreshToken)
 
-  async logout(refreshToken: string) {
+		if (!userData || !tokenFromDb) {
+			throw AuthError.UnauthorizedError()
+		}
 
-    const token = await tokenService.removeToken(refreshToken)
+		const user = await User.findById(userData.id).populate('roles')
+		const userDto = new UserDto(user) // id, username
+		const tokens = tokenService.generateTokens({ ...userDto })
+		await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
-    return token
-  }
+		return {
+			...tokens,
+			user: userDto,
+		}
+	}
 
-  async refresh(refreshToken: string) {
+	async postUserInfo(payload: IUserInfoDocument, id: string) {
+		const { fullName, email, phone, address } = payload
 
-    if (!refreshToken) {
-      throw AuthError.UnauthorizedError()
-    }
-    const userData: any = tokenService.validateRefreshToken(refreshToken)
-    const tokenFromDb = await tokenService.findToken(refreshToken)
+		const userInfo = await UserInfo.create({
+			fullName,
+			email,
+			phone,
+			address: {
+				city: address.city,
+				street: address.street,
+				postOffice: address.postOffice,
+			},
+		})
 
-    if (!userData || !tokenFromDb) {
-      throw AuthError.UnauthorizedError()
-    }
+		const userId = { _id: id }
+		const userInfoId = { $set: { userInfo: userInfo._id } }
+		const userUpdate = await User.updateOne(userId, userInfoId)
 
-    const user = await User.findById(userData.id).populate('roles')
-    const userDto = new UserDto(user) // id, username
-    const tokens = tokenService.generateTokens({ ...userDto })
-    await tokenService.saveToken(userDto.id, tokens.refreshToken)
+		return { userInfo, userUpdate }
+	}
 
-    return {
-      ...tokens,
-      user: userDto,
-    }
-  }
+	async updateUserInfo(payload: IUserInfoDocument, user: IUserDocument) {
+		const { fullName, email, phone, address } = payload
 
-  async postUserInfo(payload: IUserInfoDocument, id: string) {
+		const updateUserInfo = await UserInfo.findByIdAndUpdate(user.userInfo?.id, {
+			fullName,
+			email,
+			phone,
+			address: {
+				city: address.city,
+				street: address.street,
+				postOffice: address.postOffice,
+			},
+		})
 
-    const { fullName, email, phone, address } = payload
-
-    const userInfo = await UserInfo.create({
-      fullName,
-      email,
-      phone,
-      address: {
-        city: address.city,
-        street: address.street,
-        postOffice: address.postOffice,
-      },
-    })
-
-    const userId = { _id: id }
-    const userInfoId = { $set: { userInfo: userInfo._id } }
-    const userUpdate = await User.updateOne(userId, userInfoId)
-
-    return { userInfo, userUpdate }
-  }
-
-  async updateUserInfo(payload: IUserInfoDocument, user: IUserDocument) {
-
-    const { fullName, email, phone, address } = payload
-
-    const updateUserInfo = await UserInfo.findByIdAndUpdate(
-      user.userInfo?.id,
-      {
-        fullName,
-        email,
-        phone,
-        address: {
-          city: address.city,
-          street: address.street,
-          postOffice: address.postOffice,
-        },
-      },
-    )
-
-    return updateUserInfo
-  }
+		return updateUserInfo
+	}
 }
 
 export default new UserService()

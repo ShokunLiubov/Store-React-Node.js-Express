@@ -1,69 +1,79 @@
-import { IProductFilter, IProductQueryFilters } from '../types/product.interface'
+import {
+	IProductFilter,
+	IProductQueryFilters,
+} from '../types/product.interface'
 
 class productFilters {
+	async productFilters(query: IProductQueryFilters) {
+		try {
+			const {
+				search,
+				category,
+				count,
+				price,
+				classification,
+				type_of_aroma,
+				made_in,
+				country_of_TM,
+				volume,
+				gender,
+			} = query
+			const filters: IProductFilter = {}
 
-    async productFilters(query: IProductQueryFilters) {
+			if (search) {
+				filters.title = new RegExp(`${search}`, 'i')
+			}
 
-        try {
-            const { search, category, count, price, classification, type_of_aroma, made_in, country_of_TM, volume, gender } = query
-            const filters: IProductFilter = {}
+			if (category) {
+				const categories = category.split(',')
+				filters.category = { $in: categories }
+			}
 
-            if (search) {
-                filters.title = new RegExp(`${search}`, "i")
-            }
+			if (classification) {
+				const classifications = classification.split(',')
+				filters.classification = { $in: classifications }
+			}
 
-            if (category) {
-                const categories = category.split(',')
-                filters.category = { $in: categories }
-            }
+			if (gender) {
+				const genders = gender.split(',')
+				filters.gender = { $in: genders }
+			}
 
-            if (classification) {
-                const classifications = classification.split(',')
-                filters.classification = { $in: classifications }
+			if (type_of_aroma) {
+				const typeAroma = type_of_aroma.split(',')
+				filters.type_of_aroma = { $in: typeAroma }
+			}
 
-            }
+			if (made_in) {
+				const madeIn = made_in.split(',')
+				filters.made_in = { $in: madeIn }
+			}
 
-            if (gender) {
-                const genders = gender.split(',')
-                filters.gender = { $in: genders }
-            }
+			if (country_of_TM) {
+				const countryTM = country_of_TM.split(',')
+				filters.country_of_TM = { $in: countryTM }
+			}
 
-            if (type_of_aroma) {
-                const typeAroma = type_of_aroma.split(',')
-                filters.type_of_aroma = { $in: typeAroma }
-            }
+			if (count && count.$gte && count.$lte) {
+				const { $gte, $lte } = count
+				filters.count = { $gte, $lte }
+			}
 
-            if (made_in) {
-                const madeIn = made_in.split(',')
-                filters.made_in = { $in: madeIn }
-            }
+			if (price) {
+				const { $gte, $lte } = price
+				filters.price = { $gte, $lte }
+			}
 
-            if (country_of_TM) {
-                const countryTM = country_of_TM.split(',')
-                filters.country_of_TM = { $in: countryTM }
-            }
+			if (volume && volume.$gte && volume.$lte) {
+				const { $gte, $lte } = volume
+				filters.volume = { $gte, $lte }
+			}
 
-            if (count && count.$gte && count.$lte) {
-                const { $gte, $lte } = count
-                filters.count = { $gte, $lte }
-            }
-
-            if (price) {
-                const { $gte, $lte } = price
-                filters.price = { $gte, $lte }
-            }
-
-            if (volume && volume.$gte && volume.$lte) {
-                const { $gte, $lte } = volume
-                filters.volume = { $gte, $lte }
-            }
-
-            return filters
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
+			return filters
+		} catch (e) {
+			console.log(e)
+		}
+	}
 }
 
 export default new productFilters()

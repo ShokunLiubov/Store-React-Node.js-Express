@@ -8,10 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 class aggregatePaginate {
-    aggregatePaginate({ page, limit, Collection, aggregateBody, sort }) {
+    aggregatePaginate({ page, limit, Collection, aggregateBody, sortField, sortOrder }) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                page = +page;
+                limit = +limit;
+                sortOrder = +sortOrder;
                 const count = yield Collection.aggregate([
                     ...aggregateBody,
                     { $count: "count" }
@@ -19,10 +22,10 @@ class aggregatePaginate {
                 const docs = yield Collection.aggregate([
                     ...aggregateBody,
                     {
-                        $sort: sort
+                        $sort: { [sortField]: sortOrder }
                     },
                     {
-                        $skip: (+page - 1) * limit
+                        $skip: (page - 1) * limit
                     },
                     {
                         $limit: limit
@@ -30,11 +33,9 @@ class aggregatePaginate {
                 ]);
                 const totalDocs = (_b = (_a = count[0]) === null || _a === void 0 ? void 0 : _a.count) !== null && _b !== void 0 ? _b : 0;
                 const totalPages = Math.ceil(totalDocs / limit);
-                console.log(docs, 'docs');
-                console.log(totalPages, 'totalPages');
                 return {
                     docs: docs || [],
-                    page, totalPages
+                    currentPage: page, totalPages
                 };
             }
             catch (e) {
@@ -43,7 +44,7 @@ class aggregatePaginate {
                     docs: [],
                     page: 0,
                     totalPages: 0,
-                }; // returns an object with default values in case of error
+                };
             }
         });
     }

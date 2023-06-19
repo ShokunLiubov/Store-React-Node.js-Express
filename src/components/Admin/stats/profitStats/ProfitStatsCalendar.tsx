@@ -8,9 +8,9 @@ import 'react-date-range/dist/theme/default.css' // theme css file
 import 'react-datetime/css/react-datetime.css'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { useCalendar } from '../../../../context/calendarContext'
+import { useCalendar } from '../../../../context/calendar.context'
 import { AppStateType } from '../../../../redux/redux-store'
-import { getProfit } from '../../../../redux/statsReducer/statsThunk'
+import { getProfit } from '../../../../redux/statsReducer/stats.thunk'
 import { ICalendarRange } from '../../../../shared/interfaces/common/calendarRange.interface'
 import './profitStats.scss'
 

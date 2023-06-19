@@ -2,9 +2,9 @@ import { Dispatch } from 'redux'
 import { orderService } from '../../api/services/orderService'
 import { IFiltersOrders } from '../../shared/filters/filtersOrders.interface'
 import { IProductBasket } from '../../shared/interfaces/productInterface/productBasket.interface'
-import { setEmptyBasket } from '../basketReducer/basketActionCreator'
+import { setEmptyBasket } from '../basketReducer/basket.action-creator'
 import { AppStateType } from '../redux-store'
-import * as AC from './orderActionCreator'
+import * as AC from './order.action-creator'
 
 export const getOrders = (
 	currentPage: number | string,

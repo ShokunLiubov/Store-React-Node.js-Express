@@ -1,7 +1,7 @@
 import { IFiltersCustomers } from '../../shared/filters/filtersCustomers.interface'
 import { IUser } from '../../shared/interfaces/userInterface/user.interface'
-import * as actionType from './userActionType'
-import * as I from './userInterface'
+import * as actionType from './user.action-type'
+import * as I from './user.interface'
 
 export const setUsers = (
 	docs: Array<IUser>,

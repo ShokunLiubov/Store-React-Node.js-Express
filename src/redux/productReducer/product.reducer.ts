@@ -3,8 +3,8 @@ import { ICategory } from '../../shared/interfaces/productInterface/category.int
 import { IClassification } from '../../shared/interfaces/productInterface/classification.interface'
 import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import { IProductOptions } from '../../shared/interfaces/productInterface/productOptions.interface'
-import * as actionType from './productActionType'
-import * as I from './productInterface'
+import * as actionType from './product.action-type'
+import * as I from './product.interface'
 
 interface IProductState {
 	productsData: IProduct[]

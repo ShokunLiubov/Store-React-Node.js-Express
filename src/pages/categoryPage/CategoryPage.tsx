@@ -6,13 +6,13 @@ import Paginator from '../../components/common/pagination/Pagination'
 import FiltersCategoryPage from '../../components/store/filters/filtersCategory/FiltersCategoryPage'
 import { MenuStore } from '../../components/store/menuStore/MenuStore'
 import Sort from '../../components/store/sort/Sort'
-import { useBasketModal } from '../../context/basketModalContext'
-import { getUserInfo } from '../../redux/authReducer/authThunk'
-import { addToBasket } from '../../redux/basketReducer/basketThunk'
+import { useBasketModal } from '../../context/basketModal.context'
+import { getUserInfo } from '../../redux/authReducer/auth.thunk'
+import { addToBasket } from '../../redux/basketReducer/basket.thunk'
 import {
 	getDataForFilters,
 	getProducts,
-} from '../../redux/productReducer/productThunk'
+} from '../../redux/productReducer/product.thunk'
 import { AppStateType } from '../../redux/redux-store'
 import { publicUrl } from '../../routes/layout/PublicLayout'
 import { IFiltersProducts } from '../../shared/filters/filtersProducts.interface'

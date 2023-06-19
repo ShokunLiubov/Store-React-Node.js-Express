@@ -1,7 +1,7 @@
 import { IUser } from '../../shared/interfaces/userInterface/user.interface'
 import { IUserInfo } from '../../shared/interfaces/userInterface/userInfo.interface'
-import * as actionType from './authActionType'
-import * as I from './authInterface'
+import * as actionType from './auth.action-type'
+import * as I from './auth.interface'
 
 export const setAuth = (payload: IUser): I.ISetAuth => ({
 	type: actionType.SET_AUTH,

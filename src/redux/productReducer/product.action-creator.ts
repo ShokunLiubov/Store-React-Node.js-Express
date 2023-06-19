@@ -2,8 +2,8 @@ import { IFiltersProducts } from '../../shared/filters/filtersProducts.interface
 import { ICategory } from '../../shared/interfaces/productInterface/category.interface'
 import { IClassification } from '../../shared/interfaces/productInterface/classification.interface'
 import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
-import * as actionType from './productActionType'
-import * as I from './productInterface'
+import * as actionType from './product.action-type'
+import * as I from './product.interface'
 
 export const setProducts = (
 	docs: Array<IProduct>,

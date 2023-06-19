@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
 import { compose } from 'redux'
 import { Preloader } from '../components/common/Preloader'
-import { checkAuth } from '../redux/authReducer/authThunk'
+import { checkAuth } from '../redux/authReducer/auth.thunk'
 import { AppStateType } from '../redux/redux-store'
 import { IRoutes } from '../shared/interfaces/routes.interface'
 

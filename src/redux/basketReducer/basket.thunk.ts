@@ -1,8 +1,8 @@
 import { Dispatch } from 'redux'
-import { productService } from '../../api/services/productService'
+import { productService } from '../../api/services/product.service'
 import { IProductBasket } from '../../shared/interfaces/productInterface/productBasket.interface'
 import { AppStateType } from '../redux-store'
-import * as AC from './basketActionCreator'
+import * as AC from './basket.action-creator'
 
 export const deleteProductFromBasket = (productId: string) => {
 	return async (dispatch: Dispatch): Promise<void> => {

@@ -1,7 +1,7 @@
 import { IUserOptions } from '../../shared/interfaces/userInterface/user.interface'
 import { IUserInfoOptions } from '../../shared/interfaces/userInterface/userInfo.interface'
-import * as actionType from './authActionType'
-import * as I from './authInterface'
+import * as actionType from './auth.action-type'
+import * as I from './auth.interface'
 
 interface IAuthState {
 	user: IUserOptions

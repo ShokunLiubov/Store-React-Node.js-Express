@@ -14,7 +14,7 @@ import {
 	getProfit,
 	getStatsForOrders,
 	getYearsForStats,
-} from '../../redux/statsReducer/statsThunk'
+} from '../../redux/statsReducer/stats.thunk'
 import { ICalendarRange } from '../../shared/interfaces/common/calendarRange.interface'
 import { IOrdersByCity } from '../../shared/stats/ordersByCity.interface'
 import { IOrdersByMonth } from '../../shared/stats/ordersByMonth.interface'

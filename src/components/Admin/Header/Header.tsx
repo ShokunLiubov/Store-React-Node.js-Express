@@ -1,7 +1,7 @@
 import cn from 'classnames'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { useSidebar } from '../../../context/sidebarContext'
+import { useSidebar } from '../../../context/sidebar.context'
 import { IHeader } from '../../../shared/interfaces/header.interface'
 import styles from './header.module.scss'
 
