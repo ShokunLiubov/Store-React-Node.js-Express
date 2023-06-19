@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { storeService } from '../../api/services/storeService'
+import { storeService } from '../../api/services/store.service'
 import * as AC from './store.action-creator'
 
 export const getStoreHomeProducts = () => {
