@@ -43,7 +43,6 @@ const ProfitStatsCalendar: React.FC<IProfitStatsProps> = ({
 	})
 
 	const handleCalendar = (ranges: any): void => {
-		console.log(ranges)
 		setRange(ranges.selection)
 		formik.setFieldValue('dataRange', ranges)
 		debounce(() => {

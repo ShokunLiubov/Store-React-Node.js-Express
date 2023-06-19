@@ -6,6 +6,7 @@ import { CalendarProvider } from './context/calendar.context'
 import { EditUserInfoProvider } from './context/editUserInfo.context'
 import { ParamsProvider } from './context/params.context'
 import { SidebarProvider } from './context/sidebar.context'
+import { AuthTypeProvider } from './context/typeAuth.context'
 import './global.scss'
 import store from './redux/redux-store'
 import { AppRoutes } from './routes/AppRoutes'
@@ -15,19 +16,21 @@ const App: React.FC = (): JSX.Element => {
 	return (
 		<div>
 			<Provider store={store}>
-				<EditUserInfoProvider>
-					<ParamsProvider>
-						<SidebarProvider>
-							<CalendarProvider>
-								<BasketModalProvider>
-									<BrowserRouter>
-										<RouterCombiner routes={AppRoutes} />
-									</BrowserRouter>
-								</BasketModalProvider>
-							</CalendarProvider>
-						</SidebarProvider>
-					</ParamsProvider>
-				</EditUserInfoProvider>
+				<AuthTypeProvider>
+					<EditUserInfoProvider>
+						<ParamsProvider>
+							<SidebarProvider>
+								<CalendarProvider>
+									<BasketModalProvider>
+										<BrowserRouter>
+											<RouterCombiner routes={AppRoutes} />
+										</BrowserRouter>
+									</BasketModalProvider>
+								</CalendarProvider>
+							</SidebarProvider>
+						</ParamsProvider>
+					</EditUserInfoProvider>
+				</AuthTypeProvider>
 			</Provider>
 		</div>
 	)

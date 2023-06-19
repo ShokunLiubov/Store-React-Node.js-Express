@@ -63,7 +63,7 @@ export const Customers: React.FC<ICustomersProps> = ({
 	}
 
 	return (
-		<div className={cn('containerAdminDark')}>
+		<main className={cn('containerAdminDark')}>
 			<span className='title'>Customers</span>
 			<FiltersCustomers />
 			<div className='line'></div>
@@ -108,7 +108,7 @@ export const Customers: React.FC<ICustomersProps> = ({
 				totalPages={totalPages}
 				onPageChange={onPageChange}
 			/>
-		</div>
+		</main>
 	)
 }
 

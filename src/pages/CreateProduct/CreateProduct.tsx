@@ -88,7 +88,6 @@ const CreateProduct: React.FC<CreateProductProps> = ({
 				values.image = editProduct.image
 			}
 			const formData: FormData = new FormData()
-			console.log(formData, 'empty')
 
 			for (let value in values) {
 				formData.append(value, values[value])
@@ -96,10 +95,8 @@ const CreateProduct: React.FC<CreateProductProps> = ({
 
 			if (pathnameEditProduct) {
 				editProduct._id && updateProduct(formData, editProduct._id)
-				console.log(formData, 'update')
 			} else {
 				createNewProduct(formData)
-				console.log(formData, 'create')
 			}
 
 			navigate(adminUrl + 'my-catalogs')
@@ -116,7 +113,7 @@ const CreateProduct: React.FC<CreateProductProps> = ({
 	}
 
 	return (
-		<div className={cn('containerAdminDark')}>
+		<main className={cn('containerAdminDark')}>
 			<form
 				className={'NewProductForm'}
 				onSubmit={formik.handleSubmit}
@@ -224,7 +221,7 @@ const CreateProduct: React.FC<CreateProductProps> = ({
 					</button>
 				</div>
 			</form>
-		</div>
+		</main>
 	)
 }
 

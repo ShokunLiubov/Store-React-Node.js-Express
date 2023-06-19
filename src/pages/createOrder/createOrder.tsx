@@ -85,7 +85,7 @@ export const CreateOrder: React.FC<ICreateOrder> = ({
 			<div className='blockCreateOrder'>
 				<FormUserInfo />
 
-				<div className='order'>
+				<main className='order'>
 					<h5>Your order :</h5>
 					<div className='productItems'>
 						<ProductItem />
@@ -134,7 +134,7 @@ export const CreateOrder: React.FC<ICreateOrder> = ({
 							''
 						)}
 					</div>
-				</div>
+				</main>
 			</div>
 		</div>
 	)

@@ -1,8 +1,9 @@
 import cn from 'classnames'
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { compose } from 'redux'
+import { TypeAuth, useAuthType } from '../../../context/typeAuth.context'
 import { AppStateType } from '../../../redux/redux-store'
 import { authUrl } from '../../../routes/layout/AuthLayout'
 import { publicUrl } from '../../../routes/layout/PublicLayout'
@@ -22,7 +23,7 @@ interface IHeaderAuthProps {
 const HeaderAuth: React.FC<IHeaderAuthProps> = ({ user }): JSX.Element => {
 	const [isLoading, setIsLoading] = useState<boolean>(true)
 	const location = useLocation()
-	const navigate = useNavigate()
+	const type = useAuthType()
 
 	useEffect(() => {
 		if (user) {
@@ -50,7 +51,8 @@ const HeaderAuth: React.FC<IHeaderAuthProps> = ({ user }): JSX.Element => {
 				</NavLink>
 				{!user?.roles?.[0] && (
 					<NavLink
-						to={publicUrl + authUrl + 'register'}
+						to={publicUrl + authUrl + TypeAuth.REGISTER}
+						onClick={() => type.setAuthType(TypeAuth.REGISTER)}
 						className={(navData: IActive) =>
 							navData.isActive ? styles.active : ''
 						}
@@ -63,7 +65,8 @@ const HeaderAuth: React.FC<IHeaderAuthProps> = ({ user }): JSX.Element => {
 				)}
 				{!user?.roles?.[0] && (
 					<NavLink
-						to={publicUrl + authUrl + 'login'}
+						to={publicUrl + authUrl + TypeAuth.LOGIN}
+						onClick={() => type.setAuthType(TypeAuth.LOGIN)}
 						className={(navData: IActive) =>
 							navData.isActive ? styles.active : ''
 						}

@@ -48,7 +48,7 @@ export const StoreHome: React.FC<IStoreHomeProps> = ({
 	}, [])
 
 	return (
-		<>
+		<main>
 			<MenuStore />
 			<div className={'carousel'}>
 				<img src='./../../shopImg/bcgimg.jpeg' />
@@ -104,7 +104,7 @@ export const StoreHome: React.FC<IStoreHomeProps> = ({
 					<div className='unexpected'>Unexpected error</div>
 				)}
 			</div>
-		</>
+		</main>
 	)
 }
 

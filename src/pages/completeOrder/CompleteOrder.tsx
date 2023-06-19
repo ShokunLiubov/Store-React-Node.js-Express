@@ -13,10 +13,10 @@ export const CompleteOrder: React.FC<ICreateOrder> = ({}): JSX.Element => {
 	return (
 		<>
 			<MenuStore />
-			<div className='completeOrder'>
+			<main className='completeOrder'>
 				<span>Thank you for your order.</span>
 				<NavLink to={publicUrl}>Continue products</NavLink>
-			</div>
+			</main>
 		</>
 	)
 }

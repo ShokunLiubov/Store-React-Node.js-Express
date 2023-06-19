@@ -1,212 +1,208 @@
-$base-font: "Montserrat", sans-serif;
-$index: calc(1vw*1vh);
+$base-font: 'Montserrat', sans-serif;
+$index: calc(1vw * 1vh);
+
+// Цвета
+$color-primary: #e14eca;
+$color-secondary: #ba54f5;
+$color-background-dark: #1e1e28;
+$color-background-light: #fff;
+$color-text-dark: #333;
+$color-text-light: #ffffff;
+
+// Размеры шрифта
+$font-size-h1: 38px;
+$font-size-h2: 30px;
+$font-size-h3: 22px;
+$font-size-h4: 18px;
+$font-size-h5: 16px;
+$font-size-h6: 12px;
+$font-size-button: 9px;
+$font-size-label: 24px;
+$font-size-title: 30px;
+$font-size-number: 15px;
+$font-size-not-found: 50px;
+$font-size-preloader: 90px;
 
 body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-.AuthLayout {
-  background-color: #1e1e28;
-  button {
-    background: #e14eca;
-    cursor: pointer;
-    outline: 0;
-    border: none;
-    position: relative;
-    overflow: hidden;
-    margin: 4px 1px;
-    padding: 15px 30px;
-    font-weight: 600;
-    font-style: 18px;
-    border-radius: 0.4285rem;
-    background-image: linear-gradient(
-      to bottom left,
-      #e14eca,
-      #ba54f5,
-      #e14eca
-    );
-  }
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: $base-font;
+	color: $color-text-light;
 }
 
-.AdminLayout {
-  background-color: #1e1e28;
-  .mainButton {
-    background: #e14eca;
-    cursor: pointer;
-    outline: 0;
-    border: none;
-    position: relative;
-    overflow: hidden;
-    margin: 4px 1px;
-    padding: 15px 30px;
-    font-weight: 600;
-    font-style: 18px;
-    border-radius: 0.4285rem;
-    background-image: linear-gradient(
-      to bottom left,
-      #e14eca,
-      #ba54f5,
-      #e14eca
-    );
-  }
+.AuthLayout,
+.AdminLayout,
+.PublicLayout {
+	background-color: $color-background-dark;
+
+	button {
+		background: $color-primary;
+		cursor: pointer;
+		outline: 0;
+		border: none;
+		position: relative;
+		overflow: hidden;
+		margin: 4px 1px;
+		padding: 15px 30px;
+		font-weight: 600;
+		font-size: $font-size-button;
+		border-radius: 0.4285rem;
+		background-image: linear-gradient(
+			to bottom left,
+			$color-primary,
+			$color-secondary,
+			$color-primary
+		);
+	}
 }
 
 .PublicLayout {
-  background-color: #fff;
-  li,
-  p,
-  span,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  button,
-  a,
-  div {
-    color: #333;
-    font-weight: 400;
-  }
-  button {
-    background: #792c9b;
-    cursor: pointer;
-    outline: 0;
-    border: none;
-    position: relative;
-    overflow: hidden;
-    margin: 4px 1px;
-    color: #fff;
-    font-size: 9px;
-    padding: 8px 30px;
-    text-transform: uppercase;
-    font-weight: 500;
-    letter-spacing: 0.4px;
-  }
-  .storeContainer {
-    padding: 0px 40px;
-  }
+	background-color: $color-background-light;
+	li,
+	p,
+	span,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	button,
+	a,
+	div {
+		color: $color-text-dark;
+		font-weight: 400;
+	}
+	button {
+		background: #792c9b;
+		cursor: pointer;
+		outline: 0;
+		border: none;
+		position: relative;
+		overflow: hidden;
+		margin: 4px 1px;
+		color: $color-background-light;
+		font-size: 9px;
+		padding: 8px 30px;
+		text-transform: uppercase;
+		font-weight: 500;
+		letter-spacing: 0.4px;
+	}
+	.storeContainer {
+		padding: 0px 40px;
+	}
 
-  .label {
-    font-size: 24px;
-    color: #333;
-    text-align: center;
-    margin: 20px 0 48px;
-  }
-}
-
-li,
-p,
-span,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-button,
-a,
-div {
-  font-family: $base-font;
-  color: #ffffff;
+	.label {
+		font-size: 24px;
+		color: $color-text-dark;
+		text-align: center;
+		margin: 20px 0 48px;
+	}
 }
 
 ul {
-  list-style: none;
+	list-style: none;
+}
+
+.AdminLayout {
+	span,
+	a {
+		color: $color-text-light;
+	}
 }
 
 .containerAdminDark {
-  margin: 20px;
-  background-color: #27293c;
-  padding: 30px;
-  border-radius: 6px;
-  width: 100%;
-  height: 100%;
+	margin: 20px;
+	background-color: #27293c;
+	padding: 30px;
+	border-radius: 6px;
+	width: 100%;
+	height: 100%;
 }
 
 .containerAdminWhite {
-  margin: 20px;
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 6px;
-  width: 100%;
-  height: 100%;
-  li,
-  p,
-  span,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  button,
-  th,
-  td,
-  a,
-  div {
-    color: #333;
-  } 
+	margin: 20px;
+	background-color: $color-background-light;
+	padding: 30px;
+	border-radius: 6px;
+	width: 100%;
+	height: 100%;
+	li,
+	p,
+	span,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	button,
+	th,
+	td,
+	a,
+	div {
+		color: $color-text-dark;
+	}
 }
 
 .titleAdminPage {
-  font-size: 30px;
-  margin-bottom: 20px;
+	font-size: 30px;
+	margin-bottom: 20px;
 }
 
 .adminContainer {
-  display: flex;
+	display: flex;
 }
 
 .numberDark {
-  margin: 2px;
-  font-size: 15px;
-  font-weight: 400;
-  color: #333;
+	margin: 2px;
+	font-size: 15px;
+	font-weight: 400;
+	color: $color-text-dark;
 }
 
 h1 {
-  font-size: 38px;
+	font-size: $font-size-h1;
 }
 
 h2 {
-  font-size: 30px;
+	font-size: $font-size-h2;
 }
 h3 {
-  font-size: 22px;
+	font-size: $font-size-h3;
 }
 h4 {
-  font-size: 18px;
+	font-size: $font-size-h4;
 }
 h5 {
-  font-size: 16px;
+	font-size: $font-size-h5;
 }
 h6 {
-  font-size: 12px;
+	font-size: $font-size-h6;
 }
 
 .center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  height: 95vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	height: 95vh;
 }
 
 .styleAdmin {
-  color: #1e1e28;
+	color: $color-background-dark;
 }
 
 .notFound {
-  font-size: 50px;
+	font-size: 50px;
 }
 
 .preloader {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: 90px;
-  color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	font-size: 90px;
+	color: black;
 }

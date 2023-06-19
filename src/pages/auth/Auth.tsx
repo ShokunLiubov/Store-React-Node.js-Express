@@ -5,23 +5,30 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { compose } from 'redux'
 import { Preloader } from '../../components/common/Preloader'
 import { Input } from '../../components/ui/form/input/Input'
-import { login } from '../../redux/authReducer/auth.thunk'
+import { TypeAuth, useAuthType } from '../../context/typeAuth.context'
+import { login, registrationUser } from '../../redux/authReducer/auth.thunk'
 import { AppStateType } from '../../redux/redux-store'
 import { publicUrl } from '../../routes/layout/PublicLayout'
 import { IAuth } from '../../shared/interfaces/userInterface/auth.interface'
 import { IUserOptions } from '../../shared/interfaces/userInterface/user.interface'
-import './login.scss'
+import './auth.scss'
 
-interface LoginProps {
+interface RegisterProps {
+	registrationUser: (values: IAuth) => Promise<string | undefined>
 	login: (values: IAuth) => Promise<string | undefined>
 	user: IUserOptions
 }
 
-export const Login: React.FC<LoginProps> = ({ login, user }): JSX.Element => {
+export const AuthPage: React.FC<RegisterProps> = ({
+	registrationUser,
+	login,
+	user,
+}): JSX.Element => {
 	const navigate = useNavigate()
 	const [isLoading, setIsLoading] = useState<boolean>(true)
 	const [isShownPassword, setIsShownPassword] = useState<boolean>(false)
 	const [error, setError] = useState<string>('')
+	const type = useAuthType()
 
 	useEffect(() => {
 		if (user) {
@@ -35,12 +42,17 @@ export const Login: React.FC<LoginProps> = ({ login, user }): JSX.Element => {
 			password: '',
 		},
 		onSubmit: async (values: IAuth): Promise<void> => {
-			const message = await login(values)
+			let message
+
+			if (type.auth === TypeAuth.REGISTER) {
+				message = await registrationUser(values)
+			} else if (type.auth === TypeAuth.LOGIN) {
+				message = await login(values)
+			}
 
 			if (!message) {
 				navigate(publicUrl)
 			} else {
-				setError(message)
 			}
 		},
 	})
@@ -54,10 +66,10 @@ export const Login: React.FC<LoginProps> = ({ login, user }): JSX.Element => {
 	}
 
 	return (
-		<div className={'containerLogin'}>
+		<main className={'containerLogin'}>
 			<form className={'form'} onSubmit={formik.handleSubmit}>
 				<img src='./../../imageAuth/bcgAuth.png' />
-				<span className='authTitle'>log in</span>
+				<span className='authTitle'>{type.auth}</span>
 				<div className='blockInput'>
 					<span className='material-symbols-outlined'>mail</span>
 					<Input
@@ -79,12 +91,11 @@ export const Login: React.FC<LoginProps> = ({ login, user }): JSX.Element => {
 					/>
 					<span
 						className='material-symbols-outlined'
-						onClick={() => setIsShownPassword(!isShownPassword)}
+						onClick={(): void => setIsShownPassword(!isShownPassword)}
 					>
 						{isShownPassword ? 'visibility' : 'visibility_off'}
 					</span>
 				</div>
-
 				<div className='errorAuth'>{error}</div>
 
 				<button type='submit'>Get Started</button>
@@ -93,7 +104,7 @@ export const Login: React.FC<LoginProps> = ({ login, user }): JSX.Element => {
 				<NavLink to=''>Create Account</NavLink>
 				<NavLink to=''>Need help</NavLink>
 			</div>
-		</div>
+		</main>
 	)
 }
 
@@ -103,4 +114,6 @@ const mapStateToProps = (state: AppStateType) => {
 	}
 }
 
-export default compose(connect(mapStateToProps, { login }))(Login)
+export default compose(connect(mapStateToProps, { registrationUser, login }))(
+	AuthPage,
+)

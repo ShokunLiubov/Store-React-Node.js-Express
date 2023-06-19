@@ -51,7 +51,7 @@ export const ProductPage: React.FC<IProductPageProps> = ({
 	return (
 		<>
 			{product.count && (
-				<>
+				<main>
 					<MenuStore />
 					<div className='productPage'>
 						<div className='productPageTop'>
@@ -147,7 +147,7 @@ export const ProductPage: React.FC<IProductPageProps> = ({
 							</div>
 						</div>
 					</div>
-				</>
+				</main>
 			)}
 		</>
 	)
