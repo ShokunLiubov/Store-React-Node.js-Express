@@ -8,7 +8,7 @@ import {
 	removeCountProduct,
 } from '../../../redux/basketReducer/basket.thunk'
 import { AppStateType } from '../../../redux/redux-store'
-import { publicUrl } from '../../../routes/layout/PublicLayout'
+import { publicUrl } from '../../../routes/layout/Public.layout'
 import { IProductBasket } from '../../../shared/interfaces/productInterface/productBasket.interface'
 import './basketModal.scss'
 

@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import Delivery from '../models/Delivery.model'
+import { IDelivery } from 'order.interface'
 
 class deliveryController {
 	async getDeliveryOptions(req: Request, res: Response, next: NextFunction) {
@@ -17,7 +18,7 @@ class deliveryController {
 
 	async updateDeliveryOptions(req: Request, res: Response, next: NextFunction) {
 		try {
-			const { id, price } = req.body
+			const { id, price }: IDelivery = req.body
 
 			const updateDeliveryOption = await Delivery.findByIdAndUpdate(id, {
 				price,

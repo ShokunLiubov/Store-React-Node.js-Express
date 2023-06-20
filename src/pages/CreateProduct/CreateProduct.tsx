@@ -15,7 +15,7 @@ import {
 	updateProduct,
 } from '../../redux/productReducer/product.thunk'
 import { AppStateType } from '../../redux/redux-store'
-import { adminUrl } from '../../routes/layout/AdminLayout'
+import { adminUrl } from '../../routes/layout/Admin.layout'
 import { ISelectedOptions } from '../../shared/interfaces/common/selectedOptions.interface'
 import { ICategory } from '../../shared/interfaces/productInterface/category.interface'
 import { IClassification } from '../../shared/interfaces/productInterface/classification.interface'

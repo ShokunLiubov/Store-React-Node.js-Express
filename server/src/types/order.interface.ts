@@ -41,3 +41,8 @@ export interface IOrderFilter {
 		postOffice?: string
 	}
 }
+
+export interface IDelivery {
+	id: string
+	price: number
+}

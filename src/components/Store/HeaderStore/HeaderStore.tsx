@@ -1,10 +1,10 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { publicUrl } from '../../../routes/layout/PublicLayout'
+import { publicUrl } from '../../../routes/layout/Public.layout'
 import SearchHeaderStore from '../filters/searchHeaderStore/SearchHeaderStore'
 import { Basket } from './Basket'
-import './headerStore.scss'
 import UserAuth from './UserAuth'
+import './headerStore.scss'
 
 export const HeaderStore: React.FC = (): JSX.Element => {
 	return (

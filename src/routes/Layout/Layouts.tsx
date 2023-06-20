@@ -1,6 +1,6 @@
-import AdminLayout from './AdminLayout'
-import { AuthLayout } from './AuthLayout'
-import { PublicLayout } from './PublicLayout'
+import AdminLayout from './Admin.layout'
+import { AuthLayout } from './Auth.layout'
+import { PublicLayout } from './Public.layout'
 
 export const Layouts = {
 	AdminLayout: () => <AdminLayout></AdminLayout>,

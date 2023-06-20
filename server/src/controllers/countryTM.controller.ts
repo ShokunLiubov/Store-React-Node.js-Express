@@ -11,8 +11,8 @@ class countryTMController {
 			])
 
 			return res.status(200).json(countryTM[0].uniqueCountryTM)
-		} catch (e: any) {
-			console.error(e.message)
+		} catch (e) {
+			console.error(e)
 		}
 	}
 }

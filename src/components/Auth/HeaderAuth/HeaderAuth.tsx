@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { NavLink, useLocation } from 'react-router-dom'
 import { compose } from 'redux'
-import { TypeAuth, useAuthType } from '../../../context/typeAuth.context'
+import { TypeAuth } from '../../../context/typeAuth.context'
 import { AppStateType } from '../../../redux/redux-store'
-import { authUrl } from '../../../routes/layout/AuthLayout'
-import { publicUrl } from '../../../routes/layout/PublicLayout'
+import { authUrl } from '../../../routes/layout/Auth.layout'
+import { publicUrl } from '../../../routes/layout/Public.layout'
 import { IUserOptions } from '../../../shared/interfaces/userInterface/user.interface'
 import { Preloader } from '../../common/Preloader'
 import styles from './headerAuth.module.scss'
@@ -23,7 +23,6 @@ interface IHeaderAuthProps {
 const HeaderAuth: React.FC<IHeaderAuthProps> = ({ user }): JSX.Element => {
 	const [isLoading, setIsLoading] = useState<boolean>(true)
 	const location = useLocation()
-	const type = useAuthType()
 
 	useEffect(() => {
 		if (user) {
@@ -52,7 +51,6 @@ const HeaderAuth: React.FC<IHeaderAuthProps> = ({ user }): JSX.Element => {
 				{!user?.roles?.[0] && (
 					<NavLink
 						to={publicUrl + authUrl + TypeAuth.REGISTER}
-						onClick={() => type.setAuthType(TypeAuth.REGISTER)}
 						className={(navData: IActive) =>
 							navData.isActive ? styles.active : ''
 						}
@@ -66,7 +64,6 @@ const HeaderAuth: React.FC<IHeaderAuthProps> = ({ user }): JSX.Element => {
 				{!user?.roles?.[0] && (
 					<NavLink
 						to={publicUrl + authUrl + TypeAuth.LOGIN}
-						onClick={() => type.setAuthType(TypeAuth.LOGIN)}
 						className={(navData: IActive) =>
 							navData.isActive ? styles.active : ''
 						}
