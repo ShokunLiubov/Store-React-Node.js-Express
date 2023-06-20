@@ -1,9 +1,9 @@
 import { Pages } from '../pages/PagesCombiner'
 import { IRoutes } from '../shared/interfaces/routes.interface'
-import { adminUrl } from './layout/AdminLayout'
-import { authUrl } from './layout/AuthLayout'
+import { adminUrl } from './layout/Admin.layout'
+import { authUrl } from './layout/Auth.layout'
 import { Layouts } from './layout/Layouts'
-import { publicUrl } from './layout/PublicLayout'
+import { publicUrl } from './layout/Public.layout'
 
 export const AppRoutes: Array<IRoutes> = [
 	{

@@ -1,14 +1,14 @@
 import { useFormik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { compose } from 'redux'
 import { Preloader } from '../../components/common/Preloader'
 import { Input } from '../../components/ui/form/input/Input'
 import { TypeAuth, useAuthType } from '../../context/typeAuth.context'
 import { login, registrationUser } from '../../redux/authReducer/auth.thunk'
 import { AppStateType } from '../../redux/redux-store'
-import { publicUrl } from '../../routes/layout/PublicLayout'
+import { publicUrl } from '../../routes/layout/Public.layout'
 import { IAuth } from '../../shared/interfaces/userInterface/auth.interface'
 import { IUserOptions } from '../../shared/interfaces/userInterface/user.interface'
 import './auth.scss'
@@ -25,6 +25,7 @@ export const AuthPage: React.FC<RegisterProps> = ({
 	user,
 }): JSX.Element => {
 	const navigate = useNavigate()
+	const location = useLocation()
 	const [isLoading, setIsLoading] = useState<boolean>(true)
 	const [isShownPassword, setIsShownPassword] = useState<boolean>(false)
 	const [error, setError] = useState<string>('')
@@ -34,7 +35,12 @@ export const AuthPage: React.FC<RegisterProps> = ({
 		if (user) {
 			setIsLoading(false)
 		}
-	}, [user])
+		if (location.pathname === publicUrl + 'auth/' + TypeAuth.REGISTER) {
+			type.setAuthType(TypeAuth.REGISTER)
+		} else {
+			type.setAuthType(TypeAuth.LOGIN)
+		}
+	}, [user, location.pathname])
 
 	const formik = useFormik<IAuth>({
 		initialValues: {

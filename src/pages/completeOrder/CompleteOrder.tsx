@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
 import { MenuStore } from '../../components/store/menuStore/MenuStore'
 import { AppStateType } from '../../redux/redux-store'
-import { publicUrl } from '../../routes/layout/PublicLayout'
+import { publicUrl } from '../../routes/layout/Public.layout'
 import './completeOrder.scss'
 
 interface ICreateOrder {}

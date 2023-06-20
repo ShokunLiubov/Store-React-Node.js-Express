@@ -11,8 +11,8 @@ class madeInController {
 			])
 
 			return res.status(200).json(madeIn[0].uniqueMadeIn)
-		} catch (e: any) {
-			console.error(e.message)
+		} catch (e) {
+			console.error(e)
 		}
 	}
 }

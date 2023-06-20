@@ -17,7 +17,7 @@ import {
 	getProducts,
 } from '../../redux/productReducer/product.thunk'
 import { AppStateType } from '../../redux/redux-store'
-import { adminUrl } from '../../routes/layout/AdminLayout'
+import { adminUrl } from '../../routes/layout/Admin.layout'
 import { IFiltersProducts } from '../../shared/filters/filtersProducts.interface'
 import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import styles from './myCatalogs.module.scss'

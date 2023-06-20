@@ -1,5 +1,5 @@
+import { publicUrl } from '../../routes/layout/Public.layout'
 import { IMenuStore } from '../../shared/interfaces/menuStore.interface'
-import { publicUrl } from './../../routes/layout/PublicLayout'
 
 export const MENU_STORE_DATA: Array<IMenuStore> = [
 	{ title: 'Perfumery', path: publicUrl + 'category/all' },

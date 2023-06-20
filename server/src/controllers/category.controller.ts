@@ -7,7 +7,7 @@ class categoryController {
 			const categories = await Category.find({}).select('name slug')
 
 			return res.status(200).json(categories)
-		} catch (e: any) {
+		} catch (e) {
 			console.error(e)
 		}
 	}

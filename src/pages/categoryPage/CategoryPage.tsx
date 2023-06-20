@@ -14,7 +14,7 @@ import {
 	getProducts,
 } from '../../redux/productReducer/product.thunk'
 import { AppStateType } from '../../redux/redux-store'
-import { publicUrl } from '../../routes/layout/PublicLayout'
+import { publicUrl } from '../../routes/layout/Public.layout'
 import { IFiltersProducts } from '../../shared/filters/filtersProducts.interface'
 import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import './categoryPage.scss'

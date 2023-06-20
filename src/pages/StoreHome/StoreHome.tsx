@@ -13,7 +13,7 @@ import {
 } from '../../redux/productReducer/product.thunk'
 import { AppStateType } from '../../redux/redux-store'
 import { getStoreHomeProducts } from '../../redux/storeReducer/store.thunk'
-import { publicUrl } from '../../routes/layout/PublicLayout'
+import { publicUrl } from '../../routes/layout/Public.layout'
 import { IProduct } from '../../shared/interfaces/productInterface/product.interface'
 import { IStoreHomeProducts } from '../../shared/interfaces/storeInterface/storeHomeProducts.interface'
 import './storeHome.scss'

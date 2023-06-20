@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
+import { IPagination } from 'pagination.interface'
 import orderFilters from '../filters/order.filters'
 import Order from '../models/Order.model'
 import orderService from '../service/order.service'
@@ -6,7 +7,12 @@ import orderService from '../service/order.service'
 class orderController {
 	async getOrders(req: Request, res: Response, next: NextFunction) {
 		try {
-			const { page = 1, limit = 20, sortField, sortOrder } = req.query
+			const {
+				page = 1,
+				limit = 20,
+				sortField,
+				sortOrder,
+			}: IPagination = req.query
 
 			const filters = await orderFilters.orderFilters(req.query)
 

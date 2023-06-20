@@ -5,8 +5,8 @@ import { compose } from 'redux'
 import { TypeAuth, useAuthType } from '../../../context/typeAuth.context'
 import { logout } from '../../../redux/authReducer/auth.thunk'
 import { AppStateType } from '../../../redux/redux-store'
-import { authUrl } from '../../../routes/layout/AuthLayout'
-import { publicUrl } from '../../../routes/layout/PublicLayout'
+import { authUrl } from '../../../routes/layout/Auth.layout'
+import { publicUrl } from '../../../routes/layout/Public.layout'
 import { IUserOptions } from '../../../shared/interfaces/userInterface/user.interface'
 import './headerStore.scss'
 
@@ -26,10 +26,7 @@ export const UserAuth: React.FC<IUserAuth> = ({
 	return (
 		<div className='userAuth'>
 			{!isAuth && (
-				<NavLink
-					to={publicUrl + authUrl + TypeAuth.LOGIN}
-					onClick={() => type.setAuthType(TypeAuth.LOGIN)}
-				>
+				<NavLink to={publicUrl + authUrl + TypeAuth.LOGIN}>
 					<span className='material-symbols-outlined'>person</span>
 				</NavLink>
 			)}
