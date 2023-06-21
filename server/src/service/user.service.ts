@@ -4,7 +4,11 @@ import AuthError from '../exception/authError'
 import Role from '../models/Role.model'
 import User from '../models/User.model'
 import UserInfo from '../models/UserInfo.model'
-import { IUserDocument, IUserInfoDocument } from '../types/user.interface'
+import {
+	IUserDataForTokens,
+	IUserDocument,
+	IUserInfoDocument,
+} from '../types/user.interface'
 import tokenService from './token.service'
 
 class UserService {
@@ -24,7 +28,7 @@ class UserService {
 			roles: [userRole?.id],
 		})
 
-		const userDto = new UserDto(user) // id, username
+		const userDto: IUserDataForTokens = new UserDto(user) // id, username
 		const tokens = tokenService.generateTokens({ ...userDto })
 		await tokenService.saveToken(userDto.id, tokens.refreshToken)
 		// Create user and tokens

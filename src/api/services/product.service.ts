@@ -5,6 +5,8 @@ import { IProductBasket } from '../../shared/interfaces/productInterface/product
 import { IProductResponse } from '../../shared/response/productResponse.interface'
 import { $API } from '../api'
 
+const PRODUCTS = 'products/'
+
 export class productService {
 	static async getProducts(
 		page: number | string,
@@ -76,25 +78,25 @@ export class productService {
 			}
 		}
 
-		const response = await $API.get('products' + url)
+		const response = await $API.get(PRODUCTS + url)
 		return { data: response.data, url }
 	}
 
 	static async deleteProduct(productId: string): Promise<AxiosResponse> {
-		return $API.delete(`products/${productId}`)
+		return $API.delete(`${PRODUCTS}${productId}`)
 	}
 
-	static async createProduct(newProduct: FormData): Promise<AxiosResponse> {
-		return $API.post<IProduct>('products', newProduct)
+	static async createProduct(data: FormData): Promise<AxiosResponse> {
+		return $API.post<IProduct>(PRODUCTS, data)
 	}
 
 	static async getProduct(productId: string): Promise<IProductBasket> {
-		return $API.get(`products/${productId}`).then(response => response.data)
+		return $API.get(`${PRODUCTS}${productId}`).then(response => response.data)
 	}
 
 	static async getProductForEdit(productId: string): Promise<IProduct> {
 		return $API
-			.get(`products/edit/${productId}`)
+			.get(`${PRODUCTS}edit/${productId}`)
 			.then(response => response.data.product)
 	}
 
@@ -102,6 +104,6 @@ export class productService {
 		product: FormData,
 		productId: string,
 	): Promise<AxiosResponse> {
-		return $API.put(`products/edit/${productId}`, product)
+		return $API.put(`${PRODUCTS}edit/${productId}`, product)
 	}
 }

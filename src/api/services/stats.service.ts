@@ -4,13 +4,15 @@ import { IOrdersByCity } from '../../shared/stats/ordersByCity.interface'
 import { IOrdersByMonth } from '../../shared/stats/ordersByMonth.interface'
 import { $API } from '../api'
 
+const STATS = 'stats/'
+
 export class statsService {
 	static async getOrdersByMonth(
 		year: number,
 	): Promise<{ data: IOrdersByMonth[]; url: string }> {
 		let url = `?year=${year}`
 
-		const response = await $API.get('stats/orders/month' + url)
+		const response = await $API.get(`${STATS}orders/month` + url)
 		return { data: response.data, url }
 	}
 
@@ -19,7 +21,7 @@ export class statsService {
 	): Promise<{ data: IOrdersByCity[] }> {
 		let url = `?year=${year}`
 
-		const response = await $API.get('stats/orders/city' + url)
+		const response = await $API.get(`${STATS}orders/city` + url)
 		return { data: response.data }
 	}
 
@@ -38,12 +40,12 @@ export class statsService {
 			url += `&year=${year}`
 		}
 
-		const response = await $API.get('stats/profit?' + url)
+		const response = await $API.get(`${STATS}profit?` + url)
 
 		return response.data
 	}
 
 	static async getYearForStats(): Promise<Array<number>> {
-		return $API.get('stats/years').then(response => response.data)
+		return $API.get(`${STATS}years`).then(response => response.data)
 	}
 }

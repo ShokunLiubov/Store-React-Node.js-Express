@@ -8,7 +8,13 @@ export interface IUserDocument {
 	password: string
 	roles: EnumRoles[]
 	userInfo?: IUserInfoDocument
-	orders: Schema.Types.ObjectId[]
+	orders?: Schema.Types.ObjectId[]
+}
+
+export interface IUserDataForTokens {
+	id: string
+	username: string
+	roles: EnumRoles[]
 }
 
 export interface IUserInfoDocument {

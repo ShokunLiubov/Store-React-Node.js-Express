@@ -3,6 +3,8 @@ import { IUserInfo } from '../../shared/interfaces/userInterface/userInfo.interf
 import { IUserResponse } from '../../shared/response/userResponse.interface'
 import { $API } from '../api'
 
+const USERS = 'users'
+
 export class userService {
 	static async fetchUsers(
 		page: number | string,
@@ -27,22 +29,22 @@ export class userService {
 	}
 
 	static async getUserInfoForDelivery(): Promise<AxiosResponse<IUserInfo>> {
-		return $API.get('users/info')
+		return $API.get(`${USERS}info`)
 	}
 
 	static async createUserInfoForDelivery(
-		value: IUserInfo,
+		data: IUserInfo,
 	): Promise<AxiosResponse<IUserInfo>> {
-		return $API.post<IUserInfo>('users/info', value)
+		return $API.post<IUserInfo>(`${USERS}info`, data)
 	}
 
 	static async updateUserInfoForDelivery(
-		value: IUserInfo,
+		data: IUserInfo,
 	): Promise<AxiosResponse<IUserInfo>> {
-		return $API.put<IUserInfo>('users/info', value)
+		return $API.put<IUserInfo>(`${USERS}info`, data)
 	}
 
 	static async getCity(): Promise<Array<string>> {
-		return $API.get('users/city').then(response => response.data)
+		return $API.get(`${USERS}city`).then(response => response.data)
 	}
 }

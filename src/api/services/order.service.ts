@@ -4,6 +4,8 @@ import { IOrder } from '../../shared/interfaces/order.interface'
 import { IOrdersResponse } from '../../shared/response/orderResponse.interface'
 import { $API } from '../api'
 
+const ORDERS = 'orders/'
+
 export class orderService {
 	static async getOrders(
 		page: number | string,
@@ -39,15 +41,15 @@ export class orderService {
 			}
 		}
 
-		const response = await $API.get('orders' + url)
+		const response = await $API.get(ORDERS + url)
 		return { data: response.data, url }
 	}
 
-	static async createOrder(order: IOrder): Promise<AxiosResponse<IOrder[]>> {
-		return $API.post<IOrder[]>('orders', order)
+	static async createOrder(data: IOrder): Promise<AxiosResponse<IOrder[]>> {
+		return $API.post<IOrder[]>(ORDERS, data)
 	}
 
 	static async getCity(): Promise<Array<string>> {
-		return $API.get('orders/city').then(response => response.data)
+		return $API.get(`${ORDERS}city`).then(response => response.data)
 	}
 }

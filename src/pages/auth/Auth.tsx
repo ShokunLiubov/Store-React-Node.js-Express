@@ -42,6 +42,12 @@ export const AuthPage: React.FC<RegisterProps> = ({
 		}
 	}, [user, location.pathname])
 
+	useEffect(() => {
+		if (user?.roles?.[0]) {
+			navigate(publicUrl)
+		}
+	}, [user?.roles, navigate])
+
 	const formik = useFormik<IAuth>({
 		initialValues: {
 			username: '',
@@ -65,10 +71,6 @@ export const AuthPage: React.FC<RegisterProps> = ({
 
 	if (isLoading) {
 		return <Preloader />
-	}
-
-	if (user?.roles?.[0]) {
-		navigate(publicUrl)
 	}
 
 	return (
