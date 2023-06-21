@@ -6,7 +6,7 @@ import { IOrderDocument } from '../types/order.interface'
 
 class orderService {
 	async createOrder(payload: IOrderDocument, userId: string) {
-		const { fullName, address, allPrice, products } = payload
+		const { fullName, address, allPrice, products }: IOrderDocument = payload
 
 		const order = await Order.create({
 			fullName,

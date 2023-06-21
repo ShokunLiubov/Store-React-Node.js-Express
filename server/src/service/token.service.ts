@@ -1,8 +1,9 @@
 import jwt from 'jsonwebtoken'
 import Token from '../models/Token.model'
+import { IUserDataForTokens } from 'user.interface'
 
 class TokenService {
-	generateTokens(payload: any) {
+	generateTokens(payload: IUserDataForTokens) {
 		const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET || '', {
 			expiresIn: '30m',
 		})
